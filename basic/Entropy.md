@@ -51,3 +51,16 @@ $$
 - \\(JS(p,q) = \frac{1}{2} D\_{KL}(p||\frac{p+q}{2}) + \frac{1}{2} D\_{KL}(q||\frac{p+q}{2})\\)
 
 - 与 \\(KL\\) 相比，\\(JS\\) 散度具有对称性：\\(JS(p,q) = JS(q,p)\\)
+
+- 当真实分布为 \\(p\\) 与假设分布 \\(q\\) 不重叠时，\\(JS\\) 散度为常数：
+
+$$
+\begin{align\*}
+prior \quad &p(i)=0 \quad when \quad q(i) \geq 0, \qquad q(i)=0 \quad when \quad p(i) \geq 0 \newline \newline
+\qquad JS(p,q) &= \sum\_{i} p(i)log\frac{p(i)}{\frac{p(i)+q(i)}{2}} + \sum\_{i} q(i)log\frac{q(i)}{\frac{p(i)+q(i)}{2}} \newline
+&= log2\ \sum\_{i} p(i) + \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + log2\ \sum\_{i} q(i) + \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \newline
+&= log4 + \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \newline
+&= log4 + \sum\_{i} p(i)log\frac{p(i)}{p(i)} + \sum\_{i} q(i)log\frac{q(i)}{q(i)} \newline
+&= log4
+\end{align\*}
+$$
