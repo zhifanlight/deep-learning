@@ -66,3 +66,17 @@ prior \qquad &JS(p\_{1}||p\_{2}) \quad minimize \quad when \quad p\_{1} = p\_{2}
 \Rightarrow \qquad &V(D^{\*},G) \quad minimize \quad when \quad p\_{g} = p\_{data} 
 \end{align\*}
 $$
+
+## 优缺点
+
+### 优点
+
+- 可以训练任何一种生成器网络
+
+- 通过无监督方式学习样本的数据分布来产生类似样本，过程类似于人类的学习
+
+### 缺点
+
+- 网络通常难以收敛
+
+- 有可能导致生成器退化，进而导致训练无法继续
