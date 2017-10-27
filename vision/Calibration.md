@@ -27,9 +27,9 @@ $$ \\left\\{ \\begin{matrix} {x}' = x + [2 * p _{1} * x * y + p _{2} * (r ^2 + 2
 
 $$ \\left\\{ \\begin{matrix} {x}' = x * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) + [2 * p _{1} * x * y + p _{2} * (r ^2 + 2 * x ^2)] \\\\ {y}' = y * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) + [2 * p _{2} * x * y + p _{1} * (r ^2 + 2 * y ^2)]  \\end{matrix} \\right. $$
 
-- 畸变向量 \\( distortion = [k _{1}, k _{2}, p _{1}, p _{2}, k _{3}] \\)
+- 畸变向量 \\( distortion = [k \_{1}, k \_{2}, p \_{1}, p \_{2}, k \_{3}] \\)
 
-- 相机参数 \\( matrix=\\left[ \\begin{matrix} f _{x} & 0 & c _{x} \\\\ 0 & f _{y} & c _{y} \\\\ 0 & 0 & 1 \\end{matrix} \\right] \\)，其中，\\( \\left( \\begin{matrix}f _{x} & f _{y} \\end{matrix} \\right) \\)是相机焦距，\\( \\left( \\begin{matrix}c _{x} & c _{y} \\end{matrix} \\right) \\)是相机光学中心
+- 相机参数 \\( matrix=\\left[ \\begin{matrix} f \_{x} & 0 & c \_{x} \\\\ 0 & f \_{y} & c \_{y} \\\\ 0 & 0 & 1 \\end{matrix} \\right] \\)，其中，\\( \\left( \\begin{matrix}f \_{x} & f \_{y} \\end{matrix} \\right) \\)是相机焦距，\\( \\left( \\begin{matrix}c \_{x} & c \_{y} \\end{matrix} \\right) \\)是相机光学中心
 
 &nbsp;
 
