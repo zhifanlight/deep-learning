@@ -20,7 +20,6 @@ $$ \\left\\{ \\begin{matrix} {x}' = x * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _
 
 $$ \\left\\{ \\begin{matrix} {x}' = x + [2 * p _{1} * x * y + p _{2} * (r ^2 + 2 * x ^2)] \\\\ {y}' = y + [2 * p _{2} * x * y + p _{1} * (r ^2 + 2 * y ^2)] \\\\ r ^2 = x ^2 + y ^2 \\end{matrix} \\right. $$
 
-
 ## 综合情况
 
 - 畸变修正

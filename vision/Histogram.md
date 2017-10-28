@@ -26,7 +26,6 @@
 
 	- 对于原始图像中的每个像素值 \\( value \\)，将其更新为 \\( LUT[value] \\)
 
-
 ## 直方图均衡化
 
 - 通过累积分布函数，把灰度直方图从某个密集区间，非线性扩展成全部灰度范围内的均匀分布，增强对比度
@@ -40,7 +39,6 @@
 	- 计算 \\( P \\) 对应的累积分布 \\( C \\) 
 	
 	- 对于原始图像中的每个像素值 \\( value \\)，将其更新为 \\( 255 * C[value] \\)
-
 
 ## 直方图匹配
 
@@ -152,4 +150,4 @@ similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT)
 similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
 
 similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA)
-```
+# ```
