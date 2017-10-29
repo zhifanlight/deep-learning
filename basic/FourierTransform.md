@@ -13,7 +13,7 @@
 
 - 在频率域，振幅决定了该分量对原始信号的重要性。低频分量的振幅较大，高频分量的振幅较小。在傅立叶谱中，振幅越大，亮度越高
 
-- 大自然中的各种信号的大部分信息都集中在低频，人眼对低频更敏感
+- 大自然中的各种信号的大部分信息都集中在低频，人眼对低频信号更敏感
 
 ## 原理分析
 
@@ -41,6 +41,20 @@
 
 - 逆向傅立叶变换时，需要先进行逆中心化，再进行逆变换
 
+## 卷积定理
+
+- 函数卷积的傅立叶变换等于各自傅立叶变换的乘积：
+
+	$$F(f * g) = F(f) \cdot F(g)$$
+	
+	- 逆向傅立叶变换后，图像整体向右下角平移，距离为卷积核的一半
+
+- 函数相关的傅立叶变换等于前者傅立叶变换乘上后者傅立叶变换的共轭：
+
+	$$F(f \otimes g) = F(f) \cdot F_{C}(g)$$
+	
+	- 逆向傅立叶变换后，图像整体向左上角平移，距离为卷积核的一半
+
 &nbsp;
 
 ## Python 实现
@@ -61,4 +75,59 @@
 	transform = cv2.idft(transform, flags=cv2.DFT_SCALE)
 	magnitude = cv2.magnitude(transform[:, :, 0], transform[:, :, 1])
 	response = numpy.uint8(numpy.round(magnitude))
-	``` 
+	```
+
+- 卷积定理（卷积）
+
+	```
+	# straight convolution
+	straight = cv2.filter2D(frame, cv2.CV_32F, cv2.flip(kernel, -1))
+	
+	# dft acceleration
+	opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
+	opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
+
+	# copy data and dft
+	extend_frame[:frame_height, :frame_width] = frame
+	extend_kernel[:kernel_height, :kernel_width] = kernel
+	dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
+	dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
+	
+	# complex multiply
+	dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=False)
+	
+	# idft
+	idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+	
+	# shift image
+	response[:, :] = idft_frame[half: frame_height + half, half: frame_width + half]
+	```
+
+- 卷积定理（相关）
+
+	```
+	# straight correlation
+	straight = cv2.filter2D(frame, cv2.CV_32F, kernel)
+	
+	# dft acceleration
+	opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
+	opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
+
+	# copy data and dft
+	extend_frame[:frame_height, :frame_width] = frame
+	extend_kernel[:kernel_height, :kernel_width] = kernel
+	dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
+	dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
+	
+	# complex multiply with matrix B conjugated
+	dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=True)
+	
+	# idft
+	idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+	
+	# shift image
+	response[half:, half:] = idft_frame[: frame_height - half, : frame_width - half]
+	response[: half, : half] = idft_frame[-half:, -half:]
+	response[: half, half:] = idft_frame[-half:, : frame_width - half]
+	response[half:, : half] = idft_frame[: frame_height - half, -half:]
+	```
