@@ -32,7 +32,7 @@
 
 ## 连通区域重心
 
-- \\(\bar{x} = \frac{\sum\_{i}\sum\_{j} {x\_{i} * p\_{i,j}}}{A}\\)，\\(\bar{y} = \frac{\sum\_{i}\sum\_{j} {y\_{j} * p\_{i,j}}}{A}\\)
+- \\(\bar{x} = \frac{\sum\_{i}\sum\_{j} {x\_{i} \cdot p\_{i,j}}}{A}\\)，\\(\bar{y} = \frac{\sum\_{i}\sum\_{j} {y\_{j} \cdot p\_{i,j}}}{A}\\)
 
 - \\(A\\) 是连通区域的面积，\\(x\_{i}, y\_{j}, p_{i,j}\\) 分别是 \\((i, j)\\) 位置的行坐标、列坐标、灰度值
 

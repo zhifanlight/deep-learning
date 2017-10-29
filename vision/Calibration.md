@@ -10,7 +10,7 @@
 
 - 畸变修正
 
-$$ \\left\\{ \\begin{matrix} {x}' = x * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) \\\\ {y}' = y * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) \\\\ r ^2 = x ^2 + y ^2 \\end{matrix} \\right. $$
+$$ \\left\\{ \\begin{matrix} {x}' = x \cdot (1 + k _{1} \cdot r ^2 + k _{2} \cdot r ^4 + k _{3} \cdot r ^6) \\\\ {y}' = y \cdot (1 + k _{1} \cdot r ^2 + k _{2} \cdot r ^4 + k _{3} \cdot r ^6) \\\\ r ^2 = x ^2 + y ^2 \\end{matrix} \\right. $$
 
 ## 切向畸变
 
@@ -18,13 +18,13 @@ $$ \\left\\{ \\begin{matrix} {x}' = x * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _
 
 - 畸变修正
 
-$$ \\left\\{ \\begin{matrix} {x}' = x + [2 * p _{1} * x * y + p _{2} * (r ^2 + 2 * x ^2)] \\\\ {y}' = y + [2 * p _{2} * x * y + p _{1} * (r ^2 + 2 * y ^2)] \\\\ r ^2 = x ^2 + y ^2 \\end{matrix} \\right. $$
+$$ \\left\\{ \\begin{matrix} {x}' = x + [2 \cdot p _{1} \cdot x \cdot y + p _{2} \cdot (r ^2 + 2 \cdot x ^2)] \\\\ {y}' = y + [2 \cdot p _{2} \cdot x \cdot y + p _{1} \cdot (r ^2 + 2 \cdot y ^2)] \\\\ r ^2 = x ^2 + y ^2 \\end{matrix} \\right. $$
 
 ## 综合情况
 
 - 畸变修正
 
-$$ \\left\\{ \\begin{matrix} {x}' = x * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) + [2 * p _{1} * x * y + p _{2} * (r ^2 + 2 * x ^2)] \\\\ {y}' = y * (1 + k _{1} * r ^2 + k _{2} * r ^4 + k _{3} * r ^6) + [2 * p _{2} * x * y + p _{1} * (r ^2 + 2 * y ^2)]  \\end{matrix} \\right. $$
+$$ \\left\\{ \\begin{matrix} {x}' = x \cdot (1 + k _{1} \cdot r ^2 + k _{2} \cdot r ^4 + k _{3} \cdot r ^6) + [2 \cdot p _{1} \cdot x \cdot y + p _{2} \cdot (r ^2 + 2 \cdot x ^2)] \\\\ {y}' = y \cdot (1 + k _{1} \cdot r ^2 + k _{2} \cdot r ^4 + k _{3} \cdot r ^6) + [2 \cdot p _{2} \cdot x \cdot y + p _{1} \cdot (r ^2 + 2 \cdot y ^2)]  \\end{matrix} \\right. $$
 
 - 畸变向量 \\( distortion = [k \_{1}, k \_{2}, p \_{1}, p \_{2}, k \_{3}] \\)
 

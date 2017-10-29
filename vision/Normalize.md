@@ -18,7 +18,7 @@
 
 		- 所有数据平移或缩放到区间 \\( [a, b] \\)
 	
-		$$ new = \frac {old - min} {max - min} * (b - a) + a $$
+		$$ new = \frac {old - min} {max - min} \cdot (b - a) + a $$
 
 	- L1 范数
 
@@ -26,7 +26,7 @@
 
 		- 处理后数据的绝对值之和为 \\( L \\)，所有数据等比例缩放
 
-		$$ new = old * \frac {L} {S} $$
+		$$ new = old \cdot \frac {L} {S} $$
 	
 	- L2 范数
 
@@ -34,7 +34,7 @@
 
 		- 处理后数据的平方和为 \\( L ^{2} \\)，所有数据等比例缩放
 
-		$$ new = old * \sqrt { \frac {L ^{2}} {S} } $$
+		$$ new = old \cdot \sqrt { \frac {L ^{2}} {S} } $$
 
 	- 无穷范数
 
@@ -42,7 +42,7 @@
 
 		- 处理后数据的绝对值最大值为 \\( L \\)，所有数据等比例缩放
 
-		$$ new = old * \frac {L} {M} $$
+		$$ new = old \cdot \frac {L} {M} $$
 
 &nbsp;
 

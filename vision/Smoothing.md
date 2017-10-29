@@ -42,11 +42,11 @@
 
 		- \\( k \\) 为归一化系数；\\( p(x, y) \\) 表示 \\( (x, y) \\) 点的像素值；\\( s(a, b, x, y) \\) 表示 \\( (a, b) \\) 和 \\( (x, y) \\) 两个点空间距离的高斯值；\\( c(x, y) \\) 表示 \\( x, y \\) 两种像素值距离的高斯值
 
-		- \\( G(x, y) = k(x, y) ^ {-1} \\iint p(a, b) * s(a, b, x, y) * c(p(a, b), p(x, y)) dadb \\)
+		- \\( G(x, y) = k(x, y) ^ {-1} \\iint p(a, b) \cdot s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \\)
 
 		- \\( s(a, b, x, y) = e ^ { - \frac {(a - x) ^ {2} + (b - y) ^ {2}} {2 \sigma \_{s} ^ {2}} } \\)，\\( c(x, y) = e ^ {- \frac {(x - y) ^ 2} {2 \sigma \_{c} ^{2}}} \\)
 
-		- \\( k(x, y) = \iint s(a, b, x, y) * c(p(a, b), p(x, y)) dadb \\)
+		- \\( k(x, y) = \iint s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \\)
 
 &nbsp;
 
