@@ -25,10 +25,10 @@
 		- 直接对原始图像的灰度值进行操作
 
 			- 图像平滑
+			
+			- 边缘检测
 
 			- 图像锐化
-
-			- 边缘检测
 
 	- 频率域滤波
 
@@ -48,9 +48,13 @@
 
 	- 参考 [Smoothing.md] (Smoothing.md)
 
-- 图像锐化（TODO）
+- 边缘检测
 
-- 边缘检测（TODO）
+	- 参考 [EdgeDetection.md] (EdgeDetection.md)
+
+- 图像锐化
+
+	- 参考 [Sharpening.md] (Sharpening.md)
 
 ## 频率域滤波
 
@@ -80,9 +84,13 @@
 
 	- 参考 [Smoothing.md] (Smoothing.md)
 
-- 图像锐化（TODO）
+- 边缘检测
 
-- 边缘检测（TODO）
+	- 参考 [EdgeDetection.md] (EdgeDetection.md)
+
+- 图像锐化
+
+	- 参考 [Sharpening.md] (Sharpening.md)
 
 - 频率域滤波
 	
