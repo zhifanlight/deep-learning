@@ -56,7 +56,7 @@
 
 - 一阶导数极值处，二阶导数为零；可以检测出二阶导数的零点作为边缘
 
-- 4 向 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 0 & 1 & 0 \\\\ 1 & -4 & 1 \\\\ 0 & 1 & 0 \\end{matrix} \\right] \\) 推导：
+- 4 邻域 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 0 & 1 & 0 \\\\ 1 & -4 & 1 \\\\ 0 & 1 & 0 \\end{matrix} \\right] \\) 推导：
 	
 	$$
 	\begin{align\*}
@@ -69,7 +69,7 @@
 	\end{align\*}
 	$$
 
-- 同理可得，8 向 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 1 & 1 & 1 \\\\ 1 & -8 & 1 \\\\ 1 & 1 & 1 \\end{matrix} \\right] \\)
+- 同理可得，8 邻域 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 1 & 1 & 1 \\\\ 1 & -8 & 1 \\\\ 1 & 1 & 1 \\end{matrix} \\right] \\)
 
 - 在图像中较暗的区域中出现了亮点，Laplacian 运算会使该点变得更亮
 
@@ -105,7 +105,7 @@ response = cv2.addWeighted(abs_x, 0.5, abs_y, 0.5, 0)
 response = cv2.Canny(image, thre1, thre2)
 ```
 
-### Laplacian（4 向）
+### Laplacian（4 邻域）
 
 ```
 response = cv2.Laplacian(image, cv2.CV_16S)
