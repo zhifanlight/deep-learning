@@ -12,7 +12,7 @@
 
 - 生成器 \\(G\\) 的优化目标是生成与真实数据分布尽可能相同的样本，判别器 \\(D\\) 的优化目标是将来自生成器和真实数据的样本分别开；当判别器 \\(D\\) 无法进行判别时达到全局最优，此时 \\(p\_{g}(x) = p\_{data}(x)\\)，判别器近似于随机猜测
 
-- 优化目标：\\(min\_{G} max\_{D} V(D,G) = \mathbb{E}\_{x \sim p\_{data}(x)}[logD(x)] + \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
+- 优化目标：\\(\min\limits\_{G} \max\limits\_{D} V(D,G) = \mathbb{E}\_{x \sim p\_{data}(x)}[logD(x)] + \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
 
 ## 训练过程
 
@@ -44,7 +44,7 @@
 
 $$
 \begin{align\*}
-target \qquad &max\_{D} V(D,G) \newline \newline
+target \qquad &\max\limits\_{D} V(D,G) \newline \newline
 V(D,G) &= \int\_{x} p\_{data}(x) log(D(x)) dx + \int\_{z} p\_{z}(z) log(1 - D(G(z))) dz \newline
 &= \int\_{x} p\_{data}(x) log(D(x)) + p\_{g}(x) log(1 - D(x)) dx \newline \newline
 prior \qquad &alnx + bln(1-x) \quad maximize \quad when \quad x=\frac{a}{a+b} \newline \newline
@@ -56,7 +56,7 @@ $$
 
 $$
 \begin{align\*}
-target \qquad &min\_{G} V(D,G) \newline \newline
+target \qquad &\min\limits\_{G} V(D,G) \newline \newline
 \qquad V(D^{*},G) &= \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{p\_{data}(x)+p\_{g}(x)}) + p\_{g}(x) log(\frac{p\_{g}(x)}{p\_{data}(x)+p\_{g}(x)}) dx \newline
 &= \int\_{x} p\_{data}(x) log(\frac{1}{2}\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{1}{2}\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx \newline
 &= -2log2 + \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx\newline
