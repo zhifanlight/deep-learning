@@ -2,8 +2,6 @@
 
 # Wasserstein GAN
 
-&nbsp;
-
 ## 思想
 
 - \\(p\_{r}(x)\\) 表示样本的真实分布，\\(p_{z}(z)\\) 表示噪声的先验分布，\\(p\_{g}(x)\\) 表示生成器学到的样本分布
@@ -14,9 +12,9 @@
 
 - 优化目标：\\(\min\limits\_{G} \max\limits\_{D} V(D,G) = \mathbb{E}\_{x \sim p\_{r}(x)}[f\_{\omega}(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f\_{\omega}(x)]\\)
 
-## 原始GAN缺点
+## 原始 GAN 缺点
 
-#### \\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
+#### 形式一：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
 
 - 判别器训练的不好不坏才行，容易导致梯度消失，不容易控制：
 
@@ -30,7 +28,7 @@
 
 	- 判别器训练的太好，生成器梯度消失，无法继续
 
-#### \\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[-log(D(G(z)))]\\)
+#### 形式二：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[-log(D(G(z)))]\\)
 
 - 由于度量距离的不合理，导致生成器不稳定，以及样本多样性不足：
 

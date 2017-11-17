@@ -2,8 +2,6 @@
 
 # Generative Adversarial Network
 
-&nbsp;
-
 ## 思想
 
 - \\(p\_{data}(x)\\) 表示样本的真实分布，\\(p_{z}(z)\\) 表示噪声的先验分布，\\(p\_{g}(x)\\) 表示生成器学到的样本分布

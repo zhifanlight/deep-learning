@@ -2,8 +2,6 @@
 
 # 颜色空间
 
-&nbsp;
-
 ## RGB
 
 - R、G、B 分别代表红色（Red）、绿色（Green）、蓝色（Blue）
@@ -42,43 +40,43 @@
 
 ## Python 实现
 
-- 显示 RGB 空间的每个通道
+### 显示 RGB 空间的每个通道
 
-	- OpenCV 按 B、G、R 三个通道存储每个像素值
+- OpenCV 按 B、G、R 三个通道存储每个像素值
 
-	```
-	empty = numpy.zeros((height, width), numpy.uint8)
-	b, g, r = cv2.split(image)
-	
-	bb = cv2.merge([b, empty, empty])
-	gg = cv2.merge([empty, g, empty])
-	rr = cv2.merge([empty, empty, r])
-	```
+```
+empty = numpy.zeros((height, width), numpy.uint8)
+b, g, r = cv2.split(image)
 
-- 显示 HSV 空间的每个通道
+bb = cv2.merge([b, empty, empty])
+gg = cv2.merge([empty, g, empty])
+rr = cv2.merge([empty, empty, r])
+```
 
-	- 转换到 HSV 空间时：H 通道取值为 \\(0^{\circ}-180^{\circ}\\)，S、V 通道取值均为 \\(0-255\\)
+### 显示 HSV 空间的每个通道
 
-	```
-	empty = numpy.zeros((height, width), numpy.uint8)
-	full = 255 * numpy.ones((height, width), numpy.uint8)
-	hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-	h, s, v = cv2.split(hsv)
-	
-	hh = cv2.cvtColor(cv2.merge([h, full, full]), cv2.COLOR_HSV2BGR)
-	ss = cv2.cvtColor(cv2.merge([empty, s, full]), cv2.COLOR_HSV2BGR)
-	vv = cv2.cvtColor(cv2.merge([empty, empty, v]), cv2.COLOR_HSV2BGR)
-	``` 
-	
-- 显示 YUV 空间的每个通道
+- 转换到 HSV 空间时：H 通道取值为 \\(0^{\circ}-180^{\circ}\\)，S、V 通道取值均为 \\(0-255\\)
 
-	- 转换到 YUV 空间时：Y、U、V 通道取值均为 \\(0-255\\)
+```
+empty = numpy.zeros((height, width), numpy.uint8)
+full = 255 * numpy.ones((height, width), numpy.uint8)
+hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+h, s, v = cv2.split(hsv)
 
-	```
-	half = 128 * numpy.ones((height, width), numpy.uint8)
-	yuv = cv2.cvtColor(bgr, cv2.COLOR_BGR2YUV)
-	y, u, v = cv2.split(yuv)
-	yy = cv2.cvtColor(cv2.merge([y, half, half]), cv2.COLOR_YUV2BGR)
-	uu = cv2.cvtColor(cv2.merge([half, u, half]), cv2.COLOR_YUV2BGR)
-	vv = cv2.cvtColor(cv2.merge([half, half, v]), cv2.COLOR_YUV2BGR)
-	```
+hh = cv2.cvtColor(cv2.merge([h, full, full]), cv2.COLOR_HSV2BGR)
+ss = cv2.cvtColor(cv2.merge([empty, s, full]), cv2.COLOR_HSV2BGR)
+vv = cv2.cvtColor(cv2.merge([empty, empty, v]), cv2.COLOR_HSV2BGR)
+``` 
+
+### 显示 YUV 空间的每个通道
+
+- 转换到 YUV 空间时：Y、U、V 通道取值均为 \\(0-255\\)
+
+```
+half = 128 * numpy.ones((height, width), numpy.uint8)
+yuv = cv2.cvtColor(bgr, cv2.COLOR_BGR2YUV)
+y, u, v = cv2.split(yuv)
+yy = cv2.cvtColor(cv2.merge([y, half, half]), cv2.COLOR_YUV2BGR)
+uu = cv2.cvtColor(cv2.merge([half, u, half]), cv2.COLOR_YUV2BGR)
+vv = cv2.cvtColor(cv2.merge([half, half, v]), cv2.COLOR_YUV2BGR)
+```

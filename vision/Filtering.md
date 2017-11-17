@@ -2,8 +2,6 @@
 
 # 图像滤波
 
-&nbsp;
-
 ## 背景介绍
 
 - 目的：
@@ -44,65 +42,63 @@
 
 ## 空间域滤波
 
-- 图像平滑
+### 图像平滑
 
-	- 参考 [Smoothing.md] (Smoothing.md)
+- 参考 [Smoothing.md] (Smoothing.md)
 
-- 边缘检测
+### 边缘检测
 
-	- 参考 [EdgeDetection.md] (EdgeDetection.md)
+- 参考 [EdgeDetection.md] (EdgeDetection.md)
 
-- 图像锐化
+### 图像锐化
 
-	- 参考 [Sharpening.md] (Sharpening.md)
+- 参考 [Sharpening.md] (Sharpening.md)
 
 ## 频率域滤波
 
-- 低通滤波
+### 低通滤波
 
-	- 保留图像中的低频分量：保留图像的基本结构
+- 保留图像中的低频分量：保留图像的基本结构
 
-		![image](images/filter_low_pass.png)
+	![image](images/filter_low_pass.png)
 
-- 高通滤波
+### 高通滤波
 
-	- 保留图像中的高频分量：保留图像的细节信息
+- 保留图像中的高频分量：保留图像的细节信息
 	
-		![image](images/filter_high_pass.png)
+	![image](images/filter_high_pass.png)
 
-- 带通滤波
+### 带通滤波
 
-	- 保留图像中特定频率范围内的分量
+- 保留图像中特定频率范围内的分量
 
-		![image](images/filter_band_pass.png)
-
-&nbsp;
+	![image](images/filter_band_pass.png)
 
 ## Python 实现
 
-- 图像平滑
+### 图像平滑
 
-	- 参考 [Smoothing.md] (Smoothing.md)
+- 参考 [Smoothing.md] (Smoothing.md)
 
-- 边缘检测
+### 边缘检测
 
-	- 参考 [EdgeDetection.md] (EdgeDetection.md)
+- 参考 [EdgeDetection.md] (EdgeDetection.md)
 
-- 图像锐化
+### 图像锐化
 
-	- 参考 [Sharpening.md] (Sharpening.md)
+- 参考 [Sharpening.md] (Sharpening.md)
 
-- 频率域滤波
+### 频率域滤波
 	
-	```
-	transform = cv2.dft(numpy.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
-	transform = numpy.fft.fftshift(transform)
-	
-	transform = transform * mask
-	
-	transform = numpy.fft.ifftshift(transform)
-	transform = cv2.idft(transform, flags=cv2.DFT_SCALE)
-	
-	magnitude = cv2.magnitude(transform[:, :, 0], transform[:, :, 1])
-	response = numpy.uint8(numpy.round(magnitude))
-	```
+```
+transform = cv2.dft(numpy.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
+transform = numpy.fft.fftshift(transform)
+
+transform = transform * mask
+
+transform = numpy.fft.ifftshift(transform)
+transform = cv2.idft(transform, flags=cv2.DFT_SCALE)
+
+magnitude = cv2.magnitude(transform[:, :, 0], transform[:, :, 1])
+response = numpy.uint8(numpy.round(magnitude))
+```

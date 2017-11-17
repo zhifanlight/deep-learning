@@ -2,8 +2,6 @@
 
 # 图像锐化
 
-&nbsp;
-
 ## 原理介绍
 
 - 常用 Laplacian 边缘特征进行锐化
@@ -13,8 +11,6 @@
 	- 若 \\( G = \\left[ \\begin{matrix} 0 & 1 & 0 \\\\ 1 & -4 & 1 \\\\ 0 & 1 & 0 \\end{matrix} \\right] \\)，则 \\(S = abs(R - E)\\)
 
 	- 若 \\( G = \\left[ \\begin{matrix} 0 & -1 & 0 \\\\ -1 & 4 & -1 \\\\ 0 & -1 & 0 \\end{matrix} \\right] \\)，则 \\(S = abs(R + E)\\)
-
-&nbsp;
 
 ## Python 实现
 

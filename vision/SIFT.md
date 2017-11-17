@@ -2,9 +2,7 @@
 
 # SIFT 特征
 
-&nbsp;
-
-## 原理分析
+## 背景介绍
 
 - Scale Invariant Feature Transform
 
@@ -23,6 +21,8 @@
 	- 特征点方向确定
 
 	- 特征向量生成
+
+## 原理分析
 
 ### 极值点检测
 
@@ -131,8 +131,6 @@
 - 将该 128 维向量作为该点的特征向量并归一化，以消除光照的影响
 
 ![img](images/sift_128vector.png)
-
-&nbsp;
 
 ## Python 实现
 

@@ -2,15 +2,13 @@
 
 # 距离度量
 
-&nbsp;
-
-## \\(KL\\)散度
+## \\(KL\\) 散度
 
 - Kullback-Leibler 散度
 
 - 参考 [Entropy.md] (Entropy.md)
 
-## \\(JS\\)散度
+## \\(JS\\) 散度
 
 - Jenssen-Shannon 散度
 
@@ -37,7 +35,7 @@ $$
 \\left\\{ \begin{matrix} p(i)log\frac{p(i)}{p(i)+q(i)} = 0 & if \ p(i) = 0, q(i) \neq 0 \\\\ q(i)log\frac{q(i)}{p(i)+q(i)} = 0 & if \ q(i) = 0, p(i) \neq 0 \end{matrix} \\right\.
 $$
 
-## Wasserstein距离
+## Wasserstein 距离
 
 - 又称 EM 距离，即 Earth-Mover 距离
 

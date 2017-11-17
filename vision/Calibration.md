@@ -2,8 +2,6 @@
 
 # 相机校准
 
-&nbsp;
-
 ## 径向畸变
 
 - 远离中心的直线变成曲线
@@ -29,8 +27,6 @@ $$ \\left\\{ \\begin{matrix} {x}' = x \cdot (1 + k _{1} \cdot r ^2 + k _{2} \cdo
 - 畸变向量 \\( distortion = [k \_{1}, k \_{2}, p \_{1}, p \_{2}, k \_{3}] \\)
 
 - 相机参数 \\( matrix=\\left[ \\begin{matrix} f \_{x} & 0 & c \_{x} \\\\ 0 & f \_{y} & c \_{y} \\\\ 0 & 0 & 1 \\end{matrix} \\right] \\)，其中，\\( \\left( \\begin{matrix}f \_{x} & f \_{y} \\end{matrix} \\right) \\)是相机焦距，\\( \\left( \\begin{matrix}c \_{x} & c \_{y} \\end{matrix} \\right) \\)是相机光学中心
-
-&nbsp;
 
 ## Python 实现
 

@@ -2,8 +2,6 @@
 
 # 关键字
 
-&nbsp;
-
 ## \\(tf_{t,d}\\)
 
 - 词项频率（term frequency）

@@ -2,14 +2,11 @@
 
 # 傅立叶变换
 
-&nbsp;
-
 ## 背景介绍
 
 - 任何连续测量的时序或信号，都可以表示为不同频率的正弦波信号的无限叠加
 
 - 图像频率是图像灰度变化剧烈程度的指标：变化越剧烈，频率越高。低频分量决定图像基本结构，高频分量决定图像边缘和细节
-
 
 - 在频率域，振幅决定了该分量对原始信号的重要性。低频分量的振幅较大，高频分量的振幅较小。在傅立叶谱中，振幅越大，亮度越高
 
@@ -55,79 +52,77 @@
 	
 	- 逆向傅立叶变换后，图像整体向左上角平移，距离为卷积核的一半
 
-&nbsp;
-
 ## Python 实现
  
-- 正向傅立叶变换
+### 正向傅立叶变换
 
-	```
-	transform = cv2.dft(numpy.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
-	transform = numpy.fft.fftshift(transform)
-	magnitude = cv2.log(1.0 + cv2.magnitude(transform[:, :, 0], transform[:, :, 1]))
-	response = cv2.normalize(magnitude, None, 0.0, 255.0, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
-	``` 
+```
+transform = cv2.dft(numpy.float32(image), flags=cv2.DFT_COMPLEX_OUTPUT)
+transform = numpy.fft.fftshift(transform)
+magnitude = cv2.log(1.0 + cv2.magnitude(transform[:, :, 0], transform[:, :, 1]))
+response = cv2.normalize(magnitude, None, 0.0, 255.0, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+``` 
 
-- 逆向傅立叶变换
+### 逆向傅立叶变换
 
-	```
-	transform = numpy.fft.ifftshift(transform)
-	transform = cv2.idft(transform, flags=cv2.DFT_SCALE)
-	magnitude = cv2.magnitude(transform[:, :, 0], transform[:, :, 1])
-	response = numpy.uint8(numpy.round(magnitude))
-	```
+```
+transform = numpy.fft.ifftshift(transform)
+transform = cv2.idft(transform, flags=cv2.DFT_SCALE)
+magnitude = cv2.magnitude(transform[:, :, 0], transform[:, :, 1])
+response = numpy.uint8(numpy.round(magnitude))
+```
 
-- 卷积定理（卷积）
+### 卷积定理（卷积）
 
-	```
-	# straight convolution
-	straight = cv2.filter2D(frame, cv2.CV_32F, cv2.flip(kernel, -1))
-	
-	# dft acceleration
-	opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
-	opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
+```
+# straight convolution
+straight = cv2.filter2D(frame, cv2.CV_32F, cv2.flip(kernel, -1))
 
-	# copy data and dft
-	extend_frame[:frame_height, :frame_width] = frame
-	extend_kernel[:kernel_height, :kernel_width] = kernel
-	dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
-	dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
-	
-	# complex multiply
-	dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=False)
-	
-	# idft
-	idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
-	
-	# shift image
-	response[:, :] = idft_frame[half: frame_height + half, half: frame_width + half]
-	```
+# dft acceleration
+opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
+opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
 
-- 卷积定理（相关）
+# copy data and dft
+extend_frame[:frame_height, :frame_width] = frame
+extend_kernel[:kernel_height, :kernel_width] = kernel
+dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
+dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
 
-	```
-	# straight correlation
-	straight = cv2.filter2D(frame, cv2.CV_32F, kernel)
-	
-	# dft acceleration
-	opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
-	opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
+# complex multiply
+dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=False)
 
-	# copy data and dft
-	extend_frame[:frame_height, :frame_width] = frame
-	extend_kernel[:kernel_height, :kernel_width] = kernel
-	dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
-	dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
-	
-	# complex multiply with matrix B conjugated
-	dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=True)
-	
-	# idft
-	idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
-	
-	# shift image
-	response[half:, half:] = idft_frame[: frame_height - half, : frame_width - half]
-	response[: half, : half] = idft_frame[-half:, -half:]
-	response[: half, half:] = idft_frame[-half:, : frame_width - half]
-	response[half:, : half] = idft_frame[: frame_height - half, -half:]
-	```
+# idft
+idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+
+# shift image
+response[:, :] = idft_frame[half: frame_height + half, half: frame_width + half]
+```
+
+### 卷积定理（相关）
+
+```
+# straight correlation
+straight = cv2.filter2D(frame, cv2.CV_32F, kernel)
+
+# dft acceleration
+opt_height = cv2.getOptimalDFTSize(frame_height + kernel_height - 1)
+opt_width = cv2.getOptimalDFTSize(frame_width + kernel_width - 1)
+
+# copy data and dft
+extend_frame[:frame_height, :frame_width] = frame
+extend_kernel[:kernel_height, :kernel_width] = kernel
+dft_frame = cv2.dft(extend_frame, flags=cv2.DFT_COMPLEX_OUTPUT)
+dft_kernel = cv2.dft(extend_kernel, flags=cv2.DFT_COMPLEX_OUTPUT)
+
+# complex multiply with matrix B conjugated
+dft_mul = cv2.mulSpectrums(dft_frame, dft_kernel, 0, conjB=True)
+
+# idft
+idft_frame = cv2.idft(dft_mul, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+
+# shift image
+response[half:, half:] = idft_frame[: frame_height - half, : frame_width - half]
+response[: half, : half] = idft_frame[-half:, -half:]
+response[: half, half:] = idft_frame[-half:, : frame_width - half]
+response[half:, : half] = idft_frame[: frame_height - half, -half:]
+```
