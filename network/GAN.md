@@ -16,30 +16,30 @@
 
 - 在 \\(G\\) 固定时，\\(D\\) 的最优解是 \\(D\_{G}^{*} = \frac{p\_{data}}{p\_{data} + p\_{g}}\\)；证明：
 
-$$
-\begin{align\*}
-target \qquad &\max\limits\_{D} V(D,G) \newline \newline
-V(D,G) &= \int\_{x} p\_{data}(x) log(D(x)) dx + \int\_{z} p\_{z}(z) log(1 - D(G(z))) dz \newline
-&= \int\_{x} p\_{data}(x) log(D(x)) + p\_{g}(x) log(1 - D(x)) dx \newline \newline
-prior \qquad &alnx + bln(1-x) \quad maximize \quad when \quad x=\frac{a}{a+b} \newline \newline
-\Rightarrow \qquad &V(D,G) \quad maximize \quad when \quad D\_{G} = \frac{p\_{data}}{p\_{data} + p\_{g}} \newline \newline
-\end{align\*}
-$$
+	$$
+	\begin{align\*}
+	target \qquad &\max\limits\_{D} V(D,G) \newline \newline
+	V(D,G) &= \int\_{x} p\_{data}(x) log(D(x)) dx + \int\_{z} p\_{z}(z) log(1 - D(G(z))) dz \newline
+	&= \int\_{x} p\_{data}(x) log(D(x)) + p\_{g}(x) log(1 - D(x)) dx \newline \newline
+	prior \qquad &alnx + bln(1-x) \quad maximize \quad when \quad x=\frac{a}{a+b} \newline \newline
+	\Rightarrow \qquad &V(D,G) \quad maximize \quad when \quad D\_{G} = \frac{p\_{data}}{p\_{data} + p\_{g}} \newline \newline
+	\end{align\*}
+	$$
 
 - 在 \\(D\\) 最优时，\\(G\\) 的最优解是 \\(p\_{g} = p_{data}\\)；证明：
 
-$$
-\begin{align\*}
-target \qquad &\min\limits\_{G} V(D,G) \newline \newline
-\qquad V(D^{*},G) &= \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{p\_{data}(x)+p\_{g}(x)}) + p\_{g}(x) log(\frac{p\_{g}(x)}{p\_{data}(x)+p\_{g}(x)}) dx \newline
-&= \int\_{x} p\_{data}(x) log(\frac{1}{2}\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{1}{2}\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx \newline
-&= -2log2 + \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx\newline
-&= -2log2 + KL(p\_{data}||\frac{p\_{data}+p\_{g}}{2}) + KL(p\_{g}||\frac{p\_{data}+p\_{g}}{2}) \newline
-&= -2log2 + 2JS(p\_{data}||p\_{g}) \newline \newline
-prior \qquad &JS(p\_{1}||p\_{2}) \quad minimize \quad when \quad p\_{1} = p\_{2} \newline \newline
-\Rightarrow \qquad &V(D^{\*},G) \quad minimize \quad when \quad p\_{g} = p\_{data} 
-\end{align\*}
-$$
+	$$
+	\begin{align\*}
+	target \qquad &\min\limits\_{G} V(D,G) \newline \newline
+	\qquad V(D^{*},G) &= \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{p\_{data}(x)+p\_{g}(x)}) + p\_{g}(x) log(\frac{p\_{g}(x)}{p\_{data}(x)+p\_{g}(x)}) dx \newline
+	&= \int\_{x} p\_{data}(x) log(\frac{1}{2}\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{1}{2}\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx \newline
+	&= -2log2 + \int\_{x} p\_{data}(x) log(\frac{p\_{data}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) + p\_{g}(x) log(\frac{p\_{g}(x)}{\frac{p\_{data}(x)+p\_{g}(x)}{2}}) dx\newline
+	&= -2log2 + KL(p\_{data}||\frac{p\_{data}+p\_{g}}{2}) + KL(p\_{g}||\frac{p\_{data}+p\_{g}}{2}) \newline
+	&= -2log2 + 2JS(p\_{data}||p\_{g}) \newline \newline
+	prior \qquad &JS(p\_{1}||p\_{2}) \quad minimize \quad when \quad p\_{1} = p\_{2} \newline \newline
+	\Rightarrow \qquad &V(D^{\*},G) \quad minimize \quad when \quad p\_{g} = p\_{data} 
+	\end{align\*}
+	$$
 
 ## 训练过程
 

@@ -14,7 +14,7 @@
 
 ## 原始 GAN 缺点
 
-#### 形式一：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
+### 形式一：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
 
 - 判别器训练的不好不坏才行，容易导致梯度消失，不容易控制：
 
@@ -28,36 +28,36 @@
 
 	- 判别器训练的太好，生成器梯度消失，无法继续
 
-#### 形式二：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[-log(D(G(z)))]\\)
+### 形式二：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[-log(D(G(z)))]\\)
 
 - 由于度量距离的不合理，导致生成器不稳定，以及样本多样性不足：
 
 	- 在最优判别器下（参考 [GAN.md] (GAN.md)）：
 
-	$$\mathbb{E}\_{x \sim p\_{r}(x)}[logD^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2log2$$
-	
-	$$D^{\*}(x) = \frac{p\_{r}(x)}{p\_{r}(x) + p\_{g}(x)}$$
+		$$
+		\\left\\{ \begin{matrix} D^{\*}(x) = \frac{p\_{r}(x)}{p\_{r}(x) + p\_{g}(x)} \\\\ \mathbb{E}\_{x \sim p\_{r}(x)}[logD^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2log2 \end{matrix} \\right\.
+		$$
 
 	- 而 \\(KL(p\_{g}||p\_{r})\\) 可做如下变形：
 
-	$$
-	\begin{align\*}
-	KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
-\end{align\*}
-	$$
+		$$
+		\begin{align\*}
+		KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
+		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
+		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
+		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
+	\end{align\*}
+		$$
 	
 	- 综合上式得：
 
-	$$
-	\begin{align\*}
-	\mathbb{E}\_{x \sim p\_{g}(x)} \left[-logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
-	&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))]] \newline
-	&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + 2log2 + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] \newline
-\end{align\*}
-	$$
+		$$
+		\begin{align\*}
+		\mathbb{E}\_{x \sim p\_{g}(x)} \left[-logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
+		&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))]] \newline
+		&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + 2log2 + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] \newline
+	\end{align\*}
+		$$
 	
 	- 后两项与生成器无关，最小化 \\(G\_{loss}\\) 意味着最小化 \\(KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g})\\)：
 

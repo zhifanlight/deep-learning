@@ -22,17 +22,17 @@
 
 - \\(KL(p||q) \geq 0\\) 恒成立，当且仅当 \\(p=q\\) 时等号成立。证明：
 
-$$
-\begin{align\*}
-prior \qquad &lnx \leq (x-1) \qquad \forall x \newline \newline
-set \qquad f &= -KL(p||q) \newline
-&= \sum\_{i} p(i) \cdot log \frac{q(i)}{p(i)} \newline
-&\leq \sum\_{i} p(i) \cdot (\frac{q(i)}{p(i)} - 1) \newline
-&= \sum\_{i} (q(i) - p(i)) \newline
-&= 0 \newline \newline
-\Rightarrow \qquad &KL(p||q) \geq 0
-\end{align\*}
-$$
+	$$
+	\begin{align\*}
+	prior \qquad &lnx \leq (x-1) \qquad \forall x \newline \newline
+	set \qquad f &= -KL(p||q) \newline
+	&= \sum\_{i} p(i) \cdot log \frac{q(i)}{p(i)} \newline
+	&\leq \sum\_{i} p(i) \cdot (\frac{q(i)}{p(i)} - 1) \newline
+	&= \sum\_{i} (q(i) - p(i)) \newline
+	&= 0 \newline \newline
+	\Rightarrow \qquad &KL(p||q) \geq 0
+	\end{align\*}
+	$$
 
 ## 交叉熵
 

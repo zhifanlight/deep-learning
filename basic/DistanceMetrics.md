@@ -18,22 +18,22 @@
 
 - 当真实分布为 \\(p\\) 与假设分布 \\(q\\) 不重叠时，\\(JS\\) 散度为常数 \\(log2\\)：
 
-$$
-\begin{align\*}
-prior \quad &p(i)=0 \quad when \quad q(i) \geq 0, \qquad q(i)=0 \quad when \quad p(i) \geq 0 \newline \newline
-\qquad JS(p,q) &= \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{\frac{p(i)+q(i)}{2}} + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{\frac{p(i)+q(i)}{2}} \newline
-&= \frac{1}{2} log2\ \sum\_{i} p(i) + \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + \frac{1}{2} log2\ \sum\_{i} q(i) + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \newline
-&= log2 + \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \qquad (1) \newline
-&= log2 + \frac{1}{2} \sum\_{p(i) \neq 0} p(i)log\frac{p(i)}{p(i)} + \frac{1}{2} \sum\_{q(i) \neq 0} q(i)log\frac{q(i)}{q(i)} \qquad (2)\newline
-&= log2
-\end{align\*}
-$$
+	$$
+	\begin{align\*}
+	prior \quad &p(i)=0 \quad when \quad q(i) \geq 0, \qquad q(i)=0 \quad when \quad p(i) \geq 0 \newline \newline
+	\qquad JS(p,q) &= \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{\frac{p(i)+q(i)}{2}} + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{\frac{p(i)+q(i)}{2}} \newline
+	&= \frac{1}{2} log2\ \sum\_{i} p(i) + \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + \frac{1}{2} log2\ \sum\_{i} q(i) + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \newline
+	&= log2 + \frac{1}{2} \sum\_{i} p(i)log\frac{p(i)}{p(i)+q(i)} + \frac{1}{2} \sum\_{i} q(i)log\frac{q(i)}{p(i)+q(i)} \qquad (1) \newline
+	&= log2 + \frac{1}{2} \sum\_{p(i) \neq 0} p(i)log\frac{p(i)}{p(i)} + \frac{1}{2} \sum\_{q(i) \neq 0} q(i)log\frac{q(i)}{q(i)} \qquad (2)\newline
+	&= log2
+	\end{align\*}
+	$$
 
 - 由 \\((1)\\) 到 \\((2)\\) 的推导，由洛必达法则可知：
 
-$$
-\\left\\{ \begin{matrix} p(i)log\frac{p(i)}{p(i)+q(i)} = 0 & if \ p(i) = 0, q(i) \neq 0 \\\\ q(i)log\frac{q(i)}{p(i)+q(i)} = 0 & if \ q(i) = 0, p(i) \neq 0 \end{matrix} \\right\.
-$$
+	$$
+	\\left\\{ \begin{matrix} p(i)log\frac{p(i)}{p(i)+q(i)} = 0 & if \ p(i) = 0, q(i) \neq 0 \\\\ q(i)log\frac{q(i)}{p(i)+q(i)} = 0 & if \ q(i) = 0, p(i) \neq 0 \end{matrix} \\right\.
+	$$
 
 ## Wasserstein 距离
 

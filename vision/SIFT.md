@@ -50,27 +50,19 @@
 
 	- 根据泰勒展开：
 
-	$$
-	D(X) = D(X\_{0}) + \frac{\partial f^{T}}{\partial X}\Delta X + \frac{1}{2}\Delta X^{T}\frac{\partial^{2} f }{\partial X^{2}}\Delta X \qquad (1)
-	$$
+		$$ D(X) = D(X\_{0}) + \frac{\partial f^{T}}{\partial X}\Delta X + \frac{1}{2}\Delta X^{T}\frac{\partial^{2} f }{\partial X^{2}}\Delta X \qquad (1) $$
 	
 	- 对 \\(\Delta X\\) 求导并令导数为 \\(0\\)：
 	
-	$$
-	\Delta X = -2(\frac{\partial^{2} f}{\partial X^{2}} + \frac{\partial^{2}f^{T}}{\partial X^{2}})^{-1}\frac{\partial f}{\partial X}
-	$$
+		$$ \Delta X = -2(\frac{\partial^{2} f}{\partial X^{2}} + \frac{\partial^{2}f^{T}}{\partial X^{2}})^{-1}\frac{\partial f}{\partial X} $$
 
 	- 根据 \\(\frac{\partial^{2}f}{\partial X^{2}}\\) 对称性：
 
-	$$
-	\Delta X = -\frac{\partial^{2} f^{-1}}{\partial X^{2}}\frac{\partial f}{\partial X} \qquad
-	$$
+		$$ \Delta X = -\frac{\partial^{2} f^{-1}}{\partial X^{2}}\frac{\partial f}{\partial X} \qquad $$
 	
 	- 代入 \\((1)\\) 最后一项：
 
-	$$
-	D(X) = D(X\_{0}) + \frac{1}{2}\frac{\partial f^{T}}{\partial X}\Delta X \qquad (2)
-	$$
+		$$ D(X) = D(X\_{0}) + \frac{1}{2}\frac{\partial f^{T}}{\partial X}\Delta X \qquad (2) $$
 	
 - 如果 \\((2)\\) 中 \\(|D(X)|\\) 小于某个经验值（\\(D\_{0}=0.03\\)），则删除该极值点
 
@@ -80,19 +72,11 @@
 
 - 由特征值与迹、行列式关系：
 
-	$$
-	Tr(H) = \alpha + \beta
-	$$
-
-	$$
-	Det(H) = \alpha\beta
-	$$
+	$$ \\left\\{ \begin{matrix} Tr(H) = \alpha + \beta \\\\ Det(H) = \alpha\beta \end{matrix} \\right. $$
 
 - 设 \\(\alpha > \beta, \ \alpha = r\beta\\)，定义主曲率：
 
-	$$
-	\frac{Tr(H)^{2}}{Det(H)} = \frac{(\alpha + \beta)^{2}}{\alpha\beta} = \frac{(r\beta + \beta)^{2}}{r\beta^{2}} = \frac{(1+r)^{2}}{r}
-	$$
+	$$ \frac{Tr(H)^{2}}{Det(H)} = \frac{(\alpha + \beta)^{2}}{\alpha\beta} = \frac{(r\beta + \beta)^{2}}{r\beta^{2}} = \frac{(1+r)^{2}}{r} $$
 
 - 如果主曲率大于某个经验值（\\(r\_{0}=10\\)），则删除该特征点
 
@@ -100,13 +84,7 @@
 
 - 对于检测到的特征点，在高斯金字塔相应层中计算其半径为 \\(1.5 * \sigma\\) 的邻域内所有点的幅值 \\(m(x,y)\\) 和方向 \\(\theta(x,y)\\)：
 
-	$$
-	m(x,y) = \sqrt{[L(x,y+1) - L(x,y-1)]^{2} + [L(x+1,y) - L(x-1,y)]^{2}}
-	$$
-	
-	$$
-	\theta(x,y) = arctan \left( \frac{L(x,y+1) - L(x,y-1)}{L(x+1,y) - L(x-1,y)}\right)
-	$$
+	$$ \\left\\{ \begin{matrix} m(x,y) = \sqrt{[L(x,y+1) - L(x,y-1)]^{2} + [L(x+1,y) - L(x-1,y)]^{2}} \\\\ \theta(x,y) = arctan \left( \frac{L(x,y+1) - L(x,y-1)}{L(x+1,y) - L(x-1,y)}\right) \end{matrix} \\right. $$
 
 - 通过标准差为 \\(1.5\sigma\\) 的高斯核对邻域内所有点的幅值进行加权
 
