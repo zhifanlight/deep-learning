@@ -77,7 +77,7 @@
 
 - 由于是回归任务，判别器最后一层去掉 Sigmoid
 
-- 生成器和判别器的损失函数不取对数
+- 生成器和判别器的损失函数不取 log
 
 - 每次更新判别器的参数之后，将其截断到固定范围内
 
@@ -95,13 +95,13 @@
 
 - 将 Wasserstein 距离转换为：
 
-	$$K \cdot W(P\_{r}, P\_{g}) = \sup \limits \_{||f||\_{L} \leq K} \mathbb{E}\_{x \sim p\_{r}(x)}[f(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f(x)]$$
+	$$ W(P\_{r}, P\_{g}) = \sup \limits \_{||f||\_{L} \leq K} \frac{1}{K} \left[ \mathbb{E}\_{x \sim p\_{r}(x)}[f(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f(x)] \right] $$
 	
 	- 其中 \\(sup\\) 表示最小上界
 
 - 上式表示在函数 \\(f\\) 的 Lipchitz 常数不超过 \\(K\\) 的条件下，对所有满足条件的 \\(f\\)，取到 \\(\mathbb{E}\_{x \sim p\_{r}(x)}[f(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f(x)]\\) 的上界，即：
 	
-	$$K \cdot W(P\_{r}, P\_{g}) \approx \max \limits \_{\omega: ||f\_{\omega}||\_{L} \leq K} \mathbb{E}\_{x \sim p\_{r}(x)}[f(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f(x)]$$
+	$$ W(P\_{r}, P\_{g}) \approx \max \limits \_{\omega: ||f\_{\omega}||\_{L} \leq K} \frac{1}{K} \left[ \mathbb{E}\_{x \sim p\_{r}(x)}[f(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f(x)] \right] $$
 	
 	- 其中 \\(f\_{\omega}\\) 表示用参数为 \\(\omega\\) 的神经网络表示函数 \\(f\\)
 
