@@ -30,16 +30,16 @@
 
 	- \\(x\_{i} \ \ \\)：上一层第 \\(i\\) 个节点的输出
 
-	- \\(net\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的加权输入
+	- \\(a\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的加权输入
 
-		$$ net\_{j} = \sum\_{i}w\_{ji} \cdot x\_{i} + b\_{j} $$
+		$$ a\_{j} = \sum\_{i}w\_{ji} \cdot x\_{i} + b\_{j} $$
 	
 	- \\(z\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的预测输出
 
 		$$
 		\\left\\{ \begin{matrix}
-		z\_{j} = sigmoid(net\_{j}) = \frac{1}{1 + e^{-net\_{j}}} \\\\
-		\frac{\partial{z\_{j}}}{\partial{net\_{j}}} = z\_{j} (1 - z\_{j})
+		z\_{j} = sigmoid(a\_{j}) = \frac{1}{1 + e^{-a\_{j}}} \\\\
+		\frac{\partial{z\_{j}}}{\partial{a\_{j}}} = z\_{j} (1 - z\_{j})
 		\end{matrix} \\right\.
 		$$	
 
@@ -58,51 +58,68 @@
 
 - 对权重项应用链式法则：
 
-	$$ \frac{\partial{E\_{s}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{net\_{j}}} \cdot \frac{\partial{net\_{j}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{net\_{j}}} \cdot x\_{ji} $$
+	$$ \frac{\partial{E\_{s}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot \frac{\partial{a\_{j}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot x\_{i} $$
 
-	- 对于输出层，\\(net\_{j}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{d}\\)，因此：
+	- 对于输出层，\\(a\_{j}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{d}\\)，因此：
 
 		$$
 		\begin{align\*}
-		\frac{\partial{E\_{s}}}{\partial{net\_{j}}} &= \frac{\partial{E\_{s}}}{\partial{y\_{j}}} \cdot \frac{\partial{y\_{j}}}{\partial{net\_{j}}} \newline
+		\frac{\partial{E\_{s}}}{\partial{a\_{j}}} &= \frac{\partial{E\_{s}}}{\partial{y\_{j}}} \cdot \frac{\partial{y\_{j}}}{\partial{a\_{j}}} \newline
 		&= [-(t\_{j} - y\_{j})] \cdot [y\_{j} (1 - y\_{j})] \newline
-		&= -(t\_{j} - y\_{j}) y\_{j} (1 - y\_{j}) \newline
+		&= y\_{j} (1 - y\_{j}) (y\_{j} - t\_{j}) \newline
 		\end{align\*}
 		$$
 	
-		- 令 \\(\delta\_{j} = -\frac{\partial{E\_{s}}}{\partial{net\_{j}}}\\)，即误差项为预测误差对该节点输入的偏导值的相反数，则：
+		- 令 \\(\delta\_{j} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}}\\)，即误差项为预测误差对该节点输入的偏导值，则：
 
-			$$ \delta\_{j} = y\_{j} (1 - y\_{j}) (t\_{j} - y\_{j}) $$
+			$$ \delta\_{j} = y\_{j} (1 - y\_{j}) (y\_{j} - t\_{j}) $$
 		
 		- 于是 \\(w\_{ji}\\) 更新公式为：
 
-			$$ w\_{ji} \leftarrow w\_{ji} + \eta\delta\_{j}x\_{ji} $$
+			$$ w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i} $$
 	
-	- 对于中间层，\\(net\_{j}\\) 依次影响 \\(z\_{j}, net\_{k}, y\_{k}\\) 间接作用于 \\(E\_{d}\\)，因此：
+	- 对于中间层，\\(a\_{j}\\) 依次影响 \\(z\_{j}, a\_{k}, y\_{k}\\) 间接作用于 \\(E\_{d}\\)，因此：
 
 		$$
 		\begin{align\*}
-		\frac{\partial{E\_{s}}}{\partial{net\_{j}}} &= \sum\_{k \in Next} \frac{\partial{E\_{s}}}{\partial{net\_{k}}} \cdot \frac{\partial{net\_{k}}}{\partial{z\_{j}}} \cdot \frac{\partial{z\_{j}}}{\partial{net\_{j}}} \newline
-		&= \sum\_{k \in Next} (-\delta\_{k}) \cdot w\_{kj} \cdot [z\_{j}(1 - z\_{j})] \newline
-		&= -z\_{j}(1 - z\_{j}) \sum\_{k \in Next} \delta\_{k}w\_{kj} \newline
+		\frac{\partial{E\_{s}}}{\partial{a\_{j}}} &= \sum\_{k \in Next} \frac{\partial{E\_{s}}}{\partial{a\_{k}}} \cdot \frac{\partial{a\_{k}}}{\partial{z\_{j}}} \cdot \frac{\partial{z\_{j}}}{\partial{a\_{j}}} \newline
+		&= \sum\_{k \in Next} \delta\_{k} \cdot w\_{kj} \cdot [z\_{j}(1 - z\_{j})] \newline
+		&= z\_{j}(1 - z\_{j}) \sum\_{k \in Next} \delta\_{k}w\_{kj} \newline
 		\end{align\*}
 		$$
 	
-		- 将 \\(\delta\_{j} = -\frac{\partial{E\_{s}}}{\partial{net\_{j}}}\\) 代入得：
+		- 将 \\(\delta\_{j} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}}\\) 代入得：
 
 			$$ \delta\_{j} = z\_{j}(1 - z\_{j}) \sum\_{k \in Next} \delta\_{k} w\_{kj} $$
 
 		- 于是 \\(w\_{ji}\\) 更新公式为：
 
-			$$ w\_{ji} \leftarrow w\_{ji} + \eta\delta\_{j}x\_{ji} $$
+			$$ w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i} $$
 
 - 对偏置项应用链式法则：
 
-	$$ \frac{\partial{E\_{s}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{net\_{j}}} \cdot \frac{\partial{net\_{j}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{net\_{j}}} $$
+	$$ \frac{\partial{E\_{s}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot \frac{\partial{a\_{j}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} $$
 	
 	- 于是：
 
-		$$ b\_{j} \leftarrow b\_{j} + \eta\delta\_{k}$$
+		$$ b\_{j} \leftarrow b\_{j} - \eta\delta\_{j} $$
+
+### 向量化
+
+- 假设当前层有 \\(m\\) 个神经元，上一层有 \\(n\\) 个神经元，则：
+
+	- 矩阵 \\(w\\) 的维度为 \\(m * n\\)，矩阵 \\(b\\) 的维度为 \\(m * 1\\)
+
+	- 矩阵 \\(\delta\\) 的维度为 \\(m * 1\\)，矩阵 \\(x\\) 的维度为 \\(n * 1\\)
+
+- 由 \\(w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i}\\) 可知：
+
+	$$ w \leftarrow w - \eta \ \delta \ x^{T} $$
+
+- 由 \\(b\_{j} \leftarrow b\_{j} - \eta\delta\_{j}\\) 可知：
+
+	$$ b \leftarrow b - \eta \ \delta $$
+
 
 ### 样本集
 
