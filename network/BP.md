@@ -24,121 +24,108 @@
 	
 	- \\(y\_{i} \ \ \\)：样本 \\(s\\) 的预测值的第 \\(i\\) 个分量
 
-	- \\(w\_{ji} \ \ \\)：当前层第 \\(j\\) 个节点与上一层第 \\(i\\) 个节点间的权值
+	- \\(w\_{ji}^{l} \ \ \\)：第 \\(l\\) 层第 \\(j\\) 个节点与第 \\(l-1\\) 层第 \\(i\\) 个节点间的权值
 
-	- \\(b\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的偏置
+	- \\(b\_{j}^{l} \ \ \\)：第 \\(l\\) 层第 \\(j\\) 个节点的偏置
 
-	- \\(x\_{i} \ \ \\)：上一层第 \\(i\\) 个节点的输出
+	- \\(x\_{j}^{l} \ \ \\)：第 \\(l\\) 层第 \\(j\\) 个节点的加权输入
 
-	- \\(a\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的加权输入
-
-		$$ a\_{j} = \sum\_{i}w\_{ji} \cdot x\_{i} + b\_{j} $$
+		$$ x\_{j}^{l} = \sum\_{i}w\_{ji}^{l} \cdot z\_{i}^{l-1} + b\_{j}^{l} $$
 	
-	- \\(z\_{j} \ \ \\)：当前层第 \\(j\\) 个节点的预测输出
+	- \\(z\_{j}^{l} \ \ \\)：第 \\(l\\) 层第 \\(j\\) 个节点的预测输出
 
-		$$
-		\\left\\{ \begin{matrix}
-		z\_{j} = sigmoid(a\_{j}) = \frac{1}{1 + e^{-a\_{j}}} \\\\
-		\frac{\partial{z\_{j}}}{\partial{a\_{j}}} = z\_{j} (1 - z\_{j})
-		\end{matrix} \\right\.
-		$$	
+		$$ z\_{j}^{l} = f(x\_{j}^{l}) $$	
 
 	- \\(E\_{s} \ \ \\)：输出层误差
 
-		$$ E\_{s} = \frac{1}{2}\sum\_{i=1}^{N} (t\_{i} - y\_{i})^{2} $$
+		$$ E\_{s} = \frac{1}{2}\sum\_{i=1}^{N} (y\_{i} - t\_{i})^{2} $$
 
 - 由梯度下降可得：
 
 	$$
 	\\left\\{ \begin{matrix}
-	w\_{ji} \leftarrow w\_{ji} - \eta \cdot \frac {\partial{E\_{s}}}{\partial{w\_{ji}}} \\\\
-	b\_{j} \leftarrow b\_{j} - \eta \cdot \frac {\partial{E\_{s}}}{\partial{b\_{j}}}
+	w\_{ji}^{l} \leftarrow w\_{ji}^{l} - \eta \cdot \frac {\partial{E\_{s}}}{\partial{w\_{ji}^{l}}} \\\\
+	b\_{j}^{l} \leftarrow b\_{j}^{l} - \eta \cdot \frac {\partial{E\_{s}}}{\partial{b\_{j}^{l}}}
 	\end{matrix} \\right\.
 	$$
 
 - 对权重项应用链式法则：
 
-	$$ \frac{\partial{E\_{s}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot \frac{\partial{a\_{j}}}{\partial{w\_{ji}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot x\_{i} $$
+	$$ \frac{\partial{E\_{s}}}{\partial{w\_{ji}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} \cdot \frac{\partial{x\_{j}^{l}}}{\partial{w\_{ji}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} \cdot z\_{i}^{l-1} $$
 
-	- 对于输出层，\\(a\_{j}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{d}\\)，因此：
+	- 对于输出层，\\(x\_{j}^{l}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{d}\\)，因此：
 
 		$$
 		\begin{align\*}
-		\frac{\partial{E\_{s}}}{\partial{a\_{j}}} &= \frac{\partial{E\_{s}}}{\partial{y\_{j}}} \cdot \frac{\partial{y\_{j}}}{\partial{a\_{j}}} \newline
-		&= [-(t\_{j} - y\_{j})] \cdot [y\_{j} (1 - y\_{j})] \newline
-		&= y\_{j} (1 - y\_{j}) (y\_{j} - t\_{j}) \newline
+		\frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} &= \frac{\partial{E\_{s}}}{\partial{y\_{j}}} \cdot \frac{\partial{y\_{j}}}{\partial{x\_{j}^{l}}} \newline
+		&= (y\_{j} - t\_{j}) \cdot (y\_{j})' \newline
 		\end{align\*}
 		$$
 	
-		- 令 \\(\delta\_{j} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}}\\)，即误差项为预测误差对该节点输入的偏导值，则：
+		- 令 \\(\delta\_{j}^{l} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}}\\)，即误差项为预测误差对该节点输入的偏导值，则：
 
-			$$ \delta\_{j} = y\_{j} (1 - y\_{j}) (y\_{j} - t\_{j}) $$
+			$$ \delta\_{j}^{l} = (y\_{j})' \ (y\_{j} - t\_{j}) $$
 		
-		- 于是 \\(w\_{ji}\\) 更新公式为：
+		- 于是 \\(w\_{ji}^{l}\\) 更新公式为：
 
-			$$ w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i} $$
+			$$ w\_{ji}^{l} \leftarrow w\_{ji}^{l} - \eta \ \delta\_{j}^{l} \ z\_{i}^{l-1} $$
 	
-	- 对于中间层，\\(a\_{j}\\) 依次影响 \\(z\_{j}, a\_{k}, y\_{k}\\) 间接作用于 \\(E\_{d}\\)，因此：
+	- 对于中间层，\\(x\_{j}^{l}\\) 依次影响 \\(z\_{j}^{l}, x\_{k}^{l+1}, y\_{k}\\) 间接作用于 \\(E\_{s}\\)，因此：
 
 		$$
 		\begin{align\*}
-		\frac{\partial{E\_{s}}}{\partial{a\_{j}}} &= \sum\_{k \in Next} \frac{\partial{E\_{s}}}{\partial{a\_{k}}} \cdot \frac{\partial{a\_{k}}}{\partial{z\_{j}}} \cdot \frac{\partial{z\_{j}}}{\partial{a\_{j}}} \newline
-		&= \sum\_{k \in Next} \delta\_{k} \cdot w\_{kj} \cdot [z\_{j}(1 - z\_{j})] \newline
-		&= z\_{j}(1 - z\_{j}) \sum\_{k \in Next} \delta\_{k}w\_{kj} \newline
+		\frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} &= \sum\_{k \in Next} \frac{\partial{E\_{s}}}{\partial{x\_{k}^{l+1}}} \cdot \frac{\partial{x\_{k}^{l+1}}}{\partial{z\_{j}^{l}}} \cdot \frac{\partial{z\_{j}^{l}}}{\partial{x\_{j}^{l}}} \newline
+		&= \sum\_{k \in Next} \delta\_{k}^{l+1} \cdot w\_{kj}^{l+1} \cdot \left(z\_{j}^{l}\right)' \newline
+		&= \left(z\_{j}^{l}\right)' \sum\_{k \in Next} \delta\_{k}^{l+1} w\_{kj}^{l+1} \newline
 		\end{align\*}
 		$$
 	
-		- 将 \\(\delta\_{j} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}}\\) 代入得：
+		- 将 \\(\delta\_{j}^{l} = \frac{\partial{E\_{s}}}{\partial{a\_{j}^{l}}}\\) 代入得：
 
-			$$ \delta\_{j} = z\_{j}(1 - z\_{j}) \sum\_{k \in Next} \delta\_{k} w\_{kj} $$
+			$$ \delta\_{j}^{l} = \left(z\_{j}^{l}\right)' \sum\_{k \in Next} \delta\_{k}^{l+1} w\_{kj}^{l+1} $$
 
-		- 于是 \\(w\_{ji}\\) 更新公式为：
+		- 于是 \\(w\_{ji}^{l}\\) 更新公式为：
 
-			$$ w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i} $$
+			$$ w\_{ji}^{l} \leftarrow w\_{ji}^{l} - \eta \ \delta\_{j}^{l} \ z\_{i}^{l-1} $$
 
 - 对偏置项应用链式法则：
 
-	$$ \frac{\partial{E\_{s}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} \cdot \frac{\partial{a\_{j}}}{\partial{b\_{j}}} = \frac{\partial{E\_{s}}}{\partial{a\_{j}}} $$
+	$$ \frac{\partial{E\_{s}}}{\partial{b\_{j}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} \cdot \frac{\partial{x\_{j}^{l}}}{\partial{b\_{j}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} $$
 	
 	- 于是：
 
-		$$ b\_{j} \leftarrow b\_{j} - \eta\delta\_{j} $$
+		$$ b\_{j}^{l} \leftarrow b\_{j}^{l} - \eta \ \delta\_{j}^{l} $$
 
 ### 向量化
 
-- 假设当前层有 \\(m\\) 个神经元，上一层有 \\(n\\) 个神经元，则：
+- 假设第 \\(l\\) 层有 \\(m\\) 个神经元，第 \\(l-1\\) 层有 \\(n\\) 个神经元，则：
 
-	- 矩阵 \\(w\\) 的维度为 \\(m * n\\)，矩阵 \\(b\\) 的维度为 \\(m * 1\\)
+	- 矩阵 \\(w^{l}\\) 的维度为 \\(m * n\\)，矩阵 \\(b^{l}\\) 的维度为 \\(m * 1\\)
 
-	- 矩阵 \\(\delta\\) 的维度为 \\(m * 1\\)，矩阵 \\(x\\) 的维度为 \\(n * 1\\)
+	- 矩阵 \\(\delta^{l}\\) 的维度为 \\(m * 1\\)，矩阵 \\(z^{l-1}\\) 的维度为 \\(n * 1\\)
 
-- 由 \\(w\_{ji} \leftarrow w\_{ji} - \eta\delta\_{j}x\_{i}\\) 可知：
+- 由 \\(w\_{ji}^{l} \leftarrow w\_{ji}^{l} - \eta \ \delta\_{j}^{l} \ z\_{i}^{l-1}\\) 可知：
 
-	$$ w \leftarrow w - \eta \ \delta \ x^{T} $$
+	$$ w^{l} \leftarrow w^{l} - \eta \ \delta^{l} \ \left(z^{l-1}\right)^{T} $$
 
-- 由 \\(b\_{j} \leftarrow b\_{j} - \eta\delta\_{j}\\) 可知：
+- 由 \\(b\_{j}^{l} \leftarrow b\_{j}^{l} - \eta \ \delta\_{j}^{l}\\) 可知：
 
-	$$ b \leftarrow b - \eta \ \delta $$
-
+	$$ b^{l} \leftarrow b^{l} - \eta \ \delta^{l} $$
 
 ### 样本集
 
 - 定义如下：
 
-	- \\(w\_{ji}^{(k)} \ \ \\)：第 \\(k\\) 层第 \\(j\\) 个节点与第 \\(k-1\\) 层第 \\(i\\) 个节点间的权值
-
-	- \\(b\_{j}^{(k)} \ \ \\)：第 \\(k\\) 层第 \\(j\\) 个节点的偏置
-
-	- \\(\lambda \ \ \\)：\\(L\_{2}\\) 正则项的系数
+	- \\(\lambda \ \ \\)：\\(L\_{2}\\) 正则项系数
 
 	- \\(J \ \ \\)：样本集上的损失函数
 
-		$$ J = \frac{1}{m} \sum\_{s=1}^{m} E\_{s} + \frac{\lambda}{2} \sum\_{k} \sum\_{j} \sum\_{i} (w\_{ji}^{(k)})^{2} $$
+		$$ J = \frac{1}{m} \sum\_{s=1}^{m} E\_{s} + \frac{\lambda}{2} \sum\_{l} \sum\_{j} \sum\_{i} (w\_{ji}^{l})^{2} $$
 
 - 对权重项应用链式法则：
 
-	$$ \frac{\partial{J}}{\partial{w\_{ji}^{(l)}}} = \frac{1}{m} \sum\_{s=1}^{m} \frac{\partial{E\_{s}}}{\partial{w\_{ji}^{(l)}}} + \lambda w\_{ji}^{(l)} $$
+	$$ \frac{\partial{J}}{\partial{w\_{ji}^{l}}} = \frac{1}{m} \sum\_{s=1}^{m} \frac{\partial{E\_{s}}}{\partial{w\_{ji}^{l}}} + \lambda w\_{ji}^{l} $$
 
 - 对偏置项应用链式法则：
 
-	$$ \frac{\partial{J}}{\partial{b\_{j}^{(l)}}} = \frac{1}{m} \sum\_{s=1}^{m} \frac{\partial{E\_{s}}}{\partial{b\_{j}^{(l)}}} $$
+	$$ \frac{\partial{J}}{\partial{b\_{j}^{l}}} = \frac{1}{m} \sum\_{s=1}^{m} \frac{\partial{E\_{s}}}{\partial{b\_{j}^{l}}} $$
