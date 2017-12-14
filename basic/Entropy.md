@@ -6,7 +6,7 @@
 
 - 衡量编码一个样本所需要的平均 bit 数
 
-- \\(H(p) = \sum_{i} p(i) \cdot log \frac{1}{p(i)}\\)，其中 \\(p\\) 是样本的真实分布
+- \\(H(p) = -\sum_{i} p(i) \cdot log \ p(i)\\)，其中 \\(p\\) 是样本的真实分布
 
 ## 相对熵（\\(KL\\) 散度）
 
@@ -40,6 +40,43 @@
 
 - 在真实分布 \\(p\\) 已知的情况下，交叉熵与相对熵在行为上等价：都反应真实分布 \\(p\\) 和假设分布 \\(q\\) 的相似性
 
-- \\(H(p,q) = \sum_{i}p(i) \cdot log \frac {1} {q(i)}\\)，其中 \\(p\\) 是样本的真实分布，\\(q\\) 是样本的假设分布
+- \\(H(p,q) = -\sum_{i}p(i) \cdot log \ q(i)\\)，其中 \\(p\\) 是样本的真实分布，\\(q\\) 是样本的假设分布
 
 - 由定义，交叉熵为熵与相对熵之和：\\(H(p,q) = H(p) + KL(p||q)\\)
+
+### Sigmoid 交叉熵
+
+$$
+\begin{align\*}
+H &= -y \cdot log \ p - (1 - y) \cdot log \ (1 - p) \newline
+&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot log \ \left( 1 - \frac{1}{1 + exp(-x)} \right) \newline
+&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot log \ \left(\frac{exp(-x)}{1 + exp(-x)} \right) \newline
+&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot \left(-x + log \ \left(\frac{1}{1 + exp(-x)}\right) \right) \newline
+&= (1 - y) \cdot x - log \ \left(\frac{1}{1 + exp(-x)}\right) \newline
+&= x - xy + log \ (1 + exp(-x)) \newline
+\end{align\*}
+$$
+
+- 当 \\(x < 0\\) 时，为避免 \\(exp(-x)\\) 溢出，可对上式进行变换：
+
+	$$
+	\begin{align\*}
+	H &= x - xy + log \ (1 + exp(-x)) \newline
+	&= -xy + log \ exp(x) + log \ (1 + exp(-x)) \newline
+	&= -xy + log \ (exp(x) + 1) \newline
+	\end{align\*}
+	$$
+	
+- 综上所述，Sigmoid 交叉熵计算如下：
+
+	$$H = max(x, 0) - xy + log(1 + exp(-|x|))$$
+
+### Softmax 交叉熵
+
+- 首先计算预测输出的 Softmax 值：
+
+	$$p\_{i} = \frac{exp(o\_{i})}{\sum\_{j}exp(o\_{j})}$$
+
+- 计算真实类别与预测输出的交叉熵：
+
+	$$H = -\sum\_{i}y\_{i} \cdot log \ p\_{i}$$
