@@ -28,24 +28,40 @@
 
 	$$ H(X,Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ p(x,y) $$
 
+- 推导过程：
+
+	$$
+	\begin{align\*}
+	H(X,Y) &= \sum\_{x \in X} p(x) \cdot H(x, Y) \newline
+	&= \sum\_{x \in X} p(x) \cdot \left[ -\sum\_{y \in Y|x} p(y) \cdot log \ p(x,y) \right] \newline
+	&= -\sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \ p(x,y)
+	\end{align\*}
+	$$
+
 ## 条件熵
 
 - 对于联合分布 \\((X,Y)\\)，在已知 \\(Y\\) 时，描述 \\(X\\) 所需要的平均信息量，计算如下：
 
+	$$ H(X|Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ p(x|y) $$
+
+- 推导过程：
+
 	$$
 	\begin{align\*}
-	H(X|Y) &= -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ p(x|y) \newline
-	&= -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ \frac{p(x,y)}{p(y)}
+	H(X|Y) &= \sum\_{y \in Y} p(y) \cdot H(X|y) \newline
+	&= \sum\_{y \in Y} p(y) \cdot \left[ -\sum\_{x \in X|y} p(x) \cdot log \ p(x|y) \right] \newline
+	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ p(x|y) \newline
+	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ \frac{p(x,y)}{p(y)}
 	\end{align\*}
 	$$
 
-- 由公式可知，条件熵是联合熵、熵之差：
+- 条件熵是联合熵、信息熵之差：
 
 	$$ H(X|Y) = H(X,Y) - H(Y) $$
 
 ## 互信息
 
-- 对于联合分布 \\((X,Y)\\)，描述 \\(X, Y\\) 的相互独立程度，计算如下：
+- 对于联合分布 \\((X,Y)\\)，描述 \\(X, Y\\) 的依赖程度，计算如下：
 	
 	$$ I(X;Y) = \sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \frac{p(x,y)}{p(x) \cdot p(y)} $$
 
@@ -55,14 +71,13 @@
 
 	$$
 	\begin{align\*}
-	H(X) - H(X|Y) &= H(X,Y) - H(Y|X) - H(X|Y) \newline
-	&= -\sum p(x,y) \cdot log \ p(x,y) + \sum p(x,y) \cdot log \ \frac{p(x,y)}{p(x)} + \sum p(x,y) \cdot log \frac{p(x, y)}{p(y)} \newline
-	&= \sum\_{x}\sum\_{y} p(x,y) \cdot log \left( \frac{1}{p(x,y)} \cdot \frac{p(x, y)}{p(x)} \cdot \frac{p(x, y)}{p(y)} \right) \newline
-	&= \sum\_{x}\sum\_{y} p(x,y) \cdot log \frac{p(x, y)}{p(x) \cdot p(y)} \newline
-	&= I(X;Y) \newline
+	I(X;Y) &= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \frac{p(x,y)}{p(x) \cdot p(y)} \newline
+	&= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \frac{p(x,y)}{p(y)} - \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \ p(x) \newline
+	&= -H(X|Y) - \sum\_{x \in X} p(x) \cdot log \ p(x) \newline
+	&= H(X) - H(X|Y) \newline
 	\end{align\*}
 	$$
-
+	
 ## 信息增益
 
 - 与互信息相比，计算方式相同，意义不同：
@@ -118,7 +133,7 @@
 	
 - 在真实分布 \\(p\\) 已知的情况下，交叉熵与相对熵在行为上等价：都反应真实分布 \\(p\\) 和假设分布 \\(q\\) 的差距
 
-- 由定义可知，交叉熵是熵、相对熵之和：
+- 交叉熵是熵、相对熵之和：
 
 	$$ H(p,q) = H(p) + KL(p||q) $$
 
@@ -153,7 +168,7 @@ $$
 
 - 首先计算预测输出的 Softmax 值：
 
-	$$p\_{i} = \frac{exp(o\_{i})}{\sum\_{j}exp(o\_{j})}$$
+	$$p\_{i} = \frac{exp(x\_{i})}{\sum\_{j}exp(x\_{j})}$$
 
 - 计算真实类别与预测输出的交叉熵：
 
