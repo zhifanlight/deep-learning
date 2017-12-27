@@ -2,6 +2,10 @@
 
 # 距离度量
 
+## 交叉熵
+
+- 参考 [Entropy.md] (Entropy.md)
+
 ## \\(KL\\) 散度
 
 - Kullback-Leibler 散度
