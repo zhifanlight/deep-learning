@@ -74,7 +74,7 @@
 
 	- 直接计算高斯分布概率：
 
-		$$ Q(c'|x) = \frac{1}{\sqrt{2\pi} \ \sigma} e^{-\frac{(c'-\mu)^{2}}{2\sigma^{2}}}$$
+		$$ Q(c'|x) = \frac{1}{\sqrt{2\pi} \ \sigma} exp \left(-\frac{(c'-\mu)^{2}}{2\sigma^{2}} \right) $$
 		
 	- 当标准差 \\(\sigma\\) 固定时，其他项均为常量，\\(log \ Q(c'|x)\\) 计算如下：
 
