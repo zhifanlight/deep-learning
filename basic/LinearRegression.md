@@ -30,21 +30,31 @@
 
 - 如果把 \\(N\\) 维列向量 \\(x\_{i}\\) 扩充到 \\(N + 1\\) 维并令 \\(x\_{i0}=1\\)，那么待拟合超平面可以定义为 \\(h(x) = \theta^{T}x\\)，其中 \\(\theta\\) 是 \\(N + 1\\) 维列向量，则损失函数定义如下：
 
-	$$ J(\theta) = \frac{1}{M} \sum\_{i=1}^{M} \left( h(x\_{i}) - y\_{i} \right)^{2} = \frac{1}{M} \sum\_{i=1}^{M} \left( \theta^{T}x\_{i} - y\_{i} \right)^{2} $$
+	$$ J(\theta) = \frac{1}{2} \sum\_{i=1}^{M} \left( h(x\_{i}) - y\_{i} \right)^{2} = \frac{1}{2} \sum\_{i=1}^{M} \left( \theta^{T}x\_{i} - y\_{i} \right)^{2} $$
+
+- 令 \\(X = \\left\[ \begin{matrix} x\_{10}, x\_{11}, ..., x\_{1N} \\\\ x\_{20}, x\_{21}, ..., x\_{2N} \\\\ ... \\\\ x\_{M0}, x\_{M1}, ..., x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ ... \\\\ \theta\_{N} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ ... \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(X\theta-Y = \\left\[ \begin{matrix} x\_{1}^{T}\theta - y\_{1} \\\\ x\_{2}^{T}\theta-y\_{2} \\\\ ... \\\\ x\_{M}^{T}\theta-y\_{M} \end{matrix} \\right\]\\)
 
 ### 优化求解
 
 #### 梯度下降
 
-- 参见 [Optimizer.md](Optimizer.md)
+- 通过梯度下降法求解 \\(\theta\_{j} \leftarrow \eta \cdot \nabla\_{\theta\_{j}}J(\theta)\\)：
 
-- 通过梯度方法求解每一个 \\(\theta\_{i}\\)
+	$$
+	\begin{align\*}
+	\nabla\_{\theta\_{j}}J(\theta) &= \sum\_{i=1}^{M} \left( \theta^{T}x\_{i} - y\_{i} \right) \cdot \frac{\partial{\left( \theta^{T}x\_{i} - y\_{i} \right)}}{\partial{\theta\_{j}}} \newline
+	&= \sum\_{i=1}^{M} \left( \theta^{T}x\_{i} - y\_{i} \right) \cdot x\_{ij} \newline
+	&= \sum\_{i=1}^{M} \left( h(x\_{i}) - y\_{i} \right) \cdot x\_{ij} \newline
+	\end{align\*}
+	$$
+
+- 向量化如下：
+
+	$$ \theta \leftarrow \theta - \eta \cdot \left( X\theta - Y\right)^{T} X $$
 
 #### 正规方程
 
-- 令 \\(X = \\left\[ \begin{matrix} x\_{10}, x\_{11}, ..., x\_{1N} \\\\ x\_{20}, x\_{21}, ..., x\_{2N} \\\\ ... \\\\ x\_{M0}, x\_{M1}, ..., x\_{MN} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ ... \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(X\theta-Y = \\left\[ \begin{matrix} x\_{1}^{T}\theta - y\_{1} \\\\ x\_{2}^{T}\theta-y\_{2} \\\\ ... \\\\ x\_{M}^{T}\theta-y\_{M} \end{matrix} \\right\]\\)
-
-- 由于 \\(X\theta-Y\\) 为 \\(M + 1\\) 维列向量：
+- 由于 \\(X\theta-Y\\) 为 \\(M\\) 维列向量：
 
 	$$ \min\_{\theta} J(\theta) = \min\_{\theta} \frac{1}{2} (X\theta-Y)^{T}(X\theta-Y) $$
 
@@ -84,9 +94,10 @@
 	\begin{align\*}
 	log \ L(\theta)  &= log \ \prod\_{i=1}^{m} \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
 	&= \sum\_{i=1}^{m} log \ \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
-	&= m \ log \ \frac{1}{\sqrt{2 \pi} \sigma} - \frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum\_{i=1}^{m} \left( y\_{i} - \theta^{T} x\_{i} \right)^{2} \newline \newline
-	\Rightarrow \quad & max \ log \ L(\theta) = min \ J(\theta) \newline
+	&= m \ log \ \frac{1}{\sqrt{2 \pi} \sigma} - \frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum\_{i=1}^{m} \left( y\_{i} - \theta^{T} x\_{i} \right)^{2} \newline
 	\end{align\*}
 	$$
-	
-	- 其中， \\(J(\theta)\\) 是最小二乘的损失函数
+
+- 最小化损失函数，实质上是最大化对数似然函数：
+
+	$$ min \ \ J(\theta) = max \ \ log \ L(\theta) $$
