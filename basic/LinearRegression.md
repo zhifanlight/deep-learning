@@ -50,7 +50,7 @@
 
 - 向量化如下：
 
-	$$ \theta \leftarrow \theta - \eta \cdot \left( X\theta - Y\right)^{T} X $$
+	$$ \theta \leftarrow \theta - \eta \cdot X^{T} ( X\theta - Y ) $$
 
 #### 正规方程
 
@@ -78,11 +78,11 @@
 
 ### 假设误差分布
 
-- 误差项 \\(\epsilon\_{i}\\) 捕捉未被设置为特征的变量，假设其独立同分布，且服从正态分布 \\(N(0, \sigma^{2})\\)：
+- 误差项 \\(\epsilon\_{i}\\) 捕捉未被设置为特征的变量，假设其独立同分布，且服从高斯分布 \\(N(0, \sigma^{2})\\)：
 
 	$$ p(\epsilon\_{i}) = \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{\epsilon\_{i}^{2}}{2 \sigma^{2}} \right) $$
 
-- 在以 \\(\theta\\) 为参数且 \\(x\_{i}\\) 给定时，\\(\theta^{T} x\_{i}\\) 为定值，此时的 \\(y\_{i}\\) 服从正态分布分布 \\(N(\theta^{T} x\_{i}, \sigma^{2})\\)：
+- 在以 \\(\theta\\) 为参数且 \\(x\_{i}\\) 给定时，\\(\theta^{T} x\_{i}\\) 为定值，此时的 \\(y\_{i}\\) 服从高斯分布 \\(N(\theta^{T} x\_{i}, \sigma^{2})\\)：
 
 	$$ p(y\_{i}|x\_{i};\theta) = \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) $$
 
@@ -92,7 +92,7 @@
 
 	$$
 	\begin{align\*}
-	log \ L(\theta)  &= log \ \prod\_{i=1}^{m} \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
+	log \ L(\theta) &= log \ \prod\_{i=1}^{m} \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
 	&= \sum\_{i=1}^{m} log \ \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
 	&= m \ log \ \frac{1}{\sqrt{2 \pi} \sigma} - \frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum\_{i=1}^{m} \left( y\_{i} - \theta^{T} x\_{i} \right)^{2} \newline
 	\end{align\*}
