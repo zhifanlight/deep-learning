@@ -10,7 +10,7 @@
 
 	- 根据预测数据与超平面的位置关系，输出其类别标签
 
-- 对于二元分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), ..., (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ ... \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
+- 对于二分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), ..., (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ ... \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
 
 ## 数学推导
 
@@ -44,15 +44,15 @@
 
 	$$
 	\begin{align\*}
-	log \ L(\theta) &= log \ \prod\_{i=1}^{m} \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
-	&= \sum\_{i=1}^{m} log \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
-	&= \sum\_{i=1}^{m} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) \newline
+	log \ L(\theta) &= log \ \prod\_{i=1}^{M} \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
+	&= \sum\_{i=1}^{M} log \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
+	&= \sum\_{i=1}^{M} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) \newline
 	\end{align\*}
 	$$
 
 - 由于最大化对数似然函数等于最小化损失函数，损失函数计算如下：
 
-	$$ J(\theta) = - \sum\_{i=1}^{m} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) $$
+	$$ J(\theta) = - \sum\_{i=1}^{M} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) $$
 
 - 令 \\(X = \\left\[ \begin{matrix} x\_{10}, x\_{11}, ..., x\_{1N} \\\\ x\_{20}, x\_{21}, ..., x\_{2N} \\\\ ... \\\\ x\_{M0}, x\_{M1}, ..., x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ ... \\\\ \theta\_{N} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ ... \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(\frac{1}{1 + e^{-X\theta}}-Y = \\left\[ \begin{matrix} \frac{1}{1 + e^{-x\_{1}^{T}\theta}}-y\_{1} \\\\ \frac{1}{1 + e^{-x\_{2}^{T}\theta}}-y\_{2} \\\\ ... \\\\ \frac{1}{1 + e^{-x\_{M}^{T}\theta}}-y\_{M} \end{matrix} \\right\]\\)
 

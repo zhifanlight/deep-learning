@@ -92,9 +92,9 @@
 
 	$$
 	\begin{align\*}
-	log \ L(\theta) &= log \ \prod\_{i=1}^{m} \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
-	&= \sum\_{i=1}^{m} log \ \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
-	&= m \ log \ \frac{1}{\sqrt{2 \pi} \sigma} - \frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum\_{i=1}^{m} \left( y\_{i} - \theta^{T} x\_{i} \right)^{2} \newline
+	log \ L(\theta) &= log \ \prod\_{i=1}^{M} \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
+	&= \sum\_{i=1}^{M} log \ \frac{1}{\sqrt{2 \pi} \sigma} exp \left(- \frac{ \left( y\_{i} - \theta^{T} x\_{i} \right)^{2}}{2 \sigma^{2}} \right) \newline
+	&= M \ log \ \frac{1}{\sqrt{2 \pi} \sigma} - \frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum\_{i=1}^{M} \left( y\_{i} - \theta^{T} x\_{i} \right)^{2} \newline
 	\end{align\*}
 	$$
 
