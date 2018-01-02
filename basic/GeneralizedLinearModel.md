@@ -95,14 +95,7 @@
 
 - 假设 \\(y|x;\theta \sim N(\mu, \sigma^{2})\\)，由高斯分布对应的广义线性模型：
 
-	$$
-	\begin{align\*}
-	h\_{\theta}(x) &= E(T(y)|x) \newline
-	&= E(y|x) \newline
-	&= \mu \newline
-	&= \eta \cdot \sigma^{2} \newline
-	\end{align\*}
-	$$
+	$$ h\_{\theta}(x) = E(T(y)|x) = E(y|x) = \mu = \eta \cdot \sigma^{2} $$
 
 - 由 \\(\eta\\) 与 \\(x\\) 的线性关系可得：
 
@@ -116,14 +109,7 @@
 
 - 假设 \\(y|x;\theta \sim B(\phi)\\)，由伯努利分布对应的广义线性模型：
 
-	$$
-	\begin{align\*}
-	h\_{\theta}(x) &= E(T(y)|x) \newline
-	&= E(y|x) \newline
-	&= \phi \newline
-	&= \frac{1}{1+e^{-\eta}} \newline
-	\end{align\*}
-	$$
+	$$ h\_{\theta}(x) = E(T(y)|x) = E(y|x) = \phi = \frac{1}{1+e^{-\eta}} $$
 
 - 由 \\(\eta\\) 与 \\(x\\) 的线性关系可得：
 
@@ -133,14 +119,7 @@
 
 - 假设 \\(y|x;\theta \sim M(\phi\_{1},\phi\_{2},...,\phi\_{K})\\)，由多项式分布对应的广义线性模型：
 
-	$$
-	\begin{align\*}
-	h\_{\theta}(x) &= E(T(y)|x) \newline
-	&= \\left\[ \begin{matrix} \phi\_{1} \\\\ \phi\_{2} \\\\ ... \\\\ \phi\_{K-1} \end{matrix} \\right\] \newline
-	&= \\left\[ \begin{matrix} e^{\eta\_{1}} \cdot \phi\_{K} \\\\ e^{\eta\_{2}} \cdot \phi\_{K} \\\\ ... \\\\ e^{\eta\_{K-1}} \cdot \phi\_{K} \end{matrix} \\right\] \newline
-	&= \\left\[ \begin{matrix} \frac{exp(\eta\_{1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ \frac{exp(\eta\_{2})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ ... \\\\ \frac{exp(\eta\_{K-1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \end{matrix} \\right\] \newline
-	\end{align\*}
-	$$
+	$$ h\_{\theta}(x) = E(T(y)|x) = \\left\[ \begin{matrix} \phi\_{1} \\\\ \phi\_{2} \\\\ ... \\\\ \phi\_{K-1} \end{matrix} \\right\] = \\left\[ \begin{matrix} e^{\eta\_{1}} \cdot \phi\_{K} \\\\ e^{\eta\_{2}} \cdot \phi\_{K} \\\\ ... \\\\ e^{\eta\_{K-1}} \cdot \phi\_{K} \end{matrix} \\right\] = \\left\[ \begin{matrix} \frac{exp(\eta\_{1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ \frac{exp(\eta\_{2})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ ... \\\\ \frac{exp(\eta\_{K-1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \end{matrix} \\right\] $$
 
 - 由 \\(\eta\\) 与 \\(x\\) 的线性关系可得：
 
@@ -148,10 +127,4 @@
 
 - 当 \\(K=2\\) 时，softmax 回归退化为逻辑回归：
 
-	$$
-	\begin{align\*}
-	h\_{\theta}(x) &= \left[ \frac{e^{\theta\_{1}^{T}x}}{e^{\theta\_{1}^{T}x} + e^{\theta\_{2}^{T}x}} \right] \newline
-	&= \frac{e^{\theta\_{1}^{T}x}}{e^{\theta\_{1}^{T}x} + 1} \newline
-	&= \frac{1}{1 + e^{-\theta\_{1}^{T}x}}
-	\end{align\*}
-	$$
+	$$ h\_{\theta}(x) = \left[ \frac{e^{\theta\_{1}^{T}x}}{e^{\theta\_{1}^{T}x} + e^{\theta\_{2}^{T}x}} \right] = \frac{e^{\theta\_{1}^{T}x}}{e^{\theta\_{1}^{T}x} + 1} = \frac{1}{1 + e^{-\theta\_{1}^{T}x}} $$
