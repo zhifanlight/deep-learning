@@ -92,7 +92,7 @@
 	\end{align\*}
 	$$
 
-- 计算 \\(\frac{\partial Z\_{t}}{\partial \alpha\_{t}}\\) 并令导数为 \\(0\\) 可得：
+- 计算 \\(\frac{\partial Z\_{t}}{\partial \alpha\_{t}}\\) 并令偏导数为 \\(0\\) 可得：
 
 	$$ \alpha\_{t} = \frac{1}{2} ln \left( \frac{1-e\_{t}}{e\_{t}} \right) $$
 

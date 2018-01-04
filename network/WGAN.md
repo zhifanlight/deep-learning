@@ -46,7 +46,7 @@
 		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
 		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
 		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
-	\end{align\*}
+		\end{align\*}
 		$$
 	
 	- 综合上式得：
@@ -56,7 +56,7 @@
 		\mathbb{E}\_{x \sim p\_{g}(x)} \left[-logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
 		&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))]] \newline
 		&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + 2log2 + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] \newline
-	\end{align\*}
+		\end{align\*}
 		$$
 	
 	- 后两项与生成器无关，最小化 \\(G\_{loss}\\) 意味着最小化 \\(KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g})\\)：
@@ -65,9 +65,7 @@
 
 		- 而 \\(KL\\) 散度的不对称性，导致了样本的多样性不足，即 collapse mode：
 
-			$$
-			\\left\\{ \begin{matrix} p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\.
-			$$
+			$$ \\left\\{ \begin{matrix} p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
 			
 			- 前者对应没能生成真实样本，后者对应生成了不真实的样本
 
