@@ -28,6 +28,22 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 - 其中，\\(\alpha, \beta\\) 均为标量，\\(A, B\\) 为同维度方阵
 
+## 方阵特征值、特征向量
+
+- 方阵 \\(A\\) 的特征值 \\(\lambda\\)、特征向量 \\(v\\) 满足以下关系：
+
+	$$ Av = \lambda v \quad \Leftrightarrow \quad (A - \lambda I)v = 0 $$
+
+- 迹等于特征值之和，行列式等于特征值之积：
+
+	- 假设 \\( A=\\left[ \begin{matrix} a & b \\\\ c & d \end{matrix} \\right], v = \\left[ \begin{matrix} m \\\\ n \end{matrix} \\right] \\)，代入上式并化简可得：
+
+		$$ \lambda^{2} - (a + d) \lambda + (ad - bc) = 0 $$
+
+	- 求解上述一元二次方程可得：
+
+		$$ \\left\\{ \begin{matrix} \lambda\_{1} + \lambda\_{2} = a + d = tr(A) \\\\ \lambda\_{1} \cdot \lambda\_{2} = ad - bc = det(A) \end{matrix} \\right. $$
+
 ## 矩阵求导
 
 - 若存在矩阵 \\(H\\) 使下式成立，则 \\(\nabla\_{X}f(X) = H\\)，
