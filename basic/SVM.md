@@ -124,7 +124,7 @@
 
 - 由 \\(\sum \alpha\_{i} y\_{i} = 0\\) 可得：
 
-	$$ \alpha\_{i} y\_{i} + \alpha\_{i} y\_{j} = -\sum\_{k \neq i \neq j}^{M} \alpha\_{k} y\_{k} = D$$
+	$$ \alpha\_{i} y\_{i} + \alpha\_{i} y\_{j} = -\sum\_{k \neq i \neq j}^{M} \alpha\_{k} y\_{k} = D $$
 
 	- 由 \\(y\_{i} \in \\{-1,+1\\}\\) 可得 \\(y\_{i} = \frac{1}{y\_{i}}\\)，上式可进一步变为：
 
@@ -134,7 +134,7 @@
 
 	$$ G(\alpha) = A \alpha\_{i}^{2} + B \alpha\_{i} + E $$
 	
-- 由边界条件 \\(0 \leq \alpha\_{i}, \alpha\_{j} \leq C\\) 可知，该问题为二次函数最值问题，容易求解
+- 由边界条件 \\(0 \leq \alpha\_{i}, \alpha\_{j} \leq C\\) 可知，该问题为区间内的二次函数最值问题，容易求解
 
 #### 求解 \\(w\\)
 

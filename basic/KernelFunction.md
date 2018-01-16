@@ -22,9 +22,7 @@
 
 ### 多项式核
 
-$$ K(x\_{i},x\_{j}) = \left( x\_{i}^{T} x\_{j} \right)^{d} $$
-
-- \\(d \geq 1\\)
+$$ K(x\_{i},x\_{j}) = \left( x\_{i}^{T} x\_{j} \right)^{d} \qquad d \geq 1 $$
 
 ### 线性核
 
@@ -32,21 +30,12 @@ $$ K(x\_{i},x\_{j}) = x\_{i}^{T} x\_{j} $$
 
 ### 高斯核（RBF 核）
 
-$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \right) $$
-
-- \\(\sigma > 0\\)
+$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \right) \qquad \sigma > 0 $$
 
 ### 拉普拉斯核
 
-$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{\sigma} \right) $$
-
-- \\(\sigma > 0\\)
+$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{\sigma} \right) \qquad \sigma > 0 $$
 
 ### Sigmoid 核
 
-$$ K(x\_{i},x\_{j}) = tanh \left( \beta x\_{i}^{T} x\_{j} + \theta \right) $$
-
-- \\(\beta > 0\\)
-
-- \\(\theta < 0\\)
-
+$$ K(x\_{i},x\_{j}) = tanh \left( \beta x\_{i}^{T} x\_{j} + \theta \right) \qquad \beta > 0, \ \theta < 0 $$
