@@ -30,7 +30,7 @@
 
 - 没有参数，在训练时无需学习
 
-![img](images/cnn.png)
+![img](images/lenet.png)
 
 ## 数学推导
 
