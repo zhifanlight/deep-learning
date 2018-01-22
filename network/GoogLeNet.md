@@ -2,7 +2,7 @@
 
 # GoogLeNet
 
-## 网络结构
+## 基本思想
 
 ### Network In Network
 
@@ -14,9 +14,9 @@
 
 - 整个网络由 \\(9\\) 个 Inception 节点组成，而 Inception 结构如下：
 
-	![img](images/googlenet.png)
+	![img](images/googlenet_inception.png)
 
-### 特征提取
+#### 特征提取
 
 - 采用 \\(1 \times 1, \ 3 \times 3, \ 5 \times 5\\) 的卷积核，分别提取特征
 
@@ -24,7 +24,7 @@
 
 - 将上述 \\(4\\) 组特征按深度拼接，得到当前 Inception 节点的最终特征图
 
-### 加速计算
+#### 加速计算
 
 - 特征图较多时，\\(3 \times 3, \ 5 \times 5\\) 的卷积操作计算量巨大
 
@@ -37,3 +37,7 @@
 - 网络变得更深、更宽，性能提高 \\(2-3\\) 倍
 
 - 浅层使用普通卷积，深层使用 Inception 结构
+
+## 网络结构
+
+![img](images/googlenet.png)
