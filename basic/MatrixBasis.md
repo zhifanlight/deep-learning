@@ -67,3 +67,41 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 	- 其中 \\(W\\) 表示与 \\(X\\) 维度相同的任意矩阵
 
 - 由于机器学习的输出通常为标量，因此可以假设 \\(f(X) = tr(X)\\)，然后进行求导
+
+## 向量求导
+
+- 假设 \\(x = \\left[ \begin{matrix} x\_{1} \\\\ x\_{2} \\\\ x\_{3} \end{matrix} \\right], \ y = \\left[ \begin{matrix} y\_{1} \\\\ y\_{2} \end{matrix} \\right]\\) 都是列向量，\\(z\\) 是标量
+
+- 标量与向量、向量与向量的求导结果都存在两种互为转置的形式
+
+### 分子布局
+
+- 对分母向量转置，结果与分子保持一致
+
+	- 标量对列向量求导得到行向量：
+
+		$$ \frac{\partial z}{\partial x} = \\left[ \begin{matrix} \frac{\partial z}{\partial x\_{1}} & \frac{\partial z}{\partial x\_{2}} & \frac{\partial z}{\partial x\_{3}} \end{matrix} \\right] $$
+
+	- 列向量对标量求导得到列向量：
+
+		$$ \frac{\partial x}{\partial z} = \\left[ \begin{matrix} \frac{\partial x\_{1}}{\partial z} \\\\ \frac{\partial x\_{2}}{\partial z} \\\\ \frac{\partial x\_{3}}{\partial z} \end{matrix} \\right] $$
+
+	- 列向量对列向量求导，分子按列向量布局，分母按行向量布局：
+
+		$$ \frac{\partial y}{\partial x} = \\left[ \begin{matrix} \frac{\partial y\_{1}}{\partial x\_{1}} & \frac{\partial y\_{1}}{\partial x\_{2}} & \frac{\partial y\_{1}}{\partial x\_{3}} \\\\ \frac{\partial y\_{2}}{\partial x\_{1}} & \frac{\partial y\_{2}}{\partial x\_{2}} & \frac{\partial y\_{2}}{\partial x\_{3}} \end{matrix} \\right] $$
+
+### 分母布局
+
+- 对分子向量转置，结果与分母保持一致
+
+	- 标量对列向量求导得到列向量：
+
+		$$ \frac{\partial z}{\partial x} = \\left[ \begin{matrix} \frac{\partial z}{\partial x\_{1}} \\\\ \frac{\partial z}{\partial x\_{2}} \\\\ \frac{\partial z}{\partial x\_{3}} \end{matrix} \\right] $$
+
+	- 列向量对标量求导得到行向量：
+
+		$$ \frac{\partial x}{\partial z} = \\left[ \begin{matrix} \frac{\partial x\_{1}}{\partial z} & \frac{\partial x\_{2}}{\partial z} & \frac{\partial x\_{3}}{\partial z} \end{matrix} \\right] $$
+
+	- 列向量对列向量求导，分子按行向量布局，分母按列向量布局：
+
+		$$ \frac{\partial y}{\partial x} = \\left[ \begin{matrix} \frac{\partial y\_{1}}{\partial x\_{1}} & \frac{\partial y\_{2}}{\partial x\_{1}} \\\\ \frac{\partial y\_{1}}{\partial x\_{2}} & \frac{\partial y\_{2}}{\partial x\_{2}} \\\\ \frac{\partial y\_{1}}{\partial x\_{3}} & \frac{\partial y\_{2}}{\partial x\_{3}} \end{matrix} \\right] $$
