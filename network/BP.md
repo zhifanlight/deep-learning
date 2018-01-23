@@ -96,22 +96,6 @@
 
 		$$ b\_{j}^{l} \leftarrow b\_{j}^{l} - \eta \ \delta\_{j}^{l} $$
 
-### 向量化
-
-- 假设第 \\(l\\) 层有 \\(m\\) 个神经元，第 \\(l-1\\) 层有 \\(n\\) 个神经元，则：
-
-	- 矩阵 \\(w^{l}\\) 的维度为 \\(m * n\\)，矩阵 \\(b^{l}\\) 的维度为 \\(m * 1\\)
-
-	- 矩阵 \\(\delta^{l}\\) 的维度为 \\(m * 1\\)，矩阵 \\(z^{l-1}\\) 的维度为 \\(n * 1\\)
-
-- 由 \\(w\_{ji}^{l} \leftarrow w\_{ji}^{l} - \eta \ \delta\_{j}^{l} \ z\_{i}^{l-1}\\) 可知：
-
-	$$ w^{l} \leftarrow w^{l} - \eta \ \delta^{l} \ \left(z^{l-1}\right)^{T} $$
-
-- 由 \\(b\_{j}^{l} \leftarrow b\_{j}^{l} - \eta \ \delta\_{j}^{l}\\) 可知：
-
-	$$ b^{l} \leftarrow b^{l} - \eta \ \delta^{l} $$
-
 ### 样本集
 
 - 定义如下：
