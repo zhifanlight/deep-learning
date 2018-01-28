@@ -105,3 +105,75 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 	- 列向量对列向量求导，分子按行向量布局，分母按列向量布局：
 
 		$$ \frac{\partial y}{\partial x} = \\left[ \begin{matrix} \frac{\partial y\_{1}}{\partial x\_{1}} & \frac{\partial y\_{2}}{\partial x\_{1}} \\\\ \frac{\partial y\_{1}}{\partial x\_{2}} & \frac{\partial y\_{2}}{\partial x\_{2}} \\\\ \frac{\partial y\_{1}}{\partial x\_{3}} & \frac{\partial y\_{2}}{\partial x\_{3}} \end{matrix} \\right] $$
+
+## 向量正交化
+
+- 将一组线性无关的 \\(N\\) 维向量 \\(\alpha\_{1}, \ \alpha\_{2}, \ ..., \ \alpha\_{M}\\\) 转换为一组正交向量 \\(\beta\_{1}, \ \beta\_{2}, \ ..., \ \beta\_{M}\\)
+
+- 若将上述正交向量分别单位化，可以得到 \\(N\\) 维空间中的一组正交基 \\(\eta\_{1}, \ \eta\_{2}, \ ..., \ \eta\_{M}\\)
+
+### 施密特正交化
+
+#### 正交向量
+
+- 选定第一个正交向量：
+
+	$$ \beta\_{1} = \alpha\_{1} $$
+
+- 计算第二个正交向量：
+
+	- 设 \\(\beta\_{2}\\) 具有如下形式：
+
+		$$ \beta\_{2} = \alpha\_{2} - k \beta\_{1} $$
+
+	- 由正交关系可得：
+
+		$$ \left \langle \beta\_{2}, \ \beta\_{1} \right \rangle = \left \langle \alpha\_{2}, \ \beta\_{1} \right \rangle - k \left \langle \beta\_{1}, \ \beta\_{1} \right \rangle = 0 $$
+
+	- 由 \\(\left \langle \beta\_{1}, \ \beta\_{1} \right \rangle > 0\\) 可得：
+
+		$$ k = \frac{\left \langle \alpha\_{2}, \ \beta\_{1} \right \rangle}{\left \langle \beta\_{1}, \ \beta\_{1} \right \rangle} $$
+
+	- 代入 \\(\beta\_{2}\\) 得第二个正交向量：
+
+		$$ \beta\_{2} = \alpha\_{2} - \frac{\left \langle \alpha\_{2}, \ \beta\_{1} \right \rangle}{\left \langle \beta\_{1}, \ \beta\_{1} \right \rangle} \beta\_{1} $$
+
+- 计算第三个正交向量：
+
+	- 设 \\(\beta\_{3}\\) 具有如下形式：
+
+		$$ \beta\_{3} = \alpha\_{3} - k\_{1} \beta\_{1} - k\_{2} \beta\_{2} $$
+
+	- 由正交关系可得：
+
+		$$ \left \langle \alpha\_{3}, \ \beta\_{1} \right \rangle - k\_{1} \left \langle \beta\_{1}, \ \beta\_{1} \right \rangle = 0, \quad \left \langle \alpha\_{3}, \ \beta\_{2} \right \rangle - k\_{2} \left \langle \beta\_{2}, \ \beta\_{2} \right \rangle = 0 $$
+
+	- 由 \\(\left \langle \beta\_{1}, \ \beta\_{1} \right \rangle > 0, \ \left \langle \beta\_{2}, \ \beta\_{2} \right \rangle > 0\\) 可得：
+
+		$$ k\_{1} = \frac{\left \langle \alpha\_{3}, \ \beta\_{1} \right \rangle}{\left \langle \beta\_{1}, \ \beta\_{1} \right \rangle}, \quad k\_{2} = \frac{\left \langle \alpha\_{3}, \ \beta\_{2} \right \rangle}{\left \langle \beta\_{2}, \ \beta\_{2} \right \rangle} $$
+
+	- 代入 \\(\beta\_{3}\\) 得第三个正交向量：
+
+		$$ \beta\_{3} = \alpha\_{3} - \sum\_{k=1}^{2} \frac{\left \langle \alpha\_{3}, \ \beta\_{k} \right \rangle}{\left \langle \beta\_{k}, \ \beta\_{k} \right \rangle} \beta\_{k} $$
+
+- 计算第 \\(j\\) 个正交向量：
+
+	$$ \beta\_{j} = \alpha\_{j} - \sum\_{k=1}^{j-1} \frac{ \left \langle \alpha\_{j}, \ \beta\_{k} \right \rangle}{\left \langle \beta\_{k}, \ \beta\_{k} \right \rangle} \beta\_{k} $$
+
+#### 正交基
+
+- 对 \\(\beta\_{j}\\) 单位化得正交基：
+
+	$$ \eta\_{j} = \frac{\beta\_{j}}{||\beta\_{j}||\_{2}} $$
+
+## 实对称矩阵对角化
+
+- 对于 \\(N \times N\\) 的实对称矩阵 \\(A\\)，存在正交矩阵 \\(Q\\) 使得：
+
+	$$ Q^{-1}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & ... & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
+
+	- 其中，\\(\lambda\_{i}\\) 是 \\(A\\) 的第 \\(i\\) 个特征值，\\(Q\\) 的每一列是 \\(A\\) 的单位正交向量
+
+- 由于 \\(QQ^{T}=I\\)，对角化结果可进一步表示为：
+
+	$$ Q^{T}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & ... & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
