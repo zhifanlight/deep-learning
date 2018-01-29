@@ -55,13 +55,13 @@
 
 - 已知输入图像维度为 \\(H \times W \times C\\)，共有 \\(T\\) 个 \\(K \times K \times C\\) 卷积核，步长为 \\(S\\)：
 
-	- 输入图像可展开为一个 \\( N \times (K \times K \times C) \\) 的矩阵 \\(A\\)，\\(A\\) 的每 \\(K \times K\\) 列表示一个通道，即 \\( A = \\left[ \\begin{matrix} A\_{1} & A\_{2} & ... & A\_{C} \\end{matrix} \\right] \\)，\\(A\_{i}\\) 的每一行表示与卷积核计算的元素展开
+	- 输入图像可展开为一个 \\( N \times (K \times K \times C) \\) 的矩阵 \\(A\\)，\\(A\\) 的每 \\(K \times K\\) 列表示一个通道，即 \\( A = \\left[ \\begin{matrix} A\_{1} & A\_{2} & \cdots & A\_{C} \\end{matrix} \\right] \\)，\\(A\_{i}\\) 的每一行表示与卷积核计算的元素展开
 
-	- 所有卷积核可合并为一个 \\((K \times K \times C) \times T\\) 的矩阵 \\(B\\)，\\(B\\) 的每 \\(C\\) 行表示一个通道，即 \\( B = \\left[ \\begin{matrix} B\_{1} \\\\ B\_{2} \\\\ ... \\\\ B\_{C} \\end{matrix} \\right] \\)，\\(B\_{i}\\) 的每一列表示当前通道卷积核的元素展开
+	- 所有卷积核可合并为一个 \\((K \times K \times C) \times T\\) 的矩阵 \\(B\\)，\\(B\\) 的每 \\(C\\) 行表示一个通道，即 \\( B = \\left[ \\begin{matrix} B\_{1} \\\\ B\_{2} \\\\ \vdots \\\\ B\_{C} \\end{matrix} \\right] \\)，\\(B\_{i}\\) 的每一列表示当前通道卷积核的元素展开
 
 	- 通过 GPU 可以对矩阵乘法进行加速，计算 \\(D = AB\\)
 
-	- \\(D\\) 为 \\(N \times T\\) 矩阵，\\(D\\) 的每一列表示一个卷积核的计算结果，即 \\(D = \\left[ \\begin{matrix} D\_{1} & D\_{2} & ... & D\_{T} \\end{matrix} \\right]\\)，将 \\(D\_{i}\\) 转化成 \\(\left( \frac{H - K}{S} + 1 \right) \times \left( \frac{W - K}{S} + 1 \right) \\) 矩阵，以得到所有卷积结果
+	- \\(D\\) 为 \\(N \times T\\) 矩阵，\\(D\\) 的每一列表示一个卷积核的计算结果，即 \\(D = \\left[ \\begin{matrix} D\_{1} & D\_{2} & \cdots & D\_{T} \\end{matrix} \\right]\\)，将 \\(D\_{i}\\) 转化成 \\(\left( \frac{H - K}{S} + 1 \right) \times \left( \frac{W - K}{S} + 1 \right) \\) 矩阵，以得到所有卷积结果
 	
 ![image](images/conv_acceleration.png)
 

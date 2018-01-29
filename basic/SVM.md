@@ -28,7 +28,7 @@
 	
 	- 约束条件为：
 		
-		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1, \quad i=1,2,...,M $$
+		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1, \quad i=1,2,\cdots,M $$
 
 - 由拉格朗日乘子法可得：
 
@@ -36,9 +36,9 @@
 
 	- 约束条件为：
 
-		$$ \alpha\_{i} \geq 0, \quad i=1,2,...,M $$
+		$$ \alpha\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ \alpha\_{i} \cdot (1 - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,...,M $$
+		$$ \alpha\_{i} \cdot (1 - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,\cdots,M $$
 
 - 计算 \\(\frac{\partial L}{\partial w}, \ \frac{\partial L}{\partial b}\\) 并令偏导数为 \\(0\\) 可得：
 
@@ -54,9 +54,9 @@
 
 	- 约束条件为：
 
-		$$ \alpha\_{i} \geq 0, \quad i=1,2,...,M $$
+		$$ \alpha\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ \sum\_{i=1}^{M} \alpha\_{i} y\_{i} = 0, \quad i=1,2,...,M $$
+		$$ \sum\_{i=1}^{M} \alpha\_{i} y\_{i} = 0, \quad i=1,2,\cdots,M $$
 
 ### 线性不可分
 
@@ -64,7 +64,7 @@
 
 - 为让 SVM 忽略某些噪声，可以引入松弛变量 \\(\xi\_{i} \geq 0\\) 来允许错误分类发生：
 
-	$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,...,M $$
+	$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
 
 	- 对 \\(\xi\_{i}\\) 添加约束如下：
 
@@ -78,9 +78,9 @@
 
 	- 约束条件为：
 
-		$$ \xi\_{i} \geq 0, \quad i=1,2,...,M $$
+		$$ \xi\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,...,M $$
+		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
 
 - 由拉格朗日乘子法可得：
 
@@ -88,13 +88,13 @@
 
 	- 约束条件为：
 
-		$$ \alpha\_{i} \geq 0, \quad i=1,2,...,M $$
+		$$ \alpha\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 		
-		$$ \beta\_{i} \geq 0, \quad i=1,2,...,M $$
+		$$ \beta\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ \beta\_{i} \xi\_{i} = 0, \quad i=1,2,...,M $$
+		$$ \beta\_{i} \xi\_{i} = 0, \quad i=1,2,\cdots,M $$
 
-		$$ \alpha\_{i} \cdot (1 - \xi\_{i} - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,...,M $$
+		$$ \alpha\_{i} \cdot (1 - \xi\_{i} - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,\cdots,M $$
 
 - 计算 \\(\frac{\partial L}{\partial w}, \ \frac{\partial L}{\partial b}, \ \frac{\partial L}{\partial \xi\_{i}}\\) 并令偏导数为 \\(0\\) 可得：
 
@@ -110,9 +110,9 @@
 
 	- 约束条件为：
 
-		$$ 0 \leq \alpha\_{i} \leq C, \quad i=1,2,...,M $$
+		$$ 0 \leq \alpha\_{i} \leq C, \quad i=1,2,\cdots,M $$
 
-		$$ \sum\_{i=1}^{M} \alpha\_{i} y\_{i} = 0, \quad i=1,2,...,M $$
+		$$ \sum\_{i=1}^{M} \alpha\_{i} y\_{i} = 0, \quad i=1,2,\cdots,M $$
 
 ### 优化求解
 

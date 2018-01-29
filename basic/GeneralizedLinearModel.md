@@ -55,13 +55,13 @@
 
 ### 多项式分布
 
-- 已知 \\(p(y;\phi) \sim M(\phi\_{1},\phi\_{2},...,\phi\_{K})\\)，其中 \\(\phi\_{i}\\) 表示 \\(y=i\\) 的概率
+- 已知 \\(p(y;\phi) \sim M(\phi\_{1},\phi\_{2},\cdots,\phi\_{K})\\)，其中 \\(\phi\_{i}\\) 表示 \\(y=i\\) 的概率
 
 - 定义指示函数：
 
 	 $$ I(c)=\\left\\{ \begin{matrix} 1, \quad if \ c \ is \ true \\\\ 0, \quad if \ c \ is \ false \end{matrix} \\right. $$
 
-- 对于多项式分布，\\(b(y)=1, \ \eta=\\left\[ \begin{matrix} log \frac{\phi\_{1}}{\phi\_{K}} \\\\ log \frac{\phi\_{2}}{\phi\_{K}} \\\\ ... \\\\ log \frac{\phi\_{K-1}}{\phi\_{K}} \end{matrix} \\right\], \ T(y)=\\left\[ \begin{matrix} I(y=1) \\\\ I(y=2) \\\\ ... \\\\ I(y=K-1) \end{matrix} \\right\], \ a(\eta)=log \ \left( \sum\_{i=1}^{K}e^{\eta\_{i}} \right)\\)
+- 对于多项式分布，\\(b(y)=1, \ \eta=\\left\[ \begin{matrix} log \frac{\phi\_{1}}{\phi\_{K}} \\\\ log \frac{\phi\_{2}}{\phi\_{K}} \\\\ \vdots \\\\ log \frac{\phi\_{K-1}}{\phi\_{K}} \end{matrix} \\right\], \ T(y)=\\left\[ \begin{matrix} I(y=1) \\\\ I(y=2) \\\\ \vdots \\\\ I(y=K-1) \end{matrix} \\right\], \ a(\eta)=log \ \left( \sum\_{i=1}^{K}e^{\eta\_{i}} \right)\\)
 
 	$$
 	\begin{align\*}
@@ -73,7 +73,7 @@
 	\end{align\*}
 	$$
 
-	- 令 \\(\eta\_{K}=0\\)，由 \\(\eta=\\left\[ \begin{matrix} log \frac{\phi\_{1}}{\phi\_{K}} \\\\ log \frac{\phi\_{2}}{\phi\_{K}} \\\\ ... \\\\ log \frac{\phi\_{K-1}}{\phi\_{K}} \end{matrix} \\right\]\\) 可推导出：
+	- 令 \\(\eta\_{K}=0\\)，由 \\(\eta=\\left\[ \begin{matrix} log \frac{\phi\_{1}}{\phi\_{K}} \\\\ log \frac{\phi\_{2}}{\phi\_{K}} \\\\ \vdots \\\\ log \frac{\phi\_{K-1}}{\phi\_{K}} \end{matrix} \\right\]\\) 可推导出：
 	
 		$$ \sum\_{i=1}^{K-1}e^{\eta\_{i}} = \frac{1-\phi\_{K}}{\phi\_{k}} \quad \Rightarrow \quad \phi\_{K} = \frac{1}{1+\sum\_{i=1}^{K-1}e^{\eta\_{i}}} = \frac{1}{\sum\_{i=1}^{K}e^{\eta\_{i}}} $$
 
@@ -117,13 +117,13 @@
 
 ### softmax 回归
 
-- 假设 \\(y|x;\theta \sim M(\phi\_{1},\phi\_{2},...,\phi\_{K})\\)，由多项式分布对应的广义线性模型：
+- 假设 \\(y|x;\theta \sim M(\phi\_{1},\phi\_{2},\cdots,\phi\_{K})\\)，由多项式分布对应的广义线性模型：
 
-	$$ h\_{\theta}(x) = E(T(y)|x) = \\left\[ \begin{matrix} \phi\_{1} \\\\ \phi\_{2} \\\\ ... \\\\ \phi\_{K-1} \end{matrix} \\right\] = \\left\[ \begin{matrix} e^{\eta\_{1}} \cdot \phi\_{K} \\\\ e^{\eta\_{2}} \cdot \phi\_{K} \\\\ ... \\\\ e^{\eta\_{K-1}} \cdot \phi\_{K} \end{matrix} \\right\] = \\left\[ \begin{matrix} \frac{exp(\eta\_{1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ \frac{exp(\eta\_{2})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ ... \\\\ \frac{exp(\eta\_{K-1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \end{matrix} \\right\] $$
+	$$ h\_{\theta}(x) = E(T(y)|x) = \\left\[ \begin{matrix} \phi\_{1} \\\\ \phi\_{2} \\\\ \vdots \\\\ \phi\_{K-1} \end{matrix} \\right\] = \\left\[ \begin{matrix} e^{\eta\_{1}} \cdot \phi\_{K} \\\\ e^{\eta\_{2}} \cdot \phi\_{K} \\\\ \vdots \\\\ e^{\eta\_{K-1}} \cdot \phi\_{K} \end{matrix} \\right\] = \\left\[ \begin{matrix} \frac{exp(\eta\_{1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ \frac{exp(\eta\_{2})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \\\\ \vdots \\\\ \frac{exp(\eta\_{K-1})}{\sum\_{j=1}^{K}exp(\eta\_{j})} \end{matrix} \\right\] $$
 
 - 由 \\(\eta\\) 与 \\(x\\) 的线性关系可得：
 
-	$$ h\_{\theta}(x) = \\left\[ \begin{matrix} \frac{exp(\theta\_{1}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \\\\ \frac{exp(\theta\_{2}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \\\\ ... \\\\ \frac{exp(\theta\_{K-1}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \end{matrix} \\right\] $$
+	$$ h\_{\theta}(x) = \\left\[ \begin{matrix} \frac{exp(\theta\_{1}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \\\\ \frac{exp(\theta\_{2}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \\\\ \vdots \\\\ \frac{exp(\theta\_{K-1}^{T}x)}{\sum\_{j=1}^{K}exp(\theta\_{j}^{T}x)} \end{matrix} \\right\] $$
 
 - 当 \\(K=2\\) 时，softmax 回归退化为逻辑回归：
 

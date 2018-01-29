@@ -30,7 +30,7 @@
 
 - 矩阵化表示为：
 
-	$$ \\left[ \\begin{matrix} y\_{1} & y\_{2} & ... & y\_{M} \\end{matrix} \\right] = \\left[ \\begin{matrix} p\_{1} \\\\ p\_{2} \\\\ ... \\\\ p\_{D} \\end{matrix} \\right] \\left[ \\begin{matrix} x\_{1} & x\_{2} & ... & x\_{M} \\end{matrix} \\right] $$
+	$$ \\left[ \\begin{matrix} y\_{1} & y\_{2} & \cdots & y\_{M} \\end{matrix} \\right] = \\left[ \\begin{matrix} p\_{1} \\\\ p\_{2} \\\\ \vdots \\\\ p\_{D} \\end{matrix} \\right] \\left[ \\begin{matrix} x\_{1} & x\_{2} & \cdots & x\_{M} \\end{matrix} \\right] $$
 
 	- 其中 \\(M\\) 是待投影向量数，\\(y\_{i}\\) 是投影后的 \\(D\\) 维列向量，\\(p\_{i}\\) 是 \\(N\\) 维空间中投影基向量的行向量表示，\\(x\_{i}\\) 是投影前的 \\(N\\) 维列向量
 
@@ -42,7 +42,7 @@
 
 	- \\(X\\) 可表示为：
 
-		$$ X = \\left[ \\begin{matrix} a\_{1} & a\_{2} & ... & a\_{M} \\\\ b\_{1} & b\_{2} & ... & b\_{M} \end{matrix} \\right] $$
+		$$ X = \\left[ \\begin{matrix} a\_{1} & a\_{2} & \cdots & a\_{M} \\\\ b\_{1} & b\_{2} & \cdots & b\_{M} \end{matrix} \\right] $$
 
 	- 协方差矩阵 \\(C\\) 计算如下：
 
@@ -194,7 +194,7 @@
 
 - 假设原始空间维度为 \\(N\\)，降维后的空间维度为 \\(D\\)，其中 \\(D \leq N\\)
 
-- \\(x\_{1}, \ x\_{2}, \ ..., \ x\_{M}\\) 是原始空间中的点，\\(y\_{1}, \ y\_{2}, \ ..., \ y\_{M}\\) 是投影空间中的点
+- \\(x\_{1}, \ x\_{2}, \ \cdots, \ x\_{M}\\) 是原始空间中的点，\\(y\_{1}, \ y\_{2}, \ \cdots, \ y\_{M}\\) 是投影空间中的点
 
 - \\(x\_{i}, \ x\_{j}\\) 的相似度矩阵为 \\(P\\)，\\(y\_{i}, \ y\_{j}\\) 的相似度矩阵为 \\(Q\\)，\\(P, \ Q\\) 的维度均为 \\(M \times M\\)
 

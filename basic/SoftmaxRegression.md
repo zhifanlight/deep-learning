@@ -6,7 +6,7 @@
 
 - softmax 回归用于多分类任务，其结果是多个超平面
 
-- 对于多分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), ..., (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ ... \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
+- 对于多分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), \cdots, (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ \vdots \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
 
 ## 数学推导
 
@@ -39,7 +39,7 @@
 
 	$$ J(\theta) = - \sum\_{i=1}^{M} \sum\_{j=1}^{K} I(y\_{i}=j) \cdot log \frac{e^{\theta\_{j}^{T}x\_{i}}}{\sum\_{s=1}^{K} e^{\theta\_{s}^{T}x\_{i}}} $$
 
-- 令 \\(X = \\left\[ \begin{matrix} x\_{10}, x\_{11}, ..., x\_{1N} \\\\ x\_{20}, x\_{21}, ..., x\_{2N} \\\\ ... \\\\ x\_{M0}, x\_{M1}, ..., x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{10}, \theta\_{20}, ..., \theta\_{K0} \\\\ \theta\_{11}, \theta\_{21}, ..., \theta\_{K1} \\\\ ... \\\\ \theta\_{1N}, \theta\_{2N}, ..., \theta\_{KN} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ ... \\\\ y\_{M} \end{matrix} \\right\], \ e^{X\theta} = \\left\[ \begin{matrix} e^{\theta\_{1}^{T}x\_{1}}, e^{\theta\_{2}^{T}x\_{1}}, ..., e^{\theta\_{K}^{T}x\_{1}} \\\\ e^{\theta\_{1}^{T}x\_{2}}, e^{\theta\_{2}^{T}x\_{2}}, ..., e^{\theta\_{K}^{T}x\_{2}} \\\\ ... \\\\ e^{\theta\_{1}^{T}x\_{M}}, e^{\theta\_{2}^{T}x\_{M}}, ..., e^{\theta\_{K}^{T}x\_{M}} \end{matrix} \\right\] \\)
+- 令 \\(X = \\left\[ \begin{matrix} x\_{10} & x\_{11} & \cdots & x\_{1N} \\\\ x\_{20} & x\_{21} & \cdots & x\_{2N} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ x\_{M0} & x\_{M1} & \cdots & x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{10} & \theta\_{20} & \cdots & \theta\_{K0} \\\\ \theta\_{11} & \theta\_{21} & \cdots & \theta\_{K1} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ \theta\_{1N} & \theta\_{2N} & \cdots & \theta\_{KN} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ \vdots \\\\ y\_{M} \end{matrix} \\right\], \ e^{X\theta} = \\left\[ \begin{matrix} e^{\theta\_{1}^{T}x\_{1}} & e^{\theta\_{2}^{T}x\_{1}} & \cdots & e^{\theta\_{K}^{T}x\_{1}} \\\\ e^{\theta\_{1}^{T}x\_{2}} & e^{\theta\_{2}^{T}x\_{2}} & \cdots & e^{\theta\_{K}^{T}x\_{2}} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ e^{\theta\_{1}^{T}x\_{M}} & e^{\theta\_{2}^{T}x\_{M}} & \cdots & e^{\theta\_{K}^{T}x\_{M}} \end{matrix} \\right\] \\)
 
 - \\(I\\) 表示 \\(Y\\) 的 \\(OneHot\\) 结果，\\(norm(e^{X\theta})\\) 表示 \\(e^{X\theta}\\) 按行归一化的结果
 

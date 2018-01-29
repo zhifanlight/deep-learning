@@ -12,7 +12,7 @@
 
 	- 在多维空间中，线性是一个超平面
 
-- 对于线性回归任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), ..., (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ ... \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
+- 对于线性回归任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), \cdots, (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left\[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ \vdots \\\\ x\_{iN} \end{matrix} \\right\]\\)，\\(y\_{i}\\) 是标量
 
 - 对于这些点，最好的拟合超平面要求总的误差最小，有以下三个标准可以选择：
 
@@ -32,7 +32,7 @@
 
 	$$ J(\theta) = \frac{1}{2} \sum\_{i=1}^{M} \left( h(x\_{i}) - y\_{i} \right)^{2} = \frac{1}{2} \sum\_{i=1}^{M} \left( \theta^{T}x\_{i} - y\_{i} \right)^{2} $$
 
-- 令 \\(X = \\left\[ \begin{matrix} x\_{10}, x\_{11}, ..., x\_{1N} \\\\ x\_{20}, x\_{21}, ..., x\_{2N} \\\\ ... \\\\ x\_{M0}, x\_{M1}, ..., x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ ... \\\\ \theta\_{N} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ ... \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(X\theta-Y = \\left\[ \begin{matrix} x\_{1}^{T}\theta - y\_{1} \\\\ x\_{2}^{T}\theta-y\_{2} \\\\ ... \\\\ x\_{M}^{T}\theta-y\_{M} \end{matrix} \\right\]\\)
+- 令 \\(X = \\left\[ \begin{matrix} x\_{10} & x\_{11} & \cdots & x\_{1N} \\\\ x\_{20} & x\_{21} & \cdots x\_{2N} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ x\_{M0} & x\_{M1} & \cdots & x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ \vdots \\\\ \theta\_{N} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ \vdots \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(X\theta-Y = \\left\[ \begin{matrix} x\_{1}^{T}\theta - y\_{1} \\\\ x\_{2}^{T}\theta-y\_{2} \\\\ \vdots \\\\ x\_{M}^{T}\theta-y\_{M} \end{matrix} \\right\]\\)
 
 ### 优化求解
 
