@@ -108,7 +108,7 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 ## 向量正交化
 
-- 将一组线性无关的 \\(N\\) 维向量 \\(\alpha\_{1}, \ \alpha\_{2}, \ ..., \ \alpha\_{M}\\\) 转换为一组正交向量 \\(\beta\_{1}, \ \beta\_{2}, \ ..., \ \beta\_{M}\\)
+- 将一组线性无关的 \\(N\\) 维向量 \\(\alpha\_{1}, \ \alpha\_{2}, \ ..., \ \alpha\_{M}\\) 转换为一组正交向量 \\(\beta\_{1}, \ \beta\_{2}, \ ..., \ \beta\_{M}\\)
 
 - 若将上述正交向量分别单位化，可以得到 \\(N\\) 维空间中的一组正交基 \\(\eta\_{1}, \ \eta\_{2}, \ ..., \ \eta\_{M}\\)
 
@@ -172,7 +172,7 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 	$$ Q^{-1}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & ... & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
 
-	- 其中，\\(\lambda\_{i}\\) 是 \\(A\\) 的第 \\(i\\) 个特征值，\\(Q\\) 的每一列是 \\(A\\) 的单位正交向量
+	- 其中，\\(\lambda\_{i}\\) 是 \\(A\\) 的第 \\(i\\) 个特征值，\\(Q\\) 的每一列是 \\(A\\) 单位正交化的特征向量
 
 - 由于 \\(QQ^{T}=I\\)，对角化结果可进一步表示为：
 
