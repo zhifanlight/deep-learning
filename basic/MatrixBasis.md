@@ -26,7 +26,7 @@ $$ tr(A)=tr(A^{T}) $$
 
 #### 性质 2：循环不变
 
-$$ tr(AB) = tr(BA), \quad tr(ABC) = tr(BCA) = tr(CAB), \quad ... $$
+$$ tr(AB) = tr(BA), \quad tr(ABC) = tr(BCA) = tr(CAB), \quad \cdots $$
 
 - 设 \\(A\\) 为 \\(M \times N\\) 矩阵，\\(B\\) 为 \\(N \times M\\) 矩阵：
 
@@ -108,9 +108,9 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 ## 向量正交化
 
-- 将一组线性无关的 \\(N\\) 维向量 \\(\alpha\_{1}, \ \alpha\_{2}, \ ..., \ \alpha\_{M}\\) 转换为一组正交向量 \\(\beta\_{1}, \ \beta\_{2}, \ ..., \ \beta\_{M}\\)
+- 将一组线性无关的 \\(N\\) 维向量 \\(\alpha\_{1}, \ \alpha\_{2}, \ \cdots, \ \alpha\_{M}\\) 转换为一组正交向量 \\(\beta\_{1}, \ \beta\_{2}, \ \cdots, \ \beta\_{M}\\)
 
-- 若将上述正交向量分别单位化，可以得到 \\(N\\) 维空间中的一组正交基 \\(\eta\_{1}, \ \eta\_{2}, \ ..., \ \eta\_{M}\\)
+- 若将上述正交向量分别单位化，可以得到 \\(N\\) 维空间中的一组正交基 \\(\eta\_{1}, \ \eta\_{2}, \ \cdots, \ \eta\_{M}\\)
 
 ### 施密特正交化
 
@@ -170,10 +170,24 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 - 对于 \\(N \times N\\) 的实对称矩阵 \\(A\\)，存在正交矩阵 \\(Q\\) 使得：
 
-	$$ Q^{-1}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & ... & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
+	$$ Q^{-1}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & \ddots & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
 
 	- 其中，\\(\lambda\_{i}\\) 是 \\(A\\) 的第 \\(i\\) 个特征值，\\(Q\\) 的每一列是 \\(A\\) 单位正交化的特征向量
 
 - 由于 \\(QQ^{T}=I\\)，对角化结果可进一步表示为：
 
-	$$ Q^{T}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & ... & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
+	$$ Q^{T}AQ = \\left[ \\begin{matrix} \lambda\_{1} & & &  \\\\ & \lambda\_{2} & & \\\\ & & \ddots & \\\\ & & & \lambda\_{N} \\end{matrix} \\right] $$
+
+## 雅各比矩阵
+
+- 假设 \\(f\\) 将 \\(N\\) 维向量 \\(x\\) 映射成 \\(M\\) 维向量 \\(y\\)，则雅各比矩阵定义如下：
+
+	$$ J = \\left[ \\begin{matrix} \frac{\partial{y\_{1}}}{\partial{x\_{1}}} & \frac{\partial{y\_{1}}}{\partial{x\_{2}}} & \cdots &  \frac{\partial{y\_{1}}}{\partial{x\_{N}}} \\\\ \frac{\partial{y\_{2}}}{\partial{x\_{1}}} & \frac{\partial{y\_{2}}}{\partial{x\_{2}}} & \cdots &  \frac{\partial{y\_{2}}}{\partial{x\_{N}}} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ \frac{\partial{y\_{M}}}{\partial{x\_{1}}} & \frac{\partial{y\_{M}}}{\partial{x\_{2}}} & \cdots & \frac{\partial{y\_{M}}}{\partial{x\_{N}}} \\end{matrix} \\right] $$
+
+- 相当于按分子布局进行列向量求导 \\(\frac{\partial{y}}{\partial{x}}\\)
+
+## 海森矩阵
+
+- 假设 \\(f\\) 将 \\(N\\) 维向量 \\(x\\) 映射成标量，则海森矩阵定义如下：
+
+	$$ J = \\left[ \\begin{matrix} \frac{\partial^{2}{f}}{\partial{x\_{1}^{2}}} & \frac{\partial^{2}{f}}{\partial{x\_{1}} \partial{x\_{2}}} & \cdots &  \frac{\partial^{2}{f}}{\partial{x\_{1}} \partial{x\_{N}}} \\\\ \frac{\partial^{2}{f}}{\partial{x\_{1}} \partial{x\_{2}}} & \frac{\partial^{2}{f}}{\partial{x\_{2}^{2}}} & \cdots & \frac{\partial^{2}{f}}{\partial{x\_{2}} \partial{x\_{N}}} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ \frac{\partial^{2}{f}}{\partial{x\_{N}} \partial{x\_{1}}} & \frac{\partial^{2}{f}}{\partial{x\_{N}} \partial{x\_{2}}} & \cdots & \frac{\partial^{2}{f}}{\partial{x\_{N}^{2}}} \\end{matrix} \\right] $$
