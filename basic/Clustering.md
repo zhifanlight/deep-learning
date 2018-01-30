@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# 聚类
+# 聚类算法
 
 ## 背景介绍
 

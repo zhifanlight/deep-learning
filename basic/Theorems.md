@@ -24,4 +24,4 @@
 
 - 对于 \\(n\\) 个独立同分布的样本，当 \\(n \rightarrow \infty\\) 时，样本均值近似服从正态分布：
 
-	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N(\mu, \frac{\sigma^{2}}{n})$$
+	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N(\mu, \frac{\sigma^{2}}{n}) $$
