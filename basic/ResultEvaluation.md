@@ -145,3 +145,15 @@
 	- 因此：
 
 	$$ S = \sum\_{i=1}^{M}R\_{i} - \sum\_{j=1}^{M}j= \sum\_{i=1}^{M}R\_{i} - \frac{M(M+1)}{2} $$
+
+## \\(IoU\\)
+
+- Intersection over Union
+
+- 目标检测中常用的衡量指标，计算 Region Proposal 与 Bounding Box 的重叠率
+
+- 假设 Region Proposal 区域为 \\(P\\)，Bounding Box 区域为 \\(B\\)，计算如下：
+
+	$$ IoU = \frac{P \cap B}{P \cup B} $$
+
+- \\(IoU\\) 越大，检测结果越准确；当 \\(IoU=1\\) 时，Region Proposal 和 Bounding Box 完全重合
