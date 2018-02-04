@@ -56,15 +56,15 @@
 
 - 由于 \\(X\theta-Y\\) 为 \\(M\\) 维列向量：
 
-	$$ \min\_{\theta} J(\theta) = \min\_{\theta} \frac{1}{2} (X\theta-Y)^{T}(X\theta-Y) $$
+	$$ \min\_{\theta} J(\theta) = \min\_{\theta} \frac{1}{2} (X\theta-Y)^{T}(X\theta-Y) + \frac{\lambda}{2} ||\theta||^{2} $$
 
 - 对 \\(J(\theta)\\) 求导可得：
 
-	$$ \nabla\_{\theta}J(\theta) = X^{T}X\theta - X^{T}Y $$
+	$$ \nabla\_{\theta}J(\theta) = X^{T}X\theta - X^{T}Y + \lambda \theta $$
 
 - 令导数为 0 可得最优解：
 
-	$$ \theta^{\*} = \left\(X^{T}X\right\)^{-1}X^{T}Y $$
+	$$ \theta^{\*} = \left\( X^{T}X + \lambda I \right\)^{-1}X^{T}Y $$
 
 ## 最小二乘概率解释
 
