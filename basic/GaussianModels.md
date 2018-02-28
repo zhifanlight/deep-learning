@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# 高斯分布
+# 高斯模型
 
 ## 概率分布
 
