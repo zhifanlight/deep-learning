@@ -128,6 +128,6 @@
 
 - 将 \\(Z\_{t}\\) 与上述不等式代入误差上限可得：
 
-	$$ \prod\_{t=1}^{T}Z\_{t} \leq \prod\_{t=1}^{T}e^{-2 \gamma\_{t}^2} \leq exp \left( - \sum\_{t=1}^{T} \gamma\_{t}^2 \right) $$
+	$$ \prod\_{t=1}^{T}Z\_{t} \leq \prod\_{t=1}^{T}e^{-2 \gamma\_{t}^2} \leq exp \left( - \sum\_{t=1}^{T} 2 \gamma\_{t}^2 \right) $$
 
 - 因此 Adaboost 误差上限较小，同时还以指数速率下降

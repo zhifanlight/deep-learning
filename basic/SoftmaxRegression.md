@@ -18,7 +18,7 @@
 
 	$$ p(y|x;\theta) = \prod\_{i=1}^{K} \phi\_{i}^{I(y=i)} $$
 	
-	- \\(\phi\_{i}\\) 表示 \\(y|x=i\\) 的概率：
+	- \\(\phi\_{i}\\) 表示 \\(y=i|x\\) 的概率：
 	
 		$$ \phi\_{i} = \frac{e^{\theta\_{i}^{T}x}}{\sum\_{j=1}^{K}e^{\theta\_{j}^{T}x}} $$
 

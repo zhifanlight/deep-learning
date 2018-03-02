@@ -30,15 +30,15 @@
 
 	$$ L(\theta) \geq \sum\_{i=1}^{m} E \left[ log \left( \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) \right] = \sum\_{i=1}^{m} \sum\_{z\_{i}} Q\_{i}(z\_{i}) \cdot log \ \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} $$
 
-	- 不等式等号成立，当且仅当 \\(\forall \ z\_{i} \rightarrow \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \equiv C\\)
+	- 等号成立当且仅当 \\(\forall \ z\_{i} \rightarrow \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \equiv C\\)
 
 - 由概率之和 \\(\sum\_{z\_{i}} Q\_{i}(z\_{i}) = 1\\)：
 
-	$$ \frac{1}{C} P(x\_{i} \ ; \theta) = \sum\_{z\_{i}} \frac{1}{C} P(x\_{i}, z\_{i} \ ; \theta) = 1 $$
+	$$ \sum\_{z\_{i}} \frac{1}{C} P(x\_{i}, z\_{i} \ ; \theta) = \frac{1}{C} P(x\_{i} \ ; \theta) = 1 $$
 
 - 由前一步推导结果：
 
-	$$ Q\_{i}(z\_{i}) = \frac{P(x\_{i}, z\_{i} \ ; \theta)}{C} = \frac{P(x\_{i} \ ; \theta) \cdot P(z\_{i}|x\_{i} \ ; \theta)}{C} = P(z\_{i}|x\_{i} \ ; \theta) $$
+	$$ Q\_{i}(z\_{i}) = \frac{P(x\_{i}, z\_{i} \ ; \theta)}{C} = \frac{P(x\_{i} \ ; \theta)}{C} \cdot P(z\_{i}|x\_{i} \ ; \theta) = P(z\_{i}|x\_{i} \ ; \theta) $$
 
 ## 一般形式
 
