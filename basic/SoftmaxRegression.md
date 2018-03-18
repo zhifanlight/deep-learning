@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# softmax 回归
+# Softmax 回归
 
 ## 背景介绍
 

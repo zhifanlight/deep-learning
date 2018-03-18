@@ -34,7 +34,7 @@ $$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \r
 
 ### 拉普拉斯核
 
-$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{\sigma} \right) \qquad \sigma > 0 $$
+$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||}{\sigma} \right) \qquad \sigma > 0 $$
 
 ### Sigmoid 核
 
