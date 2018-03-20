@@ -25,3 +25,9 @@
 - 对于 \\(n\\) 个独立同分布的样本，当 \\(n \rightarrow \infty\\) 时，样本均值近似服从正态分布：
 
 	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N(\mu, \frac{\sigma^{2}}{n}) $$
+
+## 泰勒展开
+
+- 函数 \\(f(x)\\) 的在 \\(x=a\\) 处的泰勒展开如下：
+
+	$$ f(x) = \sum\_{n=0}^{\infty} \frac{f^{n}(a)}{n!} (x-a)^{n} $$
