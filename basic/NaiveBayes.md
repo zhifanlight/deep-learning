@@ -66,6 +66,8 @@
 
 - 条件概率计算如下：
 
-	$$ P(X\_{j}=a\_{t} | Y=c\_{k}) = \frac{\lambda + \sum\_{i=1}^{M} I(x\_{ij}=a\_{t}, y\_{i}=c\_{k})}{S\_{j} \cdot \lambda + \sum\_{i=1}^{M}(y\_{i}=c\_{k})} $$
+	$$ P(X\_{j}=a\_{t} | Y=c\_{k}) = \frac{\lambda + \sum\_{i=1}^{M} I(x\_{ij}=a\_{t}, y\_{i}=c\_{k})}{|S\_{j}| \cdot \lambda + \sum\_{i=1}^{M}(y\_{i}=c\_{k})} $$
+
+	- 其中，\\(S\_{j}\\) 是 \\(x\_{j}\\) 的取值集合
 
 - \\(\lambda\\) 通常为 \\(1\\)

@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# HiddenMarkov
+# 隐马尔可夫模型
 
 ## 基本思想
 

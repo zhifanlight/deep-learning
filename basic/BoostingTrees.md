@@ -110,7 +110,7 @@
 
 	- 当 \\(y = 1\\) 时：
 
-		$$ L(y, \ f) = -y \ log \left( \frac{1} {1 + e^{-\theta^{T}x}} \right) = - log (P(y=1|x)) $$
+		$$ L(y, \ f) = -y \ log \left( \frac{1} {1 + e^{-\theta^{T}x}} \right) = - \ log (P(y=1|x)) $$
 
 	- 当 \\(y = -1\\) 时：
 
