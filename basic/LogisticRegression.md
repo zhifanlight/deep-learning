@@ -82,3 +82,29 @@
 	$$ \theta \leftarrow \theta - \eta \cdot X^{T} \left( \frac{1}{1 + e^{-X\theta}} - Y \right) $$
 
 - 与最小二乘相比，梯度的形式相同，\\(h\_{\theta}(x)\\) 的计算方式不同
+
+### 对数损失
+
+- 对数损失函数源于最大似然估计
+
+- 如果非要使用平方损失函数，会导致损失函数非凸。只考虑单个样本，证明如下：
+
+	- 对于对数损失，一阶导数如下：
+
+		$$ \frac{\partial{J(\theta)}}{\partial{\theta\_{j}}} = (h\_{\theta}(x) - y) \cdot x\_{j} $$
+
+		- 进一步，二阶导数如下：
+
+			$$ \frac{\partial^{2}(J(\theta))}{\partial{\theta\_{j}^{2}}} = h\_{\theta}(x) \cdot (1 - h\_{\theta}(x)) \cdot x\_{j}^{2} $$
+
+		- 由于 sigmoid 导数大于 \\(0\\)，二阶导数恒为正；因此对数损失为凸函数，可以收敛到全局最小值
+
+	- 对于平方损失，一阶导数如下：
+
+		$$ \frac{\partial{J(\theta)}}{\partial{\theta\_{j}}} = (h\_{\theta}(x) - y) \cdot h\_{\theta}(x) \cdot (1 - h\_{\theta}(x)) \cdot x\_{j} $$
+
+		- 进一步，二阶导数如下：
+
+			$$ \frac{\partial^{2}(J(\theta))}{\partial{\theta\_{j}^{2}}} = \left( 2h(y+1) - 3h^{2} - y \right) \cdot h \cdot (1 - h) \cdot x\_{j}^{2} $$
+			
+			- 尽管 sigmoid 导数大于 \\(0\\)，但不能保证 \\(2h(y+1) - 3h^{2} - y \geq 0\\)；因此平方损失非凸，不保证收敛到全局最小值
