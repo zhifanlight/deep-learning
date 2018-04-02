@@ -58,6 +58,10 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 		$$ \\left\\{ \begin{matrix} \lambda\_{1} + \lambda\_{2} = a + d = tr(A) \\\\ \lambda\_{1} \cdot \lambda\_{2} = ad - bc = det(A) \end{matrix} \\right. $$
 
+- 如果向量 \\(x\\) 是矩阵 \\(A\\) 的特征向量，那么向量 \\(\beta x\\) 也是其特征向量
+
+	- 因此，通常说的特征向量是指单位特征向量
+
 ## 矩阵求导
 
 - 若存在矩阵 \\(H\\) 使下式成立，则 \\(\nabla\_{X}f(X) = H\\)，
@@ -165,6 +169,16 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 - 对 \\(\beta\_{j}\\) 单位化得正交基：
 
 	$$ \eta\_{j} = \frac{\beta\_{j}}{||\beta\_{j}||\_{2}} $$
+
+## 正交矩阵
+
+- 行向量和列向量分别标准正交的矩阵：
+
+	$$ AA^{T} = A^{T}A = I $$
+
+- 正交矩阵求逆代价较小：
+
+	$$ A^{-1} = A^{T} $$
 
 ## 实对称矩阵对角化
 
