@@ -4,13 +4,13 @@
 
 ## 概率分布
 
-### 单变量
+### 一维
 
 $$ p(x) = \frac{1}{\sqrt{2 \pi} \sigma} exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) $$
 
 - 其中 \\(\mu, \ \sigma^{2}\\) 分别是均值和方差
 
-### 多元
+### 多维
 
 $$ p(x) = \frac{1}{(2 \pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} exp \left( -\frac{1}{2} (x-\mu)^{T} \Sigma^{-1} (x-\mu) \right) $$
 

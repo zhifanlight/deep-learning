@@ -24,7 +24,7 @@
 
 - 由于上述目标函数求解困难，可以进行如下转换：
 
-	$$ \max\_{w,b} \frac{2}{||w||} = \min\_{w,b} \frac{1}{2} ||w||^{2} = \min\_{w,b} \frac{1}{2} ||w||^{2} $$
+	$$ \max\_{w,b} \frac{2}{||w||} \quad \Leftrightarrow \quad \min\_{w,b} \frac{1}{2} ||w||^{2} $$
 	
 	- 约束条件为：
 		
