@@ -19,3 +19,13 @@
 - 函数 \\(f(x)\\) 的在 \\(x=a\\) 处的泰勒展开如下：
 
 	$$ f(x) = \sum\_{n=0}^{\infty} \frac{f^{n}(a)}{n!} (x-a)^{n} $$
+
+## 三次方因式分解
+
+$$ a^{3} - b^{3} = (a-b) \cdot \left( a^{2} + b^{2} + ab \right) $$
+
+$$ a^{3} + b^{3} = (a+b) \cdot \left( a^{2} + b^{2} + ab \right) $$
+
+## 分步积分
+
+$$ \int f(x) \cdot g'(x) \ dx = f(x) \cdot g(x) - \int f'(x) \cdot g(x) \ dx $$
