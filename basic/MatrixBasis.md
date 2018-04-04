@@ -18,6 +18,8 @@
 
 - 主对角线上元素之和
 
+- 特征值之和
+
 ### 迹的性质
 
 #### 性质 1：转置不变
@@ -71,6 +73,12 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 	- 其中 \\(W\\) 表示与 \\(X\\) 维度相同的任意矩阵
 
 - 由于机器学习的输出通常为标量，因此可以假设 \\(f(X) = tr(X)\\)，然后进行求导
+
+### 链式法则
+
+- 如果 \\(Y=f(X), \ Z=g(Y)\\)：
+
+	$$ \frac{\partial Z}{\partial X\_{ij}} = tr \left( \left( \frac{\partial Z}{\partial Y} \right)^{T} \frac{\partial Y}{\partial X\_{ij}} \right) $$
 
 ## 向量求导
 
