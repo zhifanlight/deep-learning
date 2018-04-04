@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# 数学定理
+# 高数基础
 
 ## Jensen 不等式
 
