@@ -155,3 +155,9 @@
 - 对于 \\(n\\) 个独立同分布的样本，当 \\(n \rightarrow \infty\\) 时，样本均值近似服从正态分布：
 
 	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N(\mu, \frac{\sigma^{2}}{n}) $$
+
+	- 其中 \\(\mu\\) 是原始样本均值，\\(\sigma^{2}\\) 是原始样本方差
+
+	- 归一化得到：
+
+		$$ \lim\_{n \rightarrow \infty} \frac{\frac{1}{n} \sum\_{i=1}^{n} x\_{i} - \mu}{\sigma \ / \sqrt{n}} \sim \ N(0, 1) $$
