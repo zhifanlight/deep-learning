@@ -20,6 +20,36 @@
 
 	- 当 \\(p(i)\\) 均匀分布，即 \\(p(1) = p(2) = \ \cdots \ = p(K)\\) 时，\\(H(p) = logK\\)
 
+		- 优化目标：
+
+			$$
+			f(p\_{1}, \ p\_{2}, \ \cdots, \ p\_{K}) = -\sum\_{k=1}^{K} p\_{k} \cdot log p\_{k}
+			$$
+		
+		- 约束条件：
+
+			$$
+			\sum\_{k=1}^{K} p\_{k} = 1
+			$$
+		
+		- 由拉格朗日乘子法：
+
+			$$ L(p, \lambda) = -\sum\_{k=1}^{K} p\_{k} \cdot log p\_{k} + \lambda \left( \sum\_{k=1}^{K} p\_{k} - 1 \right) $$
+		
+			- 计算偏导：
+
+				$$ \frac{\partial{L}}{\partial{p\_{k}}} = - \left( \frac{1}{ln2} + log\_{2}(p\_{k}) \right) - \lambda $$
+				
+				$$ \frac{\partial{L}}{\partial{\lambda}} = \sum\_{k=1}^{K} p\_{k} - 1 $$
+				
+			- 令偏导为 \\(0\\)：
+
+				$$ p\_{1} = p\_{2} = \cdots = p\_{k} = \frac{1}{K} $$
+			
+			- 代入信息熵计算公式可得：
+
+				$$ H(p) = log K $$
+
 ## 联合熵
 
 - 描述一对随机变量所需要的平均信息量
