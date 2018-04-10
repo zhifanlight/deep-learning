@@ -80,9 +80,9 @@ $$ \int f(x) \cdot g'(x) \ dx = f(x) \cdot g(x) - \int f'(x) \cdot g(x) \ dx $$
 
 		$$ \lim\_{\Delta x \rightarrow 0} \frac{f(x+\Delta x * 1) - f(x)}{\Delta x} $$
 
-- 根据链式法则，方向导数计算如下：
+- 方向导数计算如下：
 
-	$$ \lim\_{\beta \rightarrow 0} \frac{\partial f(x+\beta u)}{\partial \beta} = \lim\_{\beta \rightarrow 0} tr \left( \left( \frac{\partial f}{\partial (x+\beta u)} \right)^{T} \frac{\partial (x+\beta u)}{\partial \beta} \right) = u^{T} \nabla\_{x} f(x) $$
+	$$ \lim\_{\beta \rightarrow 0} \frac{\partial f(x+\beta u)}{\partial \beta} = u^{T} \nabla\_{x} f(x) $$
 
 - 寻找使 \\(f\\) 下降最快的方向：
 
@@ -94,4 +94,10 @@ $$ \int f(x) \cdot g'(x) \ dx = f(x) \cdot g(x) - \int f'(x) \cdot g(x) \ dx $$
 
 	$$ \min\_{u} \cos \theta $$
 
-	- 当 \\(theta=180^{\circ}\\) 时取得最小值；即沿着负梯度方向下降最快
+	- 当 \\(\theta=180^{\circ}\\) 时取得最小值；即沿着负梯度方向下降最快
+
+## 常用函数求导
+
+- 对数：
+
+	$$ \frac{d \ log\_{a}(x)}{d \ x} = \frac{1}{x \ ln \ a} $$

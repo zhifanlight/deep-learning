@@ -74,12 +74,6 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 - 由于机器学习的输出通常为标量，因此可以假设 \\(f(X) = tr(X)\\)，然后进行求导
 
-### 链式法则
-
-- 如果 \\(Y=f(X), \ Z=g(Y)\\)：
-
-	$$ \frac{\partial Z}{\partial X\_{ij}} = tr \left( \left( \frac{\partial Z}{\partial Y} \right)^{T} \frac{\partial Y}{\partial X\_{ij}} \right) $$
-
 ## 向量求导
 
 - 假设 \\(x = \\left[ \begin{matrix} x\_{1} \\\\ x\_{2} \\\\ x\_{3} \end{matrix} \\right], \ y = \\left[ \begin{matrix} y\_{1} \\\\ y\_{2} \end{matrix} \\right]\\) 都是列向量，\\(z\\) 是标量
