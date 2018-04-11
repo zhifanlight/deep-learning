@@ -161,3 +161,33 @@
 	- 归一化得到：
 
 		$$ \lim\_{n \rightarrow \infty} \frac{\frac{1}{n} \sum\_{i=1}^{n} x\_{i} - \mu}{\sigma \ / \sqrt{n}} \sim \ N(0, 1) $$
+
+## 马尔可夫不等式
+
+- 对于随机变量 \\(X\\) 与给定值 \\(a\\)：
+
+	$$ P(X \geq a) \leq \frac{\mu}{a} $$
+
+	- 越大于平均值，概率越低
+
+## 切比雪夫不等式
+
+- 对于随机变量 \\(X\\) 与给定值 \\(\epsilon\\)：
+
+	$$ P(|X-\mu| \geq \epsilon) \leq \frac{\sigma^{2}}{\epsilon^{2}} $$
+	
+	- 越偏离平均值，概率越低
+
+- 切比雪夫不等式是马尔可夫不等式的一个特例：
+
+	- 将 \\(|X-\mu|\\) 和 \\(\epsilon\\) 代入马尔可夫不等式：
+
+		$$ P(|X-\mu| \geq \epsilon) \leq \frac{E(|X-\mu|)}{\epsilon} $$
+		
+	- 由于 \\(P(|X-\mu| \geq \epsilon)\\) 等价于 \\(P(|X-\mu|^{2} \geq \epsilon^{2})\\)，代入上式可得：
+
+		$$ P(|X-\mu|^{2} \geq \epsilon^{2}) \leq \frac{E \left( (X-E(x))^{2} \right)}{\epsilon^{2}} $$
+	
+	- 因此：
+
+		$$ P(|X-\mu| \geq \epsilon) \leq \frac{\sigma^{2}}{\epsilon^{2}} $$
