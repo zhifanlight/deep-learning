@@ -64,6 +64,42 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 	- 因此，通常说的特征向量是指单位特征向量
 
+## 矩阵的秩
+
+- 矩阵中最大的线性无关向量个数：
+
+	- 行秩：矩阵中最大的线性无关行向量个数
+
+	- 列秩：矩阵中最大的线性无关列向量个数
+
+	- 秩：矩阵的秩等于其行秩，也等于其列秩
+
+- 对于 \\(M \times N\\) 的矩阵 \\(A\\)，当 \\(R(A) = \min \\{M, N\\}\\) 时，矩阵 \\(A\\) 为满秩矩阵
+
+### 秩与非零解
+
+- 判断 \\(Av=0\\) 是否有解，可以转化 \\(A\\) 的列向量能否通过线性组合成为零向量
+
+- 对于 \\(M \times N\\) 的矩阵，当 \\(M < N\\) 时一定有非零解：
+
+	- 以 \\(2 \times 3\\) 矩阵 \\(A = \\left[ \begin{matrix} a & b & c \\\\ d & e & f \end{matrix} \\right]\\\) 为例，此时 \\(v\\) 可表示为 \\(\left[ \begin{matrix} x \\\\ y \\\\ z \end{matrix} \\right]\\)
+
+	- 代入矩阵可得：
+
+		$$ \\left\\{ \begin{matrix} ax + by + cz = 0 \\\\ dx + ey + fz = 0 \end{matrix} \\right. $$
+	
+	- 整理上式可得：
+
+		$$ \\left[ \begin{matrix} a \\\\ d \end{matrix} \\right]x + \\left[ \begin{matrix} b \\\\ e \end{matrix} \\right]y + \\left[ \begin{matrix} c \\\\ f \end{matrix} \\right]z = \\left[ \begin{matrix} 0 \\\\ 0 \end{matrix} \\right] $$
+
+	- 由于 \\(A\\) 的秩不超过 \\(2\\)，上述 \\(3\\) 个列向量必然线性相关，即存在非零解
+
+- 对于 \\(N \times N\\) 的方阵 \\(A\\)：
+
+	- 当 \\(A\\) 满秩时，不存在非零解
+
+	- 当 \\(A\\) 不满秩时，存在非零解
+
 ## 矩阵求导
 
 - 若存在矩阵 \\(H\\) 使下式成立，则 \\(\nabla\_{X}f(X) = H\\)，
