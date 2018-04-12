@@ -82,7 +82,7 @@ $$ tr(\alpha \cdot A + \beta \cdot B) = \alpha \cdot tr(A) + \beta \cdot tr(B) $
 
 - 对于 \\(M \times N\\) 的矩阵，当 \\(M < N\\) 时一定有非零解：
 
-	- 以 \\(2 \times 3\\) 矩阵 \\(A = \\left[ \begin{matrix} a & b & c \\\\ d & e & f \end{matrix} \\right]\\\) 为例，此时 \\(v\\) 可表示为 \\(\left[ \begin{matrix} x \\\\ y \\\\ z \end{matrix} \\right]\\)
+	- 以 \\(2 \times 3\\) 矩阵 \\(A = \\left[ \begin{matrix} a & b & c \\\\ d & e & f \end{matrix} \\right]\\) 为例，此时 \\(v\\) 可表示为 \\(\left[ \begin{matrix} x \\\\ y \\\\ z \end{matrix} \\right]\\)
 
 	- 代入矩阵可得：
 

@@ -296,7 +296,7 @@
 
 - 基于概率模型，可以计算样本属于每一类的概率
 
-- 关于高斯混合模型，参考 [GaussianModels.md]()
+- 关于高斯混合模型，参考 [GaussianModels.md](GaussianModels.md)
 
 ### SOM
 
