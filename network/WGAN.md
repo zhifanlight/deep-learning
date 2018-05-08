@@ -30,34 +30,34 @@
 
 - 此时 \\(G\_{loss}\\) 计算如下：
 
-	$$ \mathbb{E}\_{x \sim p\_{r}(x)}[logD^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2log2 $$
+	$$ \mathbb{E}\_{x \sim p\_{r}(x)}[\log D^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[\log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2\log2 $$
 
 - 对 \\(KL(p\_{g}||p\_{r})\\) 做如下变换：
 
 	$$
-	\begin{align\*}
-	KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
-	\end{align\*}
+	\begin{aligned}
+	KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log D^{\*}(x)\right] \newline
+	\end{aligned}
 	$$
 
 - 综合上式可得：
 
 	$$
-	\begin{align\*}
-	\mathbb{- \ E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
-	&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{r}}[log D^{\*}(x)]] \newline
+	\begin{aligned}
+	\mathbb{- \ E}\_{x \sim p\_{g}(x)} \left[\log D^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log(1 - D^{\*}(x))\right] \newline
+	&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2\log2 - \mathbb{E}\_{x \sim p\_{r}}[\log D^{\*}(x)]] \newline
 	&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + Const \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 
 - 最小化 \\(- 2JS(p\_{r}||p\_{g})\\) 意味着最大化 \\(p\_{r}\\) 与 \\(p\_{g}\\) 之间的差距，导致生成器不稳定
 
 - \\(KL\\) 散度的不对称性，会导致模式崩溃：
 
-	$$ \\left\\{ \begin{matrix} p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 \quad & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
+	$$ \\left\\{ \begin{matrix} p\_{g}(x)\log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 \quad & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)\log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
 			
 	- 前者表示生成器没能生成数据集中存在的样本
 

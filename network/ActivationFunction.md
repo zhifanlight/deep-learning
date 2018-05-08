@@ -52,11 +52,11 @@
 
 - 由于上述方法无法避免下溢，当需要计算 log softmax 时存在以下问题：
 
-	- 某个 \\(x\_{i}\\) 太小，其 softmax 值为 0，而 \\(log(0) =- \infty\\)
+	- 某个 \\(x\_{i}\\) 太小，其 softmax 值为 0，而 \\(\log(0) =- \infty\\)
 
-- 通常不计算 softmax，直接 log 值：
+- 通常不计算 softmax，而是直接 log softmax 值：
 
-	$$ log \left( \frac{e^{x\_{i}}}{\sum\_{j}e^{x\_{j}}} \right) = log \left( \frac{e^{x\_{i}-M}}{\sum\_{j}e^{x\_{j}-M}} \right) = (x\_{i} - M) - log \left( \sum\_{j}e^{x\_{j}-M} \right) $$
+	$$ \log \left( \frac{e^{x\_{i}}}{\sum\_{j}e^{x\_{j}}} \right) = \log \left( \frac{e^{x\_{i}-M}}{\sum\_{j}e^{x\_{j}-M}} \right) = (x\_{i} - M) - \log \left( \sum\_{j}e^{x\_{j}-M} \right) $$
 
 	- 都减去最大值 \\(M\\)，保证了不会上溢
 
@@ -108,7 +108,7 @@
 
 - 原函数、导数分别如下：
 	
-	$$ f(x) = max \ (x, 0) \qquad f'(x) = \\left\\{ \begin{matrix} 1, \quad x \geq 0 \\\\ 0, \quad x < 0 \end{matrix} \\right\. $$
+	$$ f(x) = \max \ (x, 0) \qquad f'(x) = \\left\\{ \begin{matrix} 1, \quad x \geq 0 \\\\ 0, \quad x < 0 \end{matrix} \\right\. $$
 	
 	![img](images/relu.png)
 
@@ -178,7 +178,7 @@
 
 - 原函数、导数分别如下：
 
-	$$f(x) = log \ (1 + e^{x}) \qquad f'(x) = \frac{1}{1 + e^{-x}}$$
+	$$f(x) = \log \ (1 + e^{x}) \qquad f'(x) = \frac{1}{1 + e^{-x}}$$
 	
 	![img](images/softplus.png)
 
@@ -198,7 +198,7 @@
 
 - （二元）原函数、导数分别如下：
 
-	$$ f(x) = max \ (w\_{1}^{T}x + b\_{1}, w\_{2}^{T}x + b\_{2}) \qquad f'(x) = \\left\\{ \begin{matrix} w\_{1}, \quad w\_{1}^{T}x + b\_{1} \geq w\_{2}^{T}x + b\_{2} \\\\ w\_{2} , \quad w\_{1}^{T}x + b\_{1} < w\_{2}^{T}x + b\_{2} \end{matrix} \\right\. $$
+	$$ f(x) = \max \ (w\_{1}^{T}x + b\_{1}, w\_{2}^{T}x + b\_{2}) \qquad f'(x) = \\left\\{ \begin{matrix} w\_{1}, \quad w\_{1}^{T}x + b\_{1} \geq w\_{2}^{T}x + b\_{2} \\\\ w\_{2} , \quad w\_{1}^{T}x + b\_{1} < w\_{2}^{T}x + b\_{2} \end{matrix} \\right\. $$
 
 #### 优点
 

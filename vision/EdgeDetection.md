@@ -57,14 +57,14 @@
 - 4 邻域 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 0 & 1 & 0 \\\\ 1 & -4 & 1 \\\\ 0 & 1 & 0 \\end{matrix} \\right] \\) 推导：
 	
 	$$
-	\begin{align\*}
+	\begin{aligned}
 	\frac{\partial^{2} f}{\partial x^{2}} &= \left[ f(x + 1, y) - f(x, y) \right] - \left[ f(x, y) - f(x - 1, y) \right] \newline
 	&= f(x + 1, y) + f(x - 1, y) - 2 * f(x, y) \newline \newline
 	\frac{\partial^{2} f}{\partial y^{2}} &= \left[ f(x, y + 1) - f(x, y) \right] - \left[ f(x, y) - f(x, y - 1) \right] \newline
 	&= f(x, y + 1) + f(x, y - 1) - 2 * f(x, y) \newline \newline
 	\nabla^{2}f &= \frac{\partial^{2} f}{\partial x^{2}} + \frac{\partial^{2} f}{\partial y^{2}} \newline
 	&= f(x - 1, y) + f(x + 1, y) + f(x, y - 1) + f(x, y + 1) - 4 * f(x, y) \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 
 - 同理可得，8 邻域 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 1 & 1 & 1 \\\\ 1 & -8 & 1 \\\\ 1 & 1 & 1 \\end{matrix} \\right] \\)

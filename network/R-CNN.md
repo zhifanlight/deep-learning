@@ -92,9 +92,9 @@ $$ \hat{G\_{y}} = P\_{h} d\_{y}(P) + P\_{y} $$
 
 #### 缩放
 
-$$ \hat{G\_{w}} = P\_{w} exp(d\_{w}(P)) $$
+$$ \hat{G\_{w}} = P\_{w} \exp(d\_{w}(P)) $$
 
-$$ \hat{G\_{h}} = P\_{h} exp(d\_{h}(P)) $$
+$$ \hat{G\_{h}} = P\_{h} \exp(d\_{h}(P)) $$
 
 - 对缩放比 \\(d\_{\*} = \frac{\hat{G\_{\*}}}{P\_{\*}}\\) 做对数变换，可能是由数据本身性质决定：
 
@@ -114,9 +114,9 @@ $$ \hat{G\_{h}} = P\_{h} exp(d\_{h}(P)) $$
 
 	- 缩放尺度：
 
-		$$ t\_{w} = log \left( \frac{G\_{w}}{P\_{w}} \right) $$
+		$$ t\_{w} = \log \left( \frac{G\_{w}}{P\_{w}} \right) $$
 		
-		$$ t\_{h} = log \left( \frac{G\_{h}}{P\_{h}} \right) $$
+		$$ t\_{h} = \log \left( \frac{G\_{h}}{P\_{h}} \right) $$
 
 - 由于物体特征由同一个 CNN 提取，对 \\(t\_{\*}\\) 的学习，本质上是对 \\(w\_{\*}\\) 的学习
 

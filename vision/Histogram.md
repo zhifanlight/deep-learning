@@ -72,7 +72,7 @@
 	
 	- 相交性：值越大，相似性越高
 	
-		$$ d(H _{1}, H _{2}) = \sum _{p} min(H _{1} (p), H _{2} (p)) $$
+		$$ d(H _{1}, H _{2}) = \sum _{p} \min(H _{1} (p), H _{2} (p)) $$
 
 	- 卡方距离：值越小，相似性越高
 	
@@ -146,4 +146,4 @@ similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT)
 similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
 
 similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA)
-# ```
+```

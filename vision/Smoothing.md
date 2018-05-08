@@ -30,7 +30,7 @@
 		
 - 通过二维高斯分布计算高斯核：
 
-	$$ G(x, y) = \frac {1} { 2 \pi \sigma \_{1} \sigma \_{2} } exp \left( - \frac {(x - \mu \_{x} ) ^ {2}} {2 \sigma \_{1} ^ {2}} - \frac {(y - \mu \_{y}) ^ {2}} {2 \sigma \_{2} ^ {2}} \right) $$
+	$$ G(x, y) = \frac {1} { 2 \pi \sigma \_{1} \sigma \_{2} } \exp \left( - \frac {(x - \mu \_{x} ) ^ {2}} {2 \sigma \_{1} ^ {2}} - \frac {(y - \mu \_{y}) ^ {2}} {2 \sigma \_{2} ^ {2}} \right) $$
 
 - 对高斯核进行缩放，使所有 cell 和为 1，并用缩放后的高斯核对图像进行卷积
 
@@ -42,7 +42,7 @@
 
 - \\( k \\) 为归一化系数；\\( p(x, y) \\) 表示 \\( (x, y) \\) 点的像素值；\\( s(a, b, x, y) \\) 表示 \\( (a, b) \\) 和 \\( (x, y) \\) 两个点空间距离的高斯值；\\( c(x, y) \\) 表示 \\( x, y \\) 两种像素值距离的高斯值
 
-	$$ \\left\\{ \begin{matrix} c(x, y) = exp \left( - \frac {(x - y) ^ 2} {2 \sigma \_{c} ^{2}} \right) \\\\ s(a, b, x, y) = exp \left( - \frac {(a - x) ^ {2} + (b - y) ^ {2}} {2 \sigma \_{s} ^ {2}} \right) \\\\ k(x, y) = \iint s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \\\\ G(x, y) = k(x, y) ^ {-1} \iint p(a, b) \cdot s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \end{matrix} \\right.$$
+	$$ \\left\\{ \begin{matrix} c(x, y) = \exp \left( - \frac {(x - y) ^ 2} {2 \sigma \_{c} ^{2}} \right) \\\\ s(a, b, x, y) = \exp \left( - \frac {(a - x) ^ {2} + (b - y) ^ {2}} {2 \sigma \_{s} ^ {2}} \right) \\\\ k(x, y) = \iint s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \\\\ G(x, y) = k(x, y) ^ {-1} \iint p(a, b) \cdot s(a, b, x, y) \cdot c(p(a, b), p(x, y)) dadb \end{matrix} \\right.$$
 
 ## Python 实现
 

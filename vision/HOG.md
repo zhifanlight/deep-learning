@@ -28,7 +28,7 @@
 
 	- 方向：
 
-		$$ \alpha(x,y) = arc \ tan \left( \frac{G\_{y}(x,y)}{G\_{x}(x,y)}\right) $$
+		$$ \alpha(x,y) = \arctan \left( \frac{G\_{y}(x,y)}{G\_{x}(x,y)}\right) $$
 
 ### cell 处理
 

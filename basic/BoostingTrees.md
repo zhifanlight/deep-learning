@@ -102,27 +102,27 @@
 
 - 损失函数为对数损失：
 
-	$$ L(y, \ f) = log \left( 1 + e^{-2yf} \right) \qquad y \in \\{-1, +1\\} $$
+	$$ L(y, \ f) = \log \left( 1 + e^{-2yf} \right) \qquad y \in \\{-1, +1\\} $$
 
 	- 其中 \\(f\\) 为对数几率的一半：
 
-		$$ f = \frac{1}{2} ln \frac{P(y=1|x)}{P(y=-1|x)} = \frac{1}{2} \theta^{T}x $$
+		$$ f = \frac{1}{2} \ln \frac{P(y=1|x)}{P(y=-1|x)} = \frac{1}{2} \theta^{T}x $$
 
 	- 当 \\(y = 1\\) 时：
 
-		$$ L(y, \ f) = -y \ log \left( \frac{1} {1 + e^{-\theta^{T}x}} \right) = - \ log (P(y=1|x)) $$
+		$$ L(y, \ f) = -y \ \log \left( \frac{1} {1 + e^{-\theta^{T}x}} \right) = - \ \log (P(y=1|x)) $$
 
 	- 当 \\(y = -1\\) 时：
 
-		$$ L(y, \ f) = -log \left( \frac{1} {1 + e^{\theta^{T}x}} \right) = -log \left( 1 - \frac{1} {1 + e^{-\theta^{T}x}} \right) = -log(1 - P(y=1|x)) $$
+		$$ L(y, \ f) = -\log \left( \frac{1} {1 + e^{\theta^{T}x}} \right) = -\log \left( 1 - \frac{1} {1 + e^{-\theta^{T}x}} \right) = -\log(1 - P(y=1|x)) $$
 
 - 响应值 \\(r\_{t, \ i}\\) 计算如下：
 
-	$$ r\_{t, \ i} = - \left[ \frac{\partial{L \left(y\_{i}, \ f\_{t-1}(x\_{i}) \right)}}{\partial{f\_{t-1}(x\_{i})}} \right] = \frac{2y\_{i}}{1 + exp \left( 2y\_{i} \cdot f\_{t-1}(x\_{i}) \right)} $$
+	$$ r\_{t, \ i} = - \left[ \frac{\partial{L \left(y\_{i}, \ f\_{t-1}(x\_{i}) \right)}}{\partial{f\_{t-1}(x\_{i})}} \right] = \frac{2y\_{i}}{1 + \exp \left( 2y\_{i} \cdot f\_{t-1}(x\_{i}) \right)} $$
 
 - 拟合 \\(r\_{t, \ i}\\) 的最优参数 \\(\theta^{\*}\_{t}\\) 计算如下：
 
-	$$ \theta^{\*}\_{t} = \arg \min\_{\theta} \sum\_{x \in R\_{t, \ j}} log \left( 1 + exp \left( -2y\_{i} \left( f\_{t-1}(x\_{i}) + \theta\_{t} \right) \right) \right) $$
+	$$ \theta^{\*}\_{t} = \arg \min\_{\theta} \sum\_{x \in R\_{t, \ j}} \log \left( 1 + \exp \left( -2y\_{i} \left( f\_{t-1}(x\_{i}) + \theta\_{t} \right) \right) \right) $$
 	
 	- 由于上式计算量较大，通常使用如下近似：
 

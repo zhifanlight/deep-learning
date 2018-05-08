@@ -22,7 +22,7 @@
 
 - 逆文档频率（inverse document frequency）
 
-- 与 \\( df\_{t} \\) 负相关：\\(idf_{t} = lg \frac {N} {df\_{t}}\\)
+- 与 \\( df\_{t} \\) 负相关：\\(idf_{t} = \lg \frac {N} {df\_{t}}\\)
 
 - \\(idf\\) 越大，词项越重要
 

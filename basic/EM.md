@@ -20,15 +20,15 @@
 
 - 对数似然函数如下：
 
-	$$ L(\theta) = \sum\_{i=1}^{m} log \ P(x\_{i} \ ; \theta) = \sum\_{i=1}^{m} log \left( \sum\_{z\_{i}} P(x\_{i}, z\_{i} \ ; \theta)\right) $$
+	$$ L(\theta) = \sum\_{i=1}^{m} \log \ P(x\_{i} \ ; \theta) = \sum\_{i=1}^{m} \log \left( \sum\_{z\_{i}} P(x\_{i}, z\_{i} \ ; \theta)\right) $$
 
 - 假设 \\(Q\_{i}(z\_{i})\\) 是概率分布，\\(L(\theta)\\) 可推导为：
 
-	$$ L(\theta) = \sum\_{i=1}^{m} log \left( \sum\_{z\_{i}} Q\_{i}(z\_{i}) \cdot \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) = \sum\_{i=1}^{m} log \ E \left[ \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right] $$
+	$$ L(\theta) = \sum\_{i=1}^{m} \log \left( \sum\_{z\_{i}} Q\_{i}(z\_{i}) \cdot \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) = \sum\_{i=1}^{m} \log \ E \left[ \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right] $$
 
-- 由于对数函数 \\(log\\) 为凹函数，由 Jensen 不等式：
+- 由于对数函数 \\(\log\\) 为凹函数，由 Jensen 不等式：
 
-	$$ L(\theta) \geq \sum\_{i=1}^{m} E \left[ log \left( \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) \right] = \sum\_{i=1}^{m} \sum\_{z\_{i}} Q\_{i}(z\_{i}) \cdot log \ \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} $$
+	$$ L(\theta) \geq \sum\_{i=1}^{m} E \left[ \log \left( \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) \right] = \sum\_{i=1}^{m} \sum\_{z\_{i}} Q\_{i}(z\_{i}) \cdot \log \ \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} $$
 
 	- 等号成立当且仅当 \\(\forall \ z\_{i} \rightarrow \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \equiv C\\)
 
@@ -48,4 +48,4 @@ $$ Q\_{i}(z\_{i}) = P(z\_{i}|x\_{i} \ ; \theta) $$
 
 ### M 步
 
-$$ \theta = \begin{equation} \mathop{\arg\max}_{\theta} \sum\_{i=1}^{m} \sum\_{z\_{i}} \left( Q\_{i}(z\_{i}) \cdot log \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) \end{equation} $$
+$$ \theta = \arg\max_{\theta} \sum\_{i=1}^{m} \sum\_{z\_{i}} \left( Q\_{i}(z\_{i}) \cdot \log \frac{P(x\_{i}, z\_{i} \ ; \theta)}{Q\_{i}(z\_{i})} \right) $$

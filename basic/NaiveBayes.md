@@ -37,11 +37,11 @@
 	- 当 \\(x\\) 固定时，\\(P(X=x)\\) 为常量；因此后验概率计算如下：
 
 		$$
-		\begin{align\*}
+		\begin{aligned}
 		P(Y=c\_{k} | X=x) &\propto P(X=x, Y=c\_{k}) \newline
 		&= P(Y=c\_{k}) \cdot P(X=x | Y=c\_{k}) \newline
 		&= P(Y=c\_{k}) \prod\_{j=1}^{N} P(X\_{j}=x\_{j} | Y=c\_{k}) \newline
-		\end{align\*}
+		\end{aligned}
 		$$
 
 	- 选择最大 \\(P(Y=c\_{k} | X=x)\\) 对应的 \\(c\_{k}\\) 作为最终类别标签

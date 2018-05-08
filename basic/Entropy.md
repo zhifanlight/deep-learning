@@ -8,7 +8,7 @@
 
 - 假设 \\(p\\) 是样本的真实分布，则熵计算如下：
 
-	$$ H(p) = -\sum_{i} p(i) \cdot log \ p(i) $$
+	$$ H(p) = -\sum_{i} p(i) \cdot \log \ p(i) $$
 
 	- 底数是 \\(2\\) 时，单位是比特
 
@@ -38,7 +38,7 @@
 		
 			- 计算偏导：
 
-				$$ \frac{\partial{L}}{\partial{p\_{k}}} = - \left( \frac{1}{ln2} + \log p\_{k} \right) - \lambda $$
+				$$ \frac{\partial{L}}{\partial{p\_{k}}} = - \left( \frac{1}{\ln2} + \log p\_{k} \right) - \lambda $$
 				
 				$$ \frac{\partial{L}}{\partial{\lambda}} = \sum\_{k=1}^{K} p\_{k} - 1 $$
 				
@@ -56,49 +56,49 @@
 
 - 假设 \\(X, Y\\) 是一对离散型随机变量，\\((X,Y) \sim p(x,y)\\)，则联合熵计算如下：
 
-	$$ H(X,Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ p(x,y) $$
+	$$ H(X,Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot \log \ p(x,y) $$
 
 - 推导过程：
 
 	$$
-	\begin{align\*}
+	\begin{aligned}
 	H(X,Y) &= \sum\_{x \in X} p(x) \cdot H(x, Y) \newline
-	&= \sum\_{x \in X} p(x) \cdot \left[ -\sum\_{y \in Y|x} p(y) \cdot log \ p(x,y) \right] \newline
-	&= -\sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \ p(x,y)
-	\end{align\*}
+	&= \sum\_{x \in X} p(x) \cdot \left[ -\sum\_{y \in Y|x} p(y) \cdot \log \ p(x,y) \right] \newline
+	&= -\sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot \log \ p(x,y)
+	\end{aligned}
 	$$
 
 ## 条件熵
 
 - 对于联合分布 \\((X,Y)\\)，在已知 \\(Y\\) 时，描述 \\(X\\) 所需要的平均信息量，计算如下：
 
-	$$ H(X|Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \ p(x|y) $$
+	$$ H(X|Y) = -\sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot \log \ p(x|y) $$
 
 - 推导过程：
 
 	$$
-	\begin{align\*}
+	\begin{aligned}
 	H(X|Y) &= \sum\_{y \in Y} p(y) \cdot H(X|y) \newline
-	&= \sum\_{y \in Y} p(y) \cdot \left[ -\sum\_{x \in X|y} p(x) \cdot log \ p(x|y) \right] \newline
-	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ p(x|y)
-	\end{align\*}
+	&= \sum\_{y \in Y} p(y) \cdot \left[ -\sum\_{x \in X|y} p(x) \cdot \log \ p(x|y) \right] \newline
+	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot \log \ p(x|y)
+	\end{aligned}
 	$$
 
 ## 互信息
 
 - 表示联合分布 \\(X, Y\\) 的依赖程度，计算如下：
 	
-	$$ I(X;Y) = \sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \frac{p(x,y)}{p(x) \cdot p(y)} $$
+	$$ I(X;Y) = \sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot \log \frac{p(x,y)}{p(x) \cdot p(y)} $$
 
 - 互信息为熵与条件熵之差，\\(I(X;Y) = H(X) - H(X|Y)\\)：
 
 	$$
-	\begin{align\*}
-	I(X;Y) &= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \frac{p(x,y)}{p(x) \cdot p(y)} \newline
-	&= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \frac{p(x,y)}{p(y)} - \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot log \ p(x) \newline
-	&= -H(X|Y) - \sum\_{x \in X} p(x) \cdot log \ p(x) \newline
+	\begin{aligned}
+	I(X;Y) &= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot \log \frac{p(x,y)}{p(x) \cdot p(y)} \newline
+	&= \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot \log \frac{p(x,y)}{p(y)} - \sum\_{x \in X} \sum\_{y \in Y|x} p(x,y) \cdot \log \ p(x) \newline
+	&= -H(X|Y) - \sum\_{x \in X} p(x) \cdot \log \ p(x) \newline
 	&= H(X) - H(X|Y) \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 
 ## 相对熵（\\(KL\\) 散度）
@@ -107,22 +107,22 @@
 
 - 衡量假设分布 \\(q\\) 与真实分布 \\(p\\) 之间的差距，计算如下：
 
-	$$ KL(p||q) = \sum\_{i} p(i) \cdot log \frac{p(i)}{q(i)} $$
+	$$ KL(p||q) = \sum\_{i} p(i) \cdot \log \frac{p(i)}{q(i)} $$
 
 - \\(KL\\) 散度不满足对称性：\\(KL(p||q) \neq KL(q||p)\\)
 
 - \\(KL(p||q) \geq 0\\) 恒成立，当且仅当 \\(p=q\\) 时等号成立。证明：
 
 	$$
-	\begin{align\*}
-	prior \qquad &lnx \leq (x-1) \qquad \forall x \newline \newline
+	\begin{aligned}
+	prior \qquad &\ln x \leq (x-1) \qquad \forall x \newline \newline
 	set \qquad f &= -KL(p||q) \newline
-	&= \sum\_{i} p(i) \cdot log \frac{q(i)}{p(i)} \newline
+	&= \sum\_{i} p(i) \cdot \log \frac{q(i)}{p(i)} \newline
 	&\leq \sum\_{i} p(i) \cdot (\frac{q(i)}{p(i)} - 1) \newline
 	&= \sum\_{i} (q(i) - p(i)) \newline
 	&= 0 \newline \newline
 	\Rightarrow \qquad &KL(p||q) \geq 0
-	\end{align\*}
+	\end{aligned}
 	$$
 
 - 最小化 \\(KL\\) 散度等价于最大化对数似然函数。证明：
@@ -130,12 +130,12 @@
 	- 用 \\(q(x;\theta)\\) 来近似真实分布 \\(p(x)\\)，已知来自 \\(p(x)\\) 的样本集 \\(S = {x\_{1}, x\_{2}, \cdots, x\_{N}}\\)：
 
 		$$
-		\begin{align\*}
-		min \ KL(p||q) &= \sum\_{i} p(i) \cdot log \ \frac{p(i)}{q(i)} \newline
-		&= \sum\_{i} p(i) \cdot (log \ p(i) - log \ q(i)) \newline
-		&= \sum\_{x \in S} \frac{1}{N} \cdot \left(log \ \frac{1}{N}  - log \ q(x;\theta) \right) \newline \newline
-		min \ KL(p||q) &= max \ \sum\_{x \in S} log\ q(x;\theta)
-		\end{align\*}
+		\begin{aligned}
+		\min \ KL(p||q) &= \sum\_{i} p(i) \cdot \log \ \frac{p(i)}{q(i)} \newline
+		&= \sum\_{i} p(i) \cdot (\log \ p(i) - \log \ q(i)) \newline
+		&= \sum\_{x \in S} \frac{1}{N} \cdot \left(\log \ \frac{1}{N}  - \log \ q(x;\theta) \right) \newline \newline
+		\min \ KL(p||q) &= \max \ \sum\_{x \in S} \log\ q(x;\theta)
+		\end{aligned}
 		$$
 
 ## 交叉熵
@@ -144,7 +144,7 @@
 
 - 衡量假设分布 \\(q\\) 与真实分布 \\(p\\) 之间的差距，计算如下：
 
-	$$ H(p,q) = -\sum\_{i}p(i) \cdot log \ q(i) $$
+	$$ H(p,q) = -\sum\_{i}p(i) \cdot \log \ q(i) $$
 	
 - 在真实分布 \\(p\\) 已知的情况下，交叉熵与相对熵在行为上等价：都反应真实分布 \\(p\\) 和假设分布 \\(q\\) 的差距
 
@@ -155,36 +155,36 @@
 ### Sigmoid 交叉熵
 
 $$
-\begin{align\*}
-H &= -y \cdot log \ p - (1 - y) \cdot log \ (1 - p) \newline
-&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot log \ \left( 1 - \frac{1}{1 + exp(-x)} \right) \newline
-&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot log \ \left(\frac{exp(-x)}{1 + exp(-x)} \right) \newline
-&= -y \cdot log \ \left( \frac{1}{1 + exp(-x)} \right) - (1 - y) \cdot \left(-x + log \ \left(\frac{1}{1 + exp(-x)}\right) \right) \newline
-&= (1 - y) \cdot x - log \ \left(\frac{1}{1 + exp(-x)}\right) \newline
-&= x - xy + log \ (1 + exp(-x)) \newline
-\end{align\*}
+\begin{aligned}
+H &= -y \cdot \log \ p - (1 - y) \cdot \log \ (1 - p) \newline
+&= -y \cdot \log \ \left( \frac{1}{1 + \exp(-x)} \right) - (1 - y) \cdot \log \ \left( 1 - \frac{1}{1 + \exp(-x)} \right) \newline
+&= -y \cdot \log \ \left( \frac{1}{1 + \exp(-x)} \right) - (1 - y) \cdot \log \ \left(\frac{\exp(-x)}{1 + \exp(-x)} \right) \newline
+&= -y \cdot \log \ \left( \frac{1}{1 + \exp(-x)} \right) - (1 - y) \cdot \left(-x + \log \ \left(\frac{1}{1 + \exp(-x)}\right) \right) \newline
+&= (1 - y) \cdot x - \log \ \left(\frac{1}{1 + \exp(-x)}\right) \newline
+&= x - xy + \log \ (1 + \exp(-x)) \newline
+\end{aligned}
 $$
 
-- 当 \\(x < 0\\) 时，为避免 \\(exp(-x)\\) 溢出，可对上式进行变换：
+- 当 \\(x < 0\\) 时，为避免 \\(\exp(-x)\\) 溢出，可对上式进行变换：
 
 	$$
-	\begin{align\*}
-	H &= x - xy + log \ (1 + exp(-x)) \newline
-	&= -xy + log \ exp(x) + log \ (1 + exp(-x)) \newline
-	&= -xy + log \ (exp(x) + 1) \newline
-	\end{align\*}
+	\begin{aligned}
+	H &= x - xy + \log \ (1 + \exp(-x)) \newline
+	&= -xy + \log \ \exp(x) + \log \ (1 + \exp(-x)) \newline
+	&= -xy + \log \ (\exp(x) + 1) \newline
+	\end{aligned}
 	$$
 	
 - 综上所述，Sigmoid 交叉熵计算如下：
 
-	$$H = max(x, 0) - xy + log(1 + exp(-|x|))$$
+	$$H = \max(x, 0) - xy + \log(1 + \exp(-|x|))$$
 
 ### Softmax 交叉熵
 
 - 首先计算预测输出的 Softmax 值：
 
-	$$p\_{i} = \frac{exp(x\_{i})}{\sum\_{j}exp(x\_{j})}$$
+	$$p\_{i} = \frac{\exp(x\_{i})}{\sum\_{j}\exp(x\_{j})}$$
 
 - 计算真实类别与预测输出的交叉熵：
 
-	$$H = -\sum\_{i}y\_{i} \cdot log \ p\_{i}$$
+	$$H = -\sum\_{i}y\_{i} \cdot \log \ p\_{i}$$

@@ -21,11 +21,11 @@
 - 对于给定实例 \\(x\\)，其最近邻的 \\(k\\) 个样本集合为 \\(N(x)\\)，覆盖 \\(N(x)\\) 的类别是 \\(c\_{j}\\)，那么误分类率是：
 
 	$$
-	\begin{align\*}
+	\begin{aligned}
 	\epsilon &= \frac{1}{k} \sum\_{x\_{i} \in N(x)} I(y\_{i} \neq c\_{j}) \newline
 	&= \frac{1}{k} \sum\_{x\_{i} \in N(x)} \left( 1 - I(y\_{i} = c\_{j}) \right) \newline
 	&= 1 - \frac{1}{k} \sum\_{x\_{i} \in N(x)} I(y\_{i} = c\_{j}) \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 	
 	- 多数表决等价于最大化 \\(\sum\_{x\_{i} \in N(x)}\\)，等价于最小化经验风险
@@ -40,7 +40,7 @@
 
 - 时间复杂度：
 
-	$$ T(n) = 2 \cdot T(\frac{n}{2}) + n \quad \Rightarrow \quad T(n) = O(nlogn) $$
+	$$ T(n) = 2 \cdot T(\frac{n}{2}) + n \quad \Rightarrow \quad T(n) = O(n \log n) $$
 
 ## 维度灾难
 

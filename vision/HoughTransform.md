@@ -12,11 +12,11 @@
 
 	![img](images/hough_polar_coords.png)
 	
-	- 红色直线可表示为：\\(y = \left(-\frac{cos\theta}{sin\theta}\right)x + \left(\frac{r}{sin\theta}\right)\\)
+	- 红色直线可表示为：\\(y = \left(-\frac{\cos\theta}{\sin\theta}\right)x + \left(\frac{r}{\sin\theta}\right)\\)
 	
-	- 进一步化简得到：\\(r = x \cdot cos\theta + y \cdot sin\theta\\)
+	- 进一步化简得到：\\(r = x \cdot \cos\theta + y \cdot \sin\theta\\)
 
-	- 一般来说，经过点 \\((x\_{0}, y\_{0})\\) 的一族直线可定义为：\\(r = x\_{0} \cdot cos\theta + y\_{0} \cdot sin\theta\\)，形状为正弦曲线；而曲线上的每个 \\((r, \theta)\\) 点都代表一条经过 \\((x\_{0}, y\_{0})\\) 的直线
+	- 一般来说，经过点 \\((x\_{0}, y\_{0})\\) 的一族直线可定义为：\\(r = x\_{0} \cdot \cos\theta + y\_{0} \cdot \sin\theta\\)，形状为正弦曲线；而曲线上的每个 \\((r, \theta)\\) 点都代表一条经过 \\((x\_{0}, y\_{0})\\) 的直线
 
 	- 如果两族直线 \\(r\_{\theta\_{1}}, r\_{\theta\_{2}}\\) 在 \\(r-\theta\\) 平面内相交于点 \\((r\_{0}, \theta\_{0})\\)，说明该点代表的直线同时经过 \\((x\_{1}, y\_{1}), \ (x\_{2}, y\_{2})\\)，即两点在同一条直线上
 

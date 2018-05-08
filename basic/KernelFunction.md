@@ -42,17 +42,17 @@ $$ K(x\_{i},x\_{j}) = x\_{i}^{T} x\_{j} $$
 
 ### 高斯核（RBF 核）
 
-$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \right) \qquad \sigma > 0 $$
+$$ K(x\_{i},x\_{j}) = \exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \right) \qquad \sigma > 0 $$
 
 - 高斯核将数据从原始空间映射到无穷维：
 
 	- 高斯核带宽 \\(\sigma\\) 不影响数据维度，对高斯核化简可得：
 
-		$$ K(x,y) = exp \left( -||x||^{2} \right) \cdot exp \left( -||y||^{2} \right) \cdot exp \left( 2x^{T}y \right) $$
+		$$ K(x,y) = \exp \left( -||x||^{2} \right) \cdot \exp \left( -||y||^{2} \right) \cdot \exp \left( 2x^{T}y \right) $$
 		
 	- 根据泰勒公式：
 
-		$$ K(x,y) = exp \left( -||x||^{2} \right) \cdot exp \left( -||y||^{2} \right) \cdot \sum\_{n=0} \frac{\left( 2x^{T}y \right)^{n}}{n!} $$
+		$$ K(x,y) = \exp \left( -||x||^{2} \right) \cdot \exp \left( -||y||^{2} \right) \cdot \sum\_{n=0} \frac{\left( 2x^{T}y \right)^{n}}{n!} $$
 		
 		- 高斯核本质是无穷多个多项式核累加
 
@@ -60,7 +60,7 @@ $$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||^{2}}{2\sigma^{2}} \r
 
 ### 拉普拉斯核
 
-$$ K(x\_{i},x\_{j}) = exp \left( -\frac{||x\_{i} - x\_{j}||}{\sigma} \right) \qquad \sigma > 0 $$
+$$ K(x\_{i},x\_{j}) = \exp \left( -\frac{||x\_{i} - x\_{j}||}{\sigma} \right) \qquad \sigma > 0 $$
 
 ### Sigmoid 核
 

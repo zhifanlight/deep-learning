@@ -28,7 +28,7 @@
 
 	- 计算分类器 \\(h\_{t}(x)\\) 的权重 \\(\alpha\_{t}\\)：
 
-		$$ \alpha\_{t} = \frac{1}{2} ln \left( \frac{1-e\_{t}}{e\_{t}} \right) $$
+		$$ \alpha\_{t} = \frac{1}{2} \ln \left( \frac{1-e\_{t}}{e\_{t}} \right) $$
 	
 	- 更新样本权重：
 	
@@ -69,14 +69,14 @@
 - 将上式代入误差上限可得：
 
 	$$
-	\begin{align\*}
-	\frac{1}{M} \sum\_{i=1}^{M} e^{-y\_{i}H(x\_{i})} &= \sum\_{i=1}^{M} W\_{1,i} \cdot exp \left( \sum\_{t=1}^{T} -\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i}) \right) \newline
-	&= \sum\_{i=1}^{M} W\_{1,i} \cdot \prod\_{t=1}^{T} exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
-	&= \sum\_{i=1}^{M} W\_{1,i} \cdot exp(-\alpha\_{1} \cdot y\_{i} \cdot h\_{1}(x\_{i})) \cdot \prod\_{t=2}^{T} exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
-	&= Z\_{1} \cdot \sum\_{i=1}^{M} W\_{2,i} \cdot \prod\_{t=2}^{T} exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
+	\begin{aligned}
+	\frac{1}{M} \sum\_{i=1}^{M} e^{-y\_{i}H(x\_{i})} &= \sum\_{i=1}^{M} W\_{1,i} \cdot \exp \left( \sum\_{t=1}^{T} -\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i}) \right) \newline
+	&= \sum\_{i=1}^{M} W\_{1,i} \cdot \prod\_{t=1}^{T} \exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
+	&= \sum\_{i=1}^{M} W\_{1,i} \cdot \exp(-\alpha\_{1} \cdot y\_{i} \cdot h\_{1}(x\_{i})) \cdot \prod\_{t=2}^{T} \exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
+	&= Z\_{1} \cdot \sum\_{i=1}^{M} W\_{2,i} \cdot \prod\_{t=2}^{T} \exp(-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})) \newline
 	&= \prod\_{t=1}^{T}Z\_{t} \cdot \sum\_{i=1}^{M} W\_{t+1,i} \newline
 	&= \prod\_{t=1}^{T}Z\_{t} \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 
 - 因此，在每一轮训练弱分类器 \\(h\_{t}(x)\\) 时，应最小化归一化因子 \\(Z\_{t}\\)
@@ -86,17 +86,17 @@
 - 对于每一个 \\(\alpha\_{t}\\)，都要最小化损失函数 \\(Z\_{t}\\)：
 
 	$$
-	\begin{align\*}
+	\begin{aligned}
 	Z\_{t} &= \sum\_{i=1}^{M} W\_{t,i} \cdot e^{-\alpha\_{t} \cdot y\_{i} \cdot h\_{t}(x\_{i})} \newline
 	&= \sum\_{y\_{i}=h\_{t}(x\_{i})} W\_{t,i} \cdot e^{-\alpha\_{t}} + \sum\_{y\_{i} \neq h\_{t}(x\_{i})} W\_{t,i} \cdot e^{\alpha\_{t}} \newline
 	&= e^{-\alpha\_{t}} \cdot \sum\_{y\_{i}=h\_{t}(x\_{i})} W\_{t,i} \cdot I(h\_{t}(x\_{i}) = y\_{i}) + e^{\alpha\_{t}} \cdot \sum\_{y\_{i} \neq h\_{t}(x\_{i})} W\_{t,i} \cdot I(h\_{t}(x\_{i}) \neq y\_{i}) \newline
 	&= e^{-\alpha\_{t}} \cdot (1 - e\_{t}) + e^{\alpha\_{t}} \cdot e\_{t} \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 
 - 计算 \\(\frac{\partial Z\_{t}}{\partial \alpha\_{t}}\\) 并令偏导数为 \\(0\\) 可得：
 
-	$$ \alpha\_{t} = \frac{1}{2} ln \left( \frac{1-e\_{t}}{e\_{t}} \right) $$
+	$$ \alpha\_{t} = \frac{1}{2} \ln \left( \frac{1-e\_{t}}{e\_{t}} \right) $$
 
 #### 样本权重
 
@@ -128,6 +128,6 @@
 
 - 将 \\(Z\_{t}\\) 与上述不等式代入误差上限可得：
 
-	$$ \prod\_{t=1}^{T}Z\_{t} \leq \prod\_{t=1}^{T}e^{-2 \gamma\_{t}^2} \leq exp \left( - \sum\_{t=1}^{T} 2 \gamma\_{t}^2 \right) $$
+	$$ \prod\_{t=1}^{T}Z\_{t} \leq \prod\_{t=1}^{T}e^{-2 \gamma\_{t}^2} \leq \exp \left( - \sum\_{t=1}^{T} 2 \gamma\_{t}^2 \right) $$
 
 - 因此 Adaboost 误差上限较小，同时还以指数速率下降
