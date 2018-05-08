@@ -10,7 +10,8 @@ clip = os.popen('pbpaste').read()
 
 clip = clip.replace(r'\\(', '`$').replace(r'\\)', '$`')
 clip = clip.replace(r'\\', '\\').replace(r'\_', '_').replace(r'\*', '*').replace(r'\.', '.')
-clip = clip.replace(r'\\newline', '\\\\')
+clip = clip.replace(r'\newline', '\\\\')
+clip = clip.replace(r'\*', '*')
 clips = clip.split('\n')
 
 ans = ''
