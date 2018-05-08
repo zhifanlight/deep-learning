@@ -38,7 +38,7 @@
 
 - 事件的几率表示事件发生概率与不发生概率的比值，对数几率计算如下：
 
-	$$ logit(p) = log \frac{p}{1-p} = g(x) $$
+	$$ logit(p) = \log \frac{p}{1-p} = g(x) $$
 
 - 假设后验概率服从伯努利分布，于是：
 
@@ -48,15 +48,15 @@
 
 	$$
 	\begin{align\*}
-	log \ L(\theta) &= log \ \prod\_{i=1}^{M} \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
-	&= \sum\_{i=1}^{M} log \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
-	&= \sum\_{i=1}^{M} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) \newline
+	\log \ L(\theta) &= \log \ \prod\_{i=1}^{M} \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
+	&= \sum\_{i=1}^{M} \log \ (h\_{\theta}(x\_{i}))^{y\_{i}} \cdot (1 - h\_{\theta}(x\_{i}))^{1-y\_{i}} \newline
+	&= \sum\_{i=1}^{M} \left( y\_{i} \cdot \log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot \log \ (1 - h\_{\theta}(x\_{i})) \right) \newline
 	\end{align\*}
 	$$
 
 - 由于最大化对数似然函数等于最小化损失函数，损失函数计算如下：
 
-	$$ J(\theta) = - \sum\_{i=1}^{M} \left( y\_{i} \cdot log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot log \ (1 - h\_{\theta}(x\_{i})) \right) $$
+	$$ J(\theta) = - \sum\_{i=1}^{M} \left( y\_{i} \cdot \log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot \log \ (1 - h\_{\theta}(x\_{i})) \right) $$
 
 - 令 \\(X = \\left\[ \begin{matrix} x\_{10} & x\_{11} & \cdots & x\_{1N} \\\\ x\_{20} & x\_{21} & \cdots & x\_{2N} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ x\_{M0} & x\_{M1} & \cdots & x\_{MN} \end{matrix} \\right\], \ \theta = \\left\[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ \vdots \\\\ \theta\_{N} \end{matrix} \\right\], \ Y = \\left\[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ \vdots \\\\ y\_{M} \end{matrix} \\right\] \\)，则 \\(\frac{1}{1 + e^{-X\theta}}-Y = \\left\[ \begin{matrix} \frac{1}{1 + e^{-x\_{1}^{T}\theta}}-y\_{1} \\\\ \frac{1}{1 + e^{-x\_{2}^{T}\theta}}-y\_{2} \\\\ \vdots \\\\ \frac{1}{1 + e^{-x\_{M}^{T}\theta}}-y\_{M} \end{matrix} \\right\]\\)
 
@@ -108,3 +108,33 @@
 			$$ \frac{\partial^{2}(J(\theta))}{\partial{\theta\_{j}^{2}}} = \left( 2h(y+1) - 3h^{2} - y \right) \cdot h \cdot (1 - h) \cdot x\_{j}^{2} $$
 			
 			- 尽管 sigmoid 导数大于 \\(0\\)，但不能保证 \\(2h(y+1) - 3h^{2} - y \geq 0\\)；因此平方损失非凸，不保证收敛到全局最小值
+
+### sigmoid 函数
+
+- 由最大熵模型：
+
+	$$ P\_{w}(y|x) = \frac{1}{Z\_{w}(x)} \exp \left( \sum\_{i=1}^{n} w\_{i} \cdot f\_{i}(x,y) \right) $$
+
+	- 其中 \\(Z\_{w}(x)\\) 是归一化参数：
+
+		$$ Z\_{w}(x) = \sum\_{y} \exp \left( \sum\_{i=1}^{n} w\_{i} \cdot f\_{i}(x,y) \right) $$
+
+	- \\(f\_{i}(x,y)\\) 是第 \\(i\\) 个特征函数，\\(w\_{i}\\) 是对应权重
+
+	- 关于最大熵，参考 [MaximumEntropy.md](MaximumEntropy.md)
+
+- 定义逻辑回归的特征函数为：
+
+	$$ f(x,y) = \\left\\{ \begin{matrix} g(x), & y = 1 \\\\ 0, & y = 0 \end{matrix} \\right\. $$
+	
+	- 即，只抽取正样本的特征
+
+- 代入 \\(P\_{w}(y|x)\\) 可推导出 sigmoid 函数：
+
+	$$
+	\begin{aligned}
+	P(y=1|x) &= \frac{\exp ( w \cdot f(x, y = 1) ) }{\exp(w \cdot f(x, y = 0)) + \exp(w \cdot f(x, y = 1))} \newline
+	&= \frac{1}{1 + \exp ( - w \cdot f(x, y = 1) )} \newline
+	&= \frac{1}{1 + \exp ( - w \cdot g(x) )}
+	\end{aligned}
+	$$
