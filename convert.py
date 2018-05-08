@@ -8,7 +8,9 @@ change markdown syntax from MacDown to YouDaoYun Note
 
 clip = os.popen('pbpaste').read()
 
-clip = clip.replace(r'\\(', '`$').replace(r'\\)', '$`').replace(r'\\', '\\').replace(r'\_', '_').replace(r'\*', '*')
+clip = clip.replace(r'\\(', '`$').replace(r'\\)', '$`')
+clip = clip.replace(r'\\', '\\').replace(r'\_', '_').replace(r'\*', '*').replace(r'\.', '.')
+clip = clip.replace(r'\\newline', '\\\\')
 clips = clip.split('\n')
 
 ans = ''
