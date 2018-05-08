@@ -14,16 +14,16 @@
 
 	- 底数是 \\(e\\) 时，单位是奈特
 
-- 熵的取值范围是 \\([0, logK]\\)，其中 \\(K\\) 是样本的取值个数
+- 熵的取值范围是 \\([0, \log K]\\)，其中 \\(K\\) 是样本的取值个数
 
 	- 当只有一项 \\(p(i)\\) 取值为 \\(1\\)，而其他 \\(p(i)\\) 取值均为 \\(0\\) 时，\\(H(p) = 0\\)
 
-	- 当 \\(p(i)\\) 均匀分布，即 \\(p(1) = p(2) = \ \cdots \ = p(K)\\) 时，\\(H(p) = logK\\)
+	- 当 \\(p(i)\\) 均匀分布，即 \\(p(1) = p(2) = \ \cdots \ = p(K)\\) 时，\\(H(p) = \log K\\)
 
 		- 优化目标：
 
 			$$
-			f(p\_{1}, \ p\_{2}, \ \cdots, \ p\_{K}) = -\sum\_{k=1}^{K} p\_{k} \cdot log p\_{k}
+			f(p\_{1}, \ p\_{2}, \ \cdots, \ p\_{K}) = -\sum\_{k=1}^{K} p\_{k} \cdot \log p\_{k}
 			$$
 		
 		- 约束条件：
@@ -34,11 +34,11 @@
 		
 		- 由拉格朗日乘子法：
 
-			$$ L(p, \lambda) = -\sum\_{k=1}^{K} p\_{k} \cdot log p\_{k} + \lambda \left( \sum\_{k=1}^{K} p\_{k} - 1 \right) $$
+			$$ L(p, \lambda) = -\sum\_{k=1}^{K} p\_{k} \cdot \log p\_{k} + \lambda \left( \sum\_{k=1}^{K} p\_{k} - 1 \right) $$
 		
 			- 计算偏导：
 
-				$$ \frac{\partial{L}}{\partial{p\_{k}}} = - \left( \frac{1}{ln2} + log\_{2}(p\_{k}) \right) - \lambda $$
+				$$ \frac{\partial{L}}{\partial{p\_{k}}} = - \left( \frac{1}{ln2} + \log p\_{k} \right) - \lambda $$
 				
 				$$ \frac{\partial{L}}{\partial{\lambda}} = \sum\_{k=1}^{K} p\_{k} - 1 $$
 				
@@ -48,7 +48,7 @@
 			
 			- 代入信息熵计算公式可得：
 
-				$$ H(p) = log K $$
+				$$ H(p) = \log K $$
 
 ## 联合熵
 
@@ -80,24 +80,17 @@
 	\begin{align\*}
 	H(X|Y) &= \sum\_{y \in Y} p(y) \cdot H(X|y) \newline
 	&= \sum\_{y \in Y} p(y) \cdot \left[ -\sum\_{x \in X|y} p(x) \cdot log \ p(x|y) \right] \newline
-	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ p(x|y) \newline
-	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ \frac{p(x,y)}{p(y)}
+	&= -\sum\_{y \in Y} \sum\_{x \in X|y} p(x,y) \cdot log \ p(x|y)
 	\end{align\*}
 	$$
 
-- 条件熵是联合熵、信息熵之差：
-
-	$$ H(X|Y) = H(X,Y) - H(Y) $$
-
 ## 互信息
 
-- 对于联合分布 \\((X,Y)\\)，描述 \\(X, Y\\) 的依赖程度，计算如下：
+- 表示联合分布 \\(X, Y\\) 的依赖程度，计算如下：
 	
 	$$ I(X;Y) = \sum\_{x \in X} \sum\_{y \in Y} p(x,y) \cdot log \frac{p(x,y)}{p(x) \cdot p(y)} $$
 
-- 上式为广义 \\(KL\\) 散度，\\(KL = 0\\) 当且仅当  \\(p(x,y) = p(x) \cdot p(y)\\)，即 \\(X,Y\\) 相互独立
-
-- 在已知 \\(Y\\) 时，描述 \\(X\\) 节省的平均信息量，即 \\(I(X;Y) = H(X) - H(X|Y)\\)。证明：
+- 互信息为熵与条件熵之差，\\(I(X;Y) = H(X) - H(X|Y)\\)：
 
 	$$
 	\begin{align\*}
@@ -107,14 +100,6 @@
 	&= H(X) - H(X|Y) \newline
 	\end{align\*}
 	$$
-	
-## 信息增益
-
-- 与互信息相比，计算方式相同，意义不同：
-
-	- 在计算互信息时，\\(Y\\) 是普通的随机事件
-
-	- 在计算信息增益时，\\(Y\\) 是 \\(X\\) 的分类方式
 
 ## 相对熵（\\(KL\\) 散度）
 
