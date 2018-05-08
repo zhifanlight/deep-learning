@@ -14,62 +14,56 @@
 
 ## 原始 GAN 缺点
 
-### 形式一：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[log(1 - D(G(z)))]\\)
+### 梯度消失
 
-- 判别器训练的不好不坏才行，容易导致梯度消失，不容易控制：
+- 容易落入判别器的 sigmoid 饱和区间，导致梯度消失
 
-	- 由于真实分布、生成分布基本不重叠，\\(JS(p\_{r}||p\_{g}) = log2\\)（参考 [DistanceMetrics.md] (../basic/DistanceMetrics.md)）
+### 模式崩溃
 
-	- 当判别器最优时，\\(V(D^{*},G) = 2JS(p\_{r}||p\_{g}) - 2log2\\)（参考 [GAN.md] (GAN.md)）
+- 不使用 logD trick，训练前期容易导致梯度消失
 
-	- 梯度近似为 \\(0\\)，导致生成器的训练无法继续
+- 使用 logD trick，容易导致模式崩溃
 
-	- 判别器训练的不好，生成器梯度不准，到处乱跑
+- 最优判别器如下：
 
-	- 判别器训练的太好，生成器梯度消失，无法继续
+	$$ D^{\*}(x) = \frac{p\_{r}(x)}{p\_{r}(x) + p\_{g}(x)} $$
 
-### 形式二：\\(G\_{loss} = \mathbb{E}\_{z \sim p\_{z}(z)}[-log(D(G(z)))]\\)
+- 此时 \\(G\_{loss}\\) 计算如下：
 
-- 由于度量距离的不合理，导致生成器不稳定，以及样本多样性不足：
+	$$ \mathbb{E}\_{x \sim p\_{r}(x)}[logD^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2log2 $$
 
-	- 在最优判别器下（参考 [GAN.md] (GAN.md)）：
+- 对 \\(KL(p\_{g}||p\_{r})\\) 做如下变换：
 
-		$$
-		\\left\\{ \begin{matrix} D^{\*}(x) = \frac{p\_{r}(x)}{p\_{r}(x) + p\_{g}(x)} \\\\ \mathbb{E}\_{x \sim p\_{r}(x)}[logD^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2log2 \end{matrix} \\right\.
-		$$
+	$$
+	\begin{align\*}
+	KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
+	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
+	\end{align\*}
+	$$
 
-	- 而 \\(KL(p\_{g}||p\_{r})\\) 可做如下变形：
+- 综合上式可得：
 
-		$$
-		\begin{align\*}
-		KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
-		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
-		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
-		&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] \newline
-		\end{align\*}
-		$$
-	
-	- 综合上式得：
+	$$
+	\begin{align\*}
+	\mathbb{- \ E}\_{x \sim p\_{g}(x)} \left[logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
+	&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{r}}[log D^{\*}(x)]] \newline
+	&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + Const \newline
+	\end{align\*}
+	$$
 
-		$$
-		\begin{align\*}
-		\mathbb{E}\_{x \sim p\_{g}(x)} \left[-logD^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[log(1 - D^{\*}(x))\right] \newline
-		&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2log2 - \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))]] \newline
-		&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + 2log2 + \mathbb{E}\_{x \sim p\_{g}(x)}[log(1 - D^{\*}(x))] \newline
-		\end{align\*}
-		$$
-	
-	- 后两项与生成器无关，最小化 \\(G\_{loss}\\) 意味着最小化 \\(KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g})\\)：
+- 最小化 \\(- 2JS(p\_{r}||p\_{g})\\) 意味着最大化 \\(p\_{r}\\) 与 \\(p\_{g}\\) 之间的差距，导致生成器不稳定
 
-		- 减去 \\(JS\\) 散度，意味着最大化 \\(p\_{r}\\) 与 \\(p\_{g}\\) 之间的差距，导致生成器不稳定
+- \\(KL\\) 散度的不对称性，会导致模式崩溃：
 
-		- 而 \\(KL\\) 散度的不对称性，导致了样本的多样性不足，即 collapse mode：
-
-			$$ \\left\\{ \begin{matrix} p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
+	$$ \\left\\{ \begin{matrix} p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 \quad & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
 			
-			- 前者对应没能生成真实样本，后者对应生成了不真实的样本
+	- 前者表示生成器没能生成数据集中存在的样本
 
-			- 由于惩罚代价不同，生成器尽可能少生成真实样本，也不生成不真实样本，导致了样本多样性不足
+	- 后者表示生成器生成了数据集中不存在的样本
+
+	- 由于惩罚代价不同，生成器尽量生成一些重复但“安全”的样本，也不生成不存在的样本，最终导致了模式崩溃
 
 ## 模型改善
 
