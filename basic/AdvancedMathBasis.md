@@ -101,3 +101,9 @@ $$ \int f(x) \cdot g'(x) \ dx = f(x) \cdot g(x) - \int f'(x) \cdot g(x) \ dx $$
 - 对数：
 
 	$$ \frac{d \ \log\_{a}x}{d \ x} = \frac{1}{x \ \ln \ a} $$
+
+## 链式法则
+
+- 假设 \\(z = f(x, y)\\)，其中 \\(x = g(t), \ y = h(t)\\)，那么：
+
+	$$ \frac{\partial{z}}{\partial{t}} = \frac{\partial{z}}{\partial{x}} \cdot \frac{\partial{x}}{\partial{t}} + \frac{\partial{z}}{\partial{y}} \cdot \frac{\partial{y}}{\partial{t}}$$
