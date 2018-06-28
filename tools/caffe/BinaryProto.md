@@ -6,14 +6,14 @@
 
 - 记录输入数据中每个像素点、每个通道的均值
 
-- 对于 M * N 的彩色图像，均值文件维度为 1 * 3 * M * N
+- 对于 M * N 的彩色图像，binaryproto 文件维度为 1 * 3 * M * N
 
 ## Shell 实现
 
 ### 写入
 
 ```
-$CAFFE_ROOT/build/tools/compute_image_mean train_data mean.binaryproto
+$CAFFE_ROOT/build/tools/compute_image_mean train_lmdb mean.binaryproto
 ```
 
 ## Python 实现

@@ -12,7 +12,25 @@
 
 - 常用于单标签分类问题
 
-- 由于 Caffe 内部按照 b、g、r 三个通道分别存储图像，在生成 lmdb 数据时要调节矩阵维度
+- Caffe 内部按 B、G、R 三个通道分别存储数据，需要对图像进行维度变换
+
+## Shell 实现
+
+### 写入
+
+```
+DATA='inputs'
+
+TRAIN='inputs/train/'
+VAL='inputs/val/'
+
+HEIGHT=0
+WIDTH=0
+
+GLOG_logtostderr=1 $CAFFE_ROOT/build/tools/convert_imageset --resize_height=$HEIGHT --resize_width=$WIDTH --shuffle $VAL $DATA/val.txt $DATA/val_lmdb
+
+GLOG_logtostderr=1 $CAFFE_ROOT/build/tools/convert_imageset --resize_height=$HEIGHT --resize_width=$WIDTH --shuffle $TRAIN $DATA/train.txt $DATA/train_lmdb
+```
 
 ## Python 实现
 
@@ -38,19 +56,32 @@ with environment.begin(write=True) as transaction:
 		transaction.put(key, datum.SerializeToString())
 ```
 
-### 读取
+#### 读取指定图片
 
 ```
 environment = lmdb.open('train_data', readonly=True)
-	
+datum = caffe.proto.caffe_pb2.Datum()
+
 with environment.begin() as transaction:
 	raw_datum = transaction.get('00000001')
-		
-datum = caffe.proto.caffe_pb2.Datum()
-datum.ParseFromString(raw_datum)
+	datum.ParseFromString(raw_datum)
+	label = datum.label
+	data = caffe.io.datum_to_array(datum)
+    image = data.transpose(1, 2, 0)
+    cv2.imwrite('lmdb.jpg', image)
+```
 
-x = numpy.fromstring(datum.data, dtype=numpy.uint8)
-data = x.reshape(datum.channels, datum.height, datum.width)
-data = numpy.transpose(data, (1, 2, 0))
-label = datum.label
+#### 读取所有图片
+
+```
+environment = lmdb.open('train_data', readonly=True)
+datum = caffe.proto.caffe_pb2.Datum()
+
+with environment.begin() as transaction:
+    for key, value in transaction.cursor():
+        datum.ParseFromString(value)
+        label = datum.label
+        data = caffe.io.datum_to_array(datum)
+        image = data.transpose(1, 2, 0)
+        cv2.imwrite('lmdb.jpg', image)
 ```
