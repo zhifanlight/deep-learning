@@ -22,6 +22,8 @@
 
 	- 误差平方和最小：计算方便，反映欧式距离
 
+- 使用 L1 正则项时称为 Lasso Regression，使用 L2 正则项时称为 Ridge Regression
+
 ## 数学推导
 
 ### 模型建立

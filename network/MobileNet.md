@@ -24,7 +24,7 @@
 
 ### 网络结构
 
-- 由于 max pooling 会造成信息永久丢失，用 \\(stride = 2\\) 的卷积层代替
+- 不使用 pooling 层，在 depthwise 卷积层中使用步长为 \\(2\\) 的 \\(3 \times 3\\) 卷积
 
 - 网络的第一层是标准卷积层，最后一层通过 global average pooling 后进行 softmax 分类，中间层结构如下：
 
@@ -54,9 +54,15 @@
 
 	$$ T = \frac{1}{N} + \frac{1}{D\_{K}^{2}} $$
 
-	- 对于 \\(3 \times 3\\) 卷积，加速 \\(8-9\\) 倍
+	- 对于 \\(3 \times 3\\) 卷积，理论上加速 \\(8-9\\) 倍
 
-- 对于分类任务，运行速度是 VGG 的 32 倍，准确率接近
+	- 使用 Caffe 训练时，实际速度较慢：
+
+		- Caffe 的 group 卷积按 group 依次运行，无法充分发挥 GPU 优势
+
+		- 内核函数多次启动导致的额外时间，进一步降低了运行速度
+
+- 对于分类任务，运行速度是 VGG 的 27 倍，准确率接近
 
 - 对于检测任务，相比 Faster R-CNN 和 SSD，准确率有所下降，但速度提升较大
 
@@ -117,6 +123,8 @@
 ### 网络结构
 
 - 网络第一层是标准卷积层，最后一层通过 average pooling 后进行 softmax 分类
+
+- 不使用 pooling 层，在 depthwise 卷积层中使用步长为 \\(2\\) 的 \\(3 \times 3\\) 卷积
 
 - 结合 Linear Bottleneck 和 Inverted Residual 的思想，进行卷积分解时，第二个 pointwise 卷积后不使用 ReLU 激活函数
 

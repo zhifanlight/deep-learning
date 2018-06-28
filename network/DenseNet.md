@@ -38,7 +38,7 @@
 
 - 两个 Dense 块之间的层称为 transition 层：
 
-	- 通常包含一个 Batch Normalization 层、一个 \\(1 \times 1\\) 卷积层、一个池化层
+	- 通常包含一个 Batch Normalization 层、一个 \\(1 \times 1\\) 卷积层、一个 \\(2 \times 2\\) 的 average-pooling 层
 
 ## 主要改进
 

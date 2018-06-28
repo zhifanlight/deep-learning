@@ -94,6 +94,8 @@
 
 - 可以对 Region Proposal 进行微调得到蓝色框 \\(\hat{G\_{}}\\)，使其更接近 Bounding Box，以提高检测精度
 
+- 实验结果表明，当 Region Proposal 与 Ground Truth 的 \\(IoU \geq 0.6\\) 时，作为 Bounding Box 的训练样本效果较好
+
 - 每个框都可以用 \\((x, \ y, \ w, \ h)\\) 表示，其中 \\(x, \ y\\) 是中心坐标，\\(w, \ h\\) 是宽和高
 
 - Bounding Box Regression 的目标就是寻找一个映射 \\(f\\)：
