@@ -53,7 +53,7 @@
 
 	$$ \frac{\partial{E\_{s}}}{\partial{w\_{ji}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} \cdot \frac{\partial{x\_{j}^{l}}}{\partial{w\_{ji}^{l}}} = \frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} \cdot z\_{i}^{l-1} $$
 
-	- 对于输出层，\\(x\_{j}^{l}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{d}\\)，因此：
+	- 对于输出层，\\(x\_{j}^{l}\\) 通过影响 \\(y\_{i}\\) 直接作用于 \\(E\_{s}\\)，因此：
 
 		$$
 		\begin{align\*}

@@ -58,25 +58,39 @@
 
 - CNN 输入包含两部分：
 
-	- 图像：待检测图像
+	- 图像：待检测图像（受限于显存容量，短边缩放到为 600）
 	
 	- ROI：类别 \\(u\\)、Bounding Box 目标 \\(v = (v\_{x}, v\_{y}, v\_{w}, v\_{h})\\)
 
 ### fine-tuning
 
-- 从 VGG 的 conv3_1 层开始进行 fine-tuning
+- 只对 VGG 的全连接层 fine-tuning 时效果较差，因此从 conv3_1 层开始进行 fine-tuning
 
 - 损失函数包含两部分：
 
-	- 多分类的 Softmax 损失
+	- 分类网络的 Softmax 交叉熵
 
-	- Bounding Box 的 Smooth L1 损失：
+	- Bounding Box 网络的 Smooth L1 损失：
 
-		$$ L\_{bb} = \sum\_{i \in \\{x, y, w, h\\}} Smooth\_{L\_{1}} (t\_{i}^{u} - v\_{i}) $$
+		$$ L\_{bb} = \sum\_{i \in \\{x, y, w, h\\}} [u \geq 1] \cdot Smooth\_{L\_{1}} (t\_{i}^{u} - v\_{i}) $$
 		
 		- 其中 \\(Smooth\_{L\_{1}}\\) 损失定义如下：
 
 			$$ Smooth\_{L\_{1}} = \left\\{ \begin{matrix} 0.5 x^{2} \ \ \ \ \ \quad |x| \leq 1 \\\\ |x| - 0.5 \quad |x| > 1 \end{matrix} \right. $$
+
+- 损失函数计算如下：
+
+	$$ L = L\_{cls}(p, u) + \lambda \cdot L\_{bb} $$
+	
+	- 超参数 \\(\lambda = 1\\)
+
+- 为了减少卷积层的计算量，训练时首先随机选取两张图片，之后从每张图片上选取 64 个 ROI 区域，共 128 个样本组成一个 batch
+
+	- 每个 batch 包含 32 个正样本，96 个负样本
+
+	- 将 \\(IoU \geq 0.5\\) 的 Region Proposal 视为 Ground Truth 对应的类
+
+	- 将 \\(0.1 < IoU < 0.5\\) 的 Region Proposal 视为背景类
 
 ## 特征提取
 
@@ -128,7 +142,7 @@
 
 	- 将 \\(0.1 \leq IoU < 0.5\\) 的 Region Proposal 视为负样本
 
-- 使用的数据增强技术为按 \\(50\%\\) 的概率对输入图像进行随机翻转
+- 按 \\(0.5\\) 的概率对输入图像随机翻转，进行数据增强
 
 ### 全连接层提速
 
@@ -156,4 +170,4 @@
 
 		- 当 \\(t < \min(u,v)\\) 时，可以实现全连接层提速
 
-- 在 Fast R-CNN 中使用 SVD，可以将速度提高 \\(30\%\\)，却基本不会损失检测精度
+- 在 Fast R-CNN 中使用 SVD，可以将速度提高 \\(30\%\\)，基本不会损失精度

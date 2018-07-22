@@ -60,7 +60,7 @@ ShuffleNet | 结构 | Yes
 
 	![img](images/compression_pruning.png)
 
-### 权值量化与共享
+### 权值共享与量化
 
 - 将同一层的所有权值划分为 \\(k\\) 个簇，计算每个权值对应聚类中心：
 
@@ -348,7 +348,7 @@ ShuffleNet | 结构 | Yes
 
 	- 步长为 \\(1\\) 时，卷积分支与 shortcut 分支直接相加，第二个 pointwise 卷积是为了匹配 shortcut 特征图的通道数
 
-	- 步长为 \\(2\\) 时，卷积分支与 shortcut 分支按通道拼接，shortcut 分支通过步长为 \\(2\\)、核为 \\(3\\) 的 average-pooling进行下采样
+	- 步长为 \\(2\\) 时，卷积分支与 shortcut 分支按通道拼接，shortcut 分支通过步长为 \\(2\\)、核为 \\(3\\) 的 average-pooling 进行下采样
 
 	- 去掉 depthwise 卷积和第二个 pointwise 卷积后的 ReLU 激活函数
 

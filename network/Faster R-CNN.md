@@ -38,31 +38,21 @@
 
 - 分为两部分：
 
-	- Softmax 计算每个区域属于前景类、背景类的概率
+	- Softmax 计算每个 Region Proposal 分别属于前景类、背景类的概率
 
-	- Bounding Box 输出每个 Region Proposal 的最终位置
+	- Bounding Box 输出每个 Region Proposal 的偏移量、缩放尺度
 
 #### Anchor
 
 - Anchor 是特征图上的矩形，每个 Anchor 对应输入图像中一个区域
 
-- Anchor 有 3 种形状、3 种尺寸，共 9 种 Anchor：
+- Anchor 有 3 种形状、3 种尺寸，共 9 种组合：
 
-	- 形状（长宽比）：
+	- 长宽比：\\(1:1 \quad 1:2 \quad 2:1\\)
 
-		- 1:1
+	- 短边长：\\(128 \quad 256 \quad 512\\)
 
-		- 1:2
-
-		- 2:1
-
-	- 尺寸（短边）：
-
-		- 128
-
-		- 256
-
-		- 512
+- 通过多尺度 Anchor 实现多尺度上的目标检测，节省计算
 
 #### Softmax 模块
 
@@ -70,19 +60,25 @@
 
 - 判断特征图上每个点所属的类别，每个点对应 \\(2k\\) 维向量：
 
-	- 对于每个点，共有 \\(k=9\\) 种 Anchor
+	- 对于每个点，共有 \\(k=9\\) 个 Anchor
 
-	- 使用二分类 Softmax 判断每个 Anchor 属于前景类的概率、属于背景类的概率
+	- 使用二分类 Softmax 判断每个 Anchor 分别属于前景类、背景类的概率
 
-- 为平衡样本数量差距，正负样本定义如下：
+- 来自同一张图片的 256 个样本组成一个 batch，正负样本定义如下：
 
 	- 正样本：Anchor 与任一 Ground Truth 的 \\(IoU \geq 0.7\\)
+
+		- 检测不到正样本时，将最大 \\(IoU\\) 对应的 Anchor 作为正样本
 
 	- 负样本：Anchor 与所有 Ground Truth 的 \\(IoU < 0.3\\)
 
 	- 无效样本：除了正、负样本之外的样本，不参与 RPN 训练
 
-- 交叉熵损失函数计算如下：
+	- 如果某个 Anchor 既满足正样本定义，又满足负样本定义，按负样本处理
+
+	- 为防止训练结果偏向负样本，每个 batch 内正、负样本数量相同
+
+- Softmax Loss 计算如下：
 
 	$$ L\_{cls} = \frac{1}{N\_{cls}} \sum\_{a} L\_{cls}(p\_{a}, p\_{a}^{\*}) $$
 
@@ -96,19 +92,23 @@
 
 		- 背景类：0
 
+- Softmax 模块输出 18 通道的特征图，分别表示每种 Anchor 属于前景、背景概率
+
 #### Bounding Box 模块
 
 - 通过 \\(1 \times 1\\) 卷积，将特征图中不同通道的特征联系在一起
 
 - 计算特征图上每个点对应的 Bounding Box 参数，每个点对应 \\(4k\\) 维向量：
 
-	- 对于每个点，共有 \\(k=9\\) 种 Anchor
+	- 对于每个点，共有 \\(k=9\\) 个 Anchor
 
-	- 每个 Anchor 对应 4 个 Bounding Box 参数
+	- 为每个 Anchor 训练一个 Bounding Box 回归器
 
-- Smooth L1 损失函数计算如下：
+- BBox Loss 计算如下：
 
 	$$ L\_{reg} = \frac{1}{N\_{reg}} \sum\_{a} p\_{a}^{\*} \cdot Smooth\_{L\_{1}}(t\_{a} - t\_{a}^{\*}) $$
+
+	$$ Smooth\_{L\_{1}}(x) = \left\\{ \begin{matrix} 0.5 x^{2} \quad |x| < 1 \\\\ |x| - 0.5 \quad |x| > 1 \end{matrix} \right. $$
 
 	- \\(N\_{reg}\\) 是 RPN 特征图上 Anchor 的不同位置数
 
@@ -122,9 +122,11 @@
 
 - 计算的是从 Anchor 到最近邻 Ground Truth 的 Bounding Box 参数
 
+- Bounding Box 模块输出 36 通道的特征图，分别表示每种 Anchor 的 4 个偏移量
+
 #### 损失函数
 
-- RPN 的总损失函数计算如下：
+- 整个 RPN 的损失函数计算如下：
 
 	$$ L\_{RPN} = \frac{1}{N\_{cls}} \sum\_{a} L\_{cls}(p\_{a}, p\_{a}^{\*}) + \lambda \cdot \frac{1}{N\_{reg}} \sum\_{a} p\_{a}^{\*} \cdot Smooth\_{L\_{1}}(t\_{a} - t\_{a}^{\*}) $$
 
@@ -160,11 +162,11 @@
 
 ### Anchor 数量
 
-- 对于 VGG 而言，\\(1000 \times 600\\) 的输入图像在 RPN 特征图上的尺寸约为 \\(60 \times 40\\)，共有 \\(2400 * 9 \approx 20000\\) 个 Anchor
+- 对于 VGG 而言，\\(1000 \times 600\\) 的输入图像在 RPN 特征图上的尺寸约为 \\(60 \times 40\\)，共有 \\(2400 \times 9 \approx 20000\\) 个 Anchor
 
 - 忽略超出边界、高或宽小于 16 的 Region Proposal，大约还剩 6000 个
 
-	- 在训练时，直接过滤掉超出边界的 Region Proposal；在测试时，对超出边界的 Region Proposal 进行裁剪
+	- 在训练时，直接过滤掉超出边界的 Region Proposal，否则容易导致不收敛；在测试时，对超出边界的 Region Proposal 进行裁剪
 
 	- VGG 在最后一个卷积层上的累积 \\(stride = 16\\)，当高或宽小于 16 时， Region Proposal 无法对应到特征图上的点
 

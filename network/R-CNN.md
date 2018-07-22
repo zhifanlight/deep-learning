@@ -48,15 +48,17 @@
 
 - 对 AlexNet、VGG 进行 fine-tuning，修改最后的全连接层，对候选区域训练 \\(N+1\\) 类（前景、背景）分类器
 
-- 用 CNN 提取候选区域特征，输入到二分类 SVM，判断该特征是否属于某个类别
+- 用 CNN 提取候选区域的 4096 维特征，通过二分类 SVM，判断该特征是否属于某个类别
 
 	- 由于在训练 CNN 时，为防止过拟合进行数据增强时，对正样本定义比较宽松
 
-	- 如果直接将提取的特征用 SVM 进行 Softmax，分类效果不好
+	- 如果直接对提取的特征进行 Softmax，分类效果不好
 
 ### CNN fine-tuning
 
-- 如果不针对特定任务进行 fine-tuning，直接使用预训练 CNN 提取的特征进行 SVM 分类，pool5、fc6、fc7 层特征的精度相差不大；而进行 fine-tuning 后，fc6、fc7 层学到是针对特定任务的特征
+- 不进行 fine-tuning 时，使用 fc6 层特征效果较好
+
+- 进行 fine-tuning 时，fc6 和 fc7 层特征的结果差距不大
 
 - 相对于背景类，前景类样本数量较少；为平衡正负样本比例，需要放宽正样本的限制
 
@@ -66,15 +68,19 @@
 
 	- 将 \\(IoU < 0.5\\) 的 Region Proposal 视为负样本
 
+- 相对于背景框，前景目标较少；训练时每个 batch 内包含 32 个正样本，96 个负样本
+
 ### SVM 预训练
 
 - 计算每个 Region Proposal 与 Ground Truth 的 \\(IoU\\)
 
 - 正负样本的 \\(IoU\\) 阈值设置太高或太低都会影响最终的分类准确性：
 
-	- 将完全包含在 Ground Truth 内的 Region Proposal 视为正样本
+	- 只把 Ground Truth 视为正样本
 
 	- 将 \\(IoU < 0.3\\) 的 Region Proposal 视为负样本（阈值通过实验确定）
+
+	- 对于其他候选区域，不作为 SVM 训练的样本
 
 ## 非极大值抑制
 
@@ -94,8 +100,6 @@
 
 - 可以对 Region Proposal 进行微调得到蓝色框 \\(\hat{G\_{}}\\)，使其更接近 Bounding Box，以提高检测精度
 
-- 实验结果表明，当 Region Proposal 与 Ground Truth 的 \\(IoU \geq 0.6\\) 时，作为 Bounding Box 的训练样本效果较好
-
 - 每个框都可以用 \\((x, \ y, \ w, \ h)\\) 表示，其中 \\(x, \ y\\) 是中心坐标，\\(w, \ h\\) 是宽和高
 
 - Bounding Box Regression 的目标就是寻找一个映射 \\(f\\)：
@@ -107,6 +111,10 @@
 		$$ (\hat{G\_{x}}, \ \hat{G\_{y}}, \ \hat{G\_{w}}, \ \hat{G\_{h}}) \approx (G\_{x}, \ G\_{y}, \ G\_{w}, \ G\_{h}) $$
 
 ### 实现
+
+- 为每一类训练一个 Bounding Box 回归器
+
+- 实验结果表明，当 Region Proposal 与 Ground Truth 的 \\(IoU \geq 0.6\\) 时，作为 Bounding Box 的训练样本效果较好
 
 - 需要学习的变换：\\(d\_{x}(P), \ d\_{y}(P), \ d\_{w}(P), \ d\_{h}(P)\\)：
 
