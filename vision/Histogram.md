@@ -38,30 +38,6 @@
 	
 	- 对于原始图像中的每个像素值 \\( value \\)，将其更新为 \\( 255 \cdot C[value] \\)
 
-## 直方图匹配
-
-- 把灰度直方图变成某一特定形状的直方图，有目的地增强某个灰度区间
-
-- 直方图均衡化的扩展，可以得到任意形状的灰度直方图
-
-- 处理后的图像，具有与目标图像相似的颜色特征
-
-- 数学原理
-
-	- 原始直方图为 \\( r \\)，均衡化结果为 \\( s \\)，变化函数为 \\( s = T(r) \\)
-
-	- 目标直方图为 \\( z \\)，均衡化结果为 \\( v \\)，变换函数为 \\( v = G(z) \\)
-
-	- 匹配目标是原始直方图、目标直方图尽可能接近，即 \\( s \_{k} = v \_{m} \\)
-
-- 计算过程
-
-	- 分别计算原始图像、目标图像的累积分布直方图 \\( R \\) 和 \\( Z \\)
-
-	- 对于 \\( R \\) 的每个 \\( bin \\)，在 \\( Z \\) 中找到与其概率值最接近的 \\( bin \\)，记录 \\( bin \\) 间映射关系
-	
-	- 根据以上映射关系，对整张图像进行映射
-
 ## 直方图对比
 
 - 比较归一化后直方图相似性
@@ -116,24 +92,6 @@ image = cv2.LUT(image, lut)
 
 ```
 image = cv2.equalizeHist(image)
-```
-
-### 直方图匹配
-
-```
-origin_hist = get_cumulative_histogram(origin_hist)
-target_hist = get_cumulative_histogram(target_hist)
-
-diff = numpy.zeros((256, 256))
-for i in range(256):
-	for j in range(256):
-		diff[i][j] = abs(origin_hist[i] - target_hist[j])
-			
-lut = numpy.zeros((256, ))
-for i in range(256):
-	lut[i] = index_of_minimum(diff[i][:])
-	
-image = cv2.LUT(origin, lut).astype(numpy.uint8)
 ```
 
 ### 直方图对比
