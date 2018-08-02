@@ -10,7 +10,7 @@
 
 	- 根据预测数据与超平面的位置关系，输出其类别标签
 
-- 对于二分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), \cdots, (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left] \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ \vdots \\\\ x\_{iN} \end{matrix} \\right]\\)，\\(y\_{i}\\) 是标量
+- 对于二分类任务，假设获得了 \\(N\\) 维空间中的 \\(M\\) 个点及观察值：\\((x\_{1},y\_{1}), (x\_{2},y\_{2}), \cdots, (x\_{M},y\_{M})\\)，其中 \\(x\_{i}\\) 是 \\(N\\) 维列向量 \\(\\left[ \begin{matrix} x\_{i1} \\\\ x\_{i2} \\\\ \vdots \\\\ x\_{iN} \end{matrix} \\right]\\)，\\(y\_{i}\\) 是标量
 
 ## 数学推导
 
@@ -38,7 +38,7 @@
 
 - 事件的几率表示事件发生概率与不发生概率的比值，对数几率计算如下：
 
-	$$ logit(p) = \log \frac{p}{1-p} = g(x) $$
+	$$ g(x) = \log \frac{p}{1-p} $$
 
 - 假设后验概率服从伯努利分布，于是：
 
@@ -58,11 +58,7 @@
 
 	$$ J(\theta) = - \sum\_{i=1}^{M} \left( y\_{i} \cdot \log \ h\_{\theta}(x\_{i}) + (1 - y\_{i}) \cdot \log \ (1 - h\_{\theta}(x\_{i})) \right) $$
 
-- 令 \\(X = \\left[[ \begin{matrix} x\_{10} & x\_{11} & \cdots & x\_{1N} \\\\ x\_{20} & x\_{21} & \cdots & x\_{2N} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ x\_{M0} & x\_{M1} & \cdots & x\_{MN} \end{matrix} \\right], \ \theta = \\left[ \begin{matrix} \theta\_{0} \\\\ \theta\_{1} \\\\ \vdots \\\\ \theta\_{N} \end{matrix} \\right], \ Y = \\left[ \begin{matrix} y\_{1} \\\\ y\_{2} \\\\ \vdots \\\\ y\_{M} \end{matrix} \\right] \\)，则 \\(\frac{1}{1 + e^{-X\theta}}-Y = \\left[ \begin{matrix} \frac{1}{1 + e^{-x\_{1}^{T}\theta}}-y\_{1} \\\\ \frac{1}{1 + e^{-x\_{2}^{T}\theta}}-y\_{2} \\\\ \vdots \\\\ \frac{1}{1 + e^{-x\_{M}^{T}\theta}}-y\_{M} \end{matrix} \\right]\\)
-
 ### 优化求解
-
-#### 梯度下降
 
 - 通过梯度下降法求解 \\(\theta\_{j} \leftarrow \eta \cdot \nabla\_{\theta\_{j}}J(\theta)\\)：
 
@@ -73,13 +69,9 @@
 	&= -\sum\_{i=1}^{M} \left( y\_{i} \cdot \frac{1}{h\_{\theta}(x\_{i})} + (y\_{i} - 1) \cdot \frac{1}{1 - h\_{\theta}(x\_{i})} \right) \cdot \frac{\partial{h\_{\theta}(x\_{i})}}{\partial{g(x\_{i})}} \cdot \frac{\partial{g(x\_{i})}}{\partial{\theta\_{j}}} \newline
 	&= -\sum\_{i=1}^{M} \left( y\_{i} \cdot \frac{1}{h\_{\theta}(x\_{i})} + (y\_{i} - 1) \cdot \frac{1}{1 - h\_{\theta}(x\_{i})} \right) \cdot h\_{\theta}(x\_{i}) \cdot (1 - h\_{\theta}(x\_{i})) \cdot x\_{ij} \newline
 	&= \sum\_{i=1}^{M} (h\_{\theta}(x\_{i}) - y\_{i}) \cdot x\_{ij} \newline
-	&= \sum\_{i=1}^{M} (\frac{1}{1 + e^{-\theta^{T}x\_{i}}} - y\_{i}) \cdot x\_{ij} \newline
+	&= \sum\_{i=1}^{M} \left(\frac{1}{1 + e^{-\theta^{T}x\_{i}}} - y\_{i}\right) \cdot x\_{ij} \newline
 	\end{aligned}
 	$$
-
-- 向量化如下：
-
-	$$ \theta \leftarrow \theta - \eta \cdot X^{T} \left( \frac{1}{1 + e^{-X\theta}} - Y \right) $$
 
 - 与最小二乘相比，梯度的形式相同，\\(h\_{\theta}(x)\\) 的计算方式不同
 
@@ -87,9 +79,9 @@
 
 - 对数损失函数源于最大似然估计
 
-- 如果非要使用平方损失函数，会导致损失函数非凸。只考虑单个样本，证明如下：
+- 如果强行使用平方损失函数，会导致损失函数非凸。只考虑单个样本，证明如下：
 
-	- 对于对数损失，一阶导数如下：
+	- 使用对数损失时，一阶导数如下：
 
 		$$ \frac{\partial{J(\theta)}}{\partial{\theta\_{j}}} = (h\_{\theta}(x) - y) \cdot x\_{j} $$
 
@@ -97,9 +89,11 @@
 
 			$$ \frac{\partial^{2}(J(\theta))}{\partial{\theta\_{j}^{2}}} = h\_{\theta}(x) \cdot (1 - h\_{\theta}(x)) \cdot x\_{j}^{2} $$
 
-		- 由于 sigmoid 导数大于 \\(0\\)，二阶导数恒为正；因此对数损失为凸函数，可以收敛到全局最小值
+		- 由于 sigmoid 导数大于 \\(0\\)，二阶导数恒为正
 
-	- 对于平方损失，一阶导数如下：
+		- 对数损失为凸函数，可以收敛到全局最小值
+
+	- 使用平方损失时，一阶导数如下：
 
 		$$ \frac{\partial{J(\theta)}}{\partial{\theta\_{j}}} = (h\_{\theta}(x) - y) \cdot h\_{\theta}(x) \cdot (1 - h\_{\theta}(x)) \cdot x\_{j} $$
 
@@ -107,34 +101,14 @@
 
 			$$ \frac{\partial^{2}(J(\theta))}{\partial{\theta\_{j}^{2}}} = \left( 2h(y+1) - 3h^{2} - y \right) \cdot h \cdot (1 - h) \cdot x\_{j}^{2} $$
 			
-			- 尽管 sigmoid 导数大于 \\(0\\)，但不能保证 \\(2h(y+1) - 3h^{2} - y \geq 0\\)；因此平方损失非凸，不保证收敛到全局最小值
+			- 尽管 sigmoid 导数大于 \\(0\\)，但不能保证 \\(2h(y+1) - 3h^{2} - y \geq 0\\)
 
-### sigmoid 函数
+			- 平方损失非凸，不保证收敛到全局最小值
 
-- 由最大熵模型：
+### Sigmoid 函数推导
 
-	$$ P\_{w}(y|x) = \frac{1}{Z\_{w}(x)} \exp \left( \sum\_{i=1}^{n} w\_{i} \cdot f\_{i}(x,y) \right) $$
+- 逻辑回归属于广义线性模型，后验分布 \\(P(y|x; \ \theta)\\) 属于指数族分布 \\(exp(\eta)\\)
 
-	- 其中 \\(Z\_{w}(x)\\) 是归一化参数：
+- 通过广义线性模型和指数族分布，可以推导出 sigmoid 函数
 
-		$$ Z\_{w}(x) = \sum\_{y} \exp \left( \sum\_{i=1}^{n} w\_{i} \cdot f\_{i}(x,y) \right) $$
-
-	- \\(f\_{i}(x,y)\\) 是第 \\(i\\) 个特征函数，\\(w\_{i}\\) 是对应权重
-
-	- 关于最大熵，参考 [MaximumEntropy.md](MaximumEntropy.md)
-
-- 定义逻辑回归的特征函数为：
-
-	$$ f(x,y) = \\left\\{ \begin{matrix} g(x), & y = 1 \\\\ 0, & y = 0 \end{matrix} \\right\. $$
-	
-	- 即，只抽取正样本的特征
-
-- 代入 \\(P\_{w}(y|x)\\) 可推导出 sigmoid 函数：
-
-	$$
-	\begin{aligned}
-	P(y=1|x) &= \frac{\exp ( w \cdot f(x, y = 1) ) }{\exp(w \cdot f(x, y = 0)) + \exp(w \cdot f(x, y = 1))} \newline
-	&= \frac{1}{1 + \exp ( - w \cdot f(x, y = 1) )} \newline
-	&= \frac{1}{1 + \exp ( - w \cdot g(x) )}
-	\end{aligned}
-	$$
+- 关于广义线性模型，参考 [GeneralizedLinearModel.md](GeneralizedLinearModel.md)

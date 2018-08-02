@@ -20,9 +20,15 @@
 	
 	- 误差绝对值和最小：难以优化求解
 
-	- 误差平方和最小：计算方便，反映欧式距离
+	- 误差平方和最小：计算方便，符合欧式距离
 
 - 使用 L1 正则项时称为 Lasso Regression，使用 L2 正则项时称为 Ridge Regression
+
+- Lasso Regression 和 Ridge Regression 均可通过最大后验估计推导：
+
+	- 假设参数服从拉普拉斯分布时，可以推导出 Lasso Regression
+
+	- 假设参数服从高斯分布时，可以推导出 Ridge Regression
 
 ## 数学推导
 

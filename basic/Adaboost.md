@@ -16,7 +16,9 @@
 
 - 假设样本集为 \\(\\{(x\_{1},y\_{1}), (x\_{2},y\_{2}), \cdots, (x\_{M},y\_{M})\\}\\)，样本标签 \\(y\_{i} \in \\{-1, +1\\} \\)，样本的初始权重 \\(W\_{1}=(\frac{1}{M}, \frac{1}{M}, \cdots, \frac{1}{M})\\)
 
-- 指示函数定义如下：\\(I(c)=\\left\\{ \begin{matrix} 1, \quad if \ c \ is \ true \\\\ 0, \quad if \ c \ is \ false \end{matrix} \\right.\\)
+- 指示函数定义如下：
+
+	$$ I(c)=\\left\\{ \begin{matrix} 1, \quad if \ c \ is \ true \\\\ 0, \quad if \ c \ is \ false \end{matrix} \\right. $$
 
 - 进行 \\(T\\) 次迭代，对于当前迭代次数 \\(t\\)：
 
