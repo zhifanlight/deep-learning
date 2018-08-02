@@ -34,17 +34,17 @@
 
 - 一阶导数极值处定义为边缘
 
-- 使用 Sobel 等边缘检测器进行边缘检测，计算幅值和方向：
+- 使用 Sobel 等边缘检测器进行边缘检测，计算梯度大小和方向：
 
 	$$ G = \sqrt{G\_{x}^{2} + G\_{y}^{2}} \ , \quad \theta = arctan\left(\frac{G\_{y}}{G\_{x}}\right) $$
 	
-- 使用滞后阈值：低阈值 \\(T\_{1}\\)、高阈值 \\(T\_{2}\\)：
+- 设置低阈值 \\(T\_{1}\\)、高阈值 \\(T\_{2}\\)：
 
-	- 如果某像素位置的幅值超过 \\(T\_{2}\\)，该像素被保留为边缘像素
+	- 如果某像素的梯度值超过 \\(T\_{2}\\)，该像素被保留为边缘像素
 
-	- 如果某像素位置的幅值小于 \\(T\_{1}\\)，该像素被排除
+	- 如果某像素的梯度值小于 \\(T\_{1}\\)，该像素被排除
 
-	- 如果某像素位置的幅值介于两者之间，则仅当该像素连接到高于 \\(T\_{2}\\) 的像素时才被保留
+	- 如果某像素的梯度值介于两者之间，则仅当该像素连接到高于 \\(T\_{2}\\) 的像素时才被保留
 
 	- \\(T\_{1}: T\_{2}\\) 的通常介于 2:1 到 3:1
 
@@ -52,18 +52,20 @@
 
 ## Laplacian
 
-- 一阶导数极值处，二阶导数为零；可以检测出二阶导数的零点作为边缘
+- 一阶导数极值处，二阶导数为零
+
+	- 通过寻找二阶导数的零点，进行边缘检测
 
 - 4 邻域 Laplacian 卷积核 \\( G = \\left[ \\begin{matrix} 0 & 1 & 0 \\\\ 1 & -4 & 1 \\\\ 0 & 1 & 0 \\end{matrix} \\right] \\) 推导：
 	
 	$$
 	\begin{aligned}
 	\frac{\partial^{2} f}{\partial x^{2}} &= \left[ f(x + 1, y) - f(x, y) \right] - \left[ f(x, y) - f(x - 1, y) \right] \newline
-	&= f(x + 1, y) + f(x - 1, y) - 2 * f(x, y) \newline \newline
+	&= f(x + 1, y) + f(x - 1, y) - 2 \cdot f(x, y) \newline \newline
 	\frac{\partial^{2} f}{\partial y^{2}} &= \left[ f(x, y + 1) - f(x, y) \right] - \left[ f(x, y) - f(x, y - 1) \right] \newline
-	&= f(x, y + 1) + f(x, y - 1) - 2 * f(x, y) \newline \newline
+	&= f(x, y + 1) + f(x, y - 1) - 2 \cdot f(x, y) \newline \newline
 	\nabla^{2}f &= \frac{\partial^{2} f}{\partial x^{2}} + \frac{\partial^{2} f}{\partial y^{2}} \newline
-	&= f(x - 1, y) + f(x + 1, y) + f(x, y - 1) + f(x, y + 1) - 4 * f(x, y) \newline
+	&= f(x - 1, y) + f(x + 1, y) + f(x, y - 1) + f(x, y + 1) - 4 \cdot f(x, y) \newline
 	\end{aligned}
 	$$
 
