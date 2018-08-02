@@ -52,15 +52,11 @@
 
 - 鞍点附近梯度较小，如果鞍点较多，会导致训练过程接近停滞
 
-- 选择合适的学习率 \\(\eta\\) 非常困难
+- 选择合适的学习率 \\(\eta\\) 非常依赖于经验
 
 - 对每个参数的学习率都相同，这种做法不合理：
 
 	- 当一个方向上的梯度变化比另一个方向陡峭，训练过程会发生明显振荡
-
-	- 假设输入 \\(x\_{1}, x\_{2}\\) 取值分别为 \\(1,2,\cdots\\) 和 \\(100,200,\cdots\\)：
-
-		- 只有当 \\(w\_{1} \gg w\_{2}\\) 时，\\(x\_{1}, x\_{2}\\) 才会对 loss 有同数量级的影响
 
 		- 在 loss 的等高线图中，\\(w\_{1}\\) 方向梯度较小，\\(w\_{2}\\) 方向梯度较大
 
@@ -94,29 +90,9 @@
 
 	- 通常情况下，二次曲面比平面拟合情况要好，因此牛顿法迭代次数更少
 
-#### 拟牛顿法
-
-- 由于 Hessian 矩阵计算量较大，拟牛顿法使用近似矩阵来代替 Hessian 矩阵，减少计算量
-
-- 对二阶泰勒展开两边求导：
-
-	$$ f^{'}(x) \approx f^{'}(x\_{k+1}) + f^{''}(x\_{k+1}) \cdot (x - x\_{k+1}) $$
-
-	- 令 \\(x=x\_{k}, \ s\_{k}=x\_{k}-x\_{k+1}, \ y\_{k}=f^{'}(x\_{k+1})-f^{'}(x\_{k}) \\) 可得：
-
-		$$ f^{''}(x\_{k+1}) \cdot s\_{k} = y\_{k} $$
-
-	- 可以用 \\(B\_{k+1}\\) 代替 Hessian 矩阵 \\(H\_{k+1}\\)，其迭代公式为：
-
-		$$ B\_{k+1} = B\_{k} + \frac{y\_{k} y\_{k}^{T}}{y\_{k}^{T} s\_{k}} - \frac{B\_{k}s\_{k}s\_{k}^{T}B\_{k}}{s\_{k}^{T}B\_{k}s\_{k}} $$
-
-- 计算 Hessian 矩阵的时间复杂度为 \\(O(n^{2})\\)，而迭代时只用到了 Jacobin 矩阵，时间复杂度为 \\(O(n)\\)
-
 ### Momentum Optimizer
 
 - 借用物理中动量的概念，模拟物体运动时的惯性，在一定程度上保留之前的更新方向，同时根据当前 Batch 的梯度微调最终的更新方向
-
-#### Momentum
 
 - 参数更新过程如下：
 
@@ -130,89 +106,9 @@
 
 	- 由于保留了之前的更新方向，在一定程度上能够减少振荡，从而加速收敛
 
-#### Nesterov
-
-- 用 \\(\theta - \gamma v\_{t-1}\\) 近似下一步更新后的参数值，通过未来参数 \\(\theta\\) 的梯度更新当前的参数：
-
-	$$ v\_{t} \leftarrow \gamma v\_{t-1} + \eta \nabla\_{\theta} J(\theta - \gamma v\_{t-1}) $$
-	
-	$$ \theta \leftarrow \theta - v\_{t} $$
-	
-	- 超参数 \\(\gamma\\) 通常设置为 0.9
-
-- 优点：
-
-	- 具有预见性的更新，可以防止前进的太快，提高灵敏度
-
-	- 对一些 RNN 任务，性能提升明显
-
-### Adagrad Optimizer
-
-- 让学习率适应参数，适合处理稀疏数据：
-
-	- 对于出现次数少的特征，采用较大的学习率
-
-	- 对于出现次数多的特征，采用较小的学习率
-
-- 令 \\(g\_{t,i}\\) 表示 \\(t\\) 时刻参数 \\(\theta\_{i}\\) 的梯度，参数更新如下：
-
-	$$ \theta\_{t+1,i} \leftarrow \theta\_{t,i} - \frac{\eta}{\sqrt{G\_{t,ii} + \epsilon}} \cdot g\_{t,i} $$
-		
-	- 对角矩阵 \\(G\_{t}\\) 的每个元素 \\(G\_{t,ii}\\) 表示到 \\(t\\) 时刻为止，关于 \\(\theta\_{i}\\) 的梯度平方和
-
-	- \\(\epsilon\\) 是平滑项，防止分母为 0，通常取 \\(1e^{-8}\\)
-	
-- 通过对位乘法进行向量化：
-
-	$$ \theta\_{t+1} \leftarrow \theta\_{t} - \frac{\eta}{\sqrt{G\_{t} + \epsilon}} \odot g\_{t} $$
-
-- 优点：
-
-	- 无需手动调节，只需设置一个初始学习率，通常设置为 0.01
-
-- 缺点：
-
-	- 学习率调整过于激进，分母不断累积导致学习率不断收缩，训练过程可能提前结束
-
-### Adadelta Optimizer
-
-- Adagrad 方法的扩展算法，处理 Adagrad 学习率单调递减的问题
-
-- 不使用 \\(\theta\\) 的梯度平方和，而是递归地计算梯度平方的历史均值：
-
-	$$ E \left[ g^{2} \right]\_{t} \leftarrow \gamma E \left[ g^{2} \right]\_{t-1} + (1 - \gamma) g\_{t}^{2} $$
-
-	- 超参数 \\(\gamma\\) 通常设置为 0.9
-
-- 用 \\(E \left[ g^{2} \right]\_{t}\\) 代替 Adagrad 中的 \\(G\_{t}\\)，参数更新如下：
-
-	$$ \Delta \theta\_{t} \leftarrow - \frac{\eta}{\sqrt{E \left[ g^{2} \right]\_{t} + \epsilon}} \ g\_{t} $$
-
-- 进一步近似可得：
-
-	$$ \Delta \theta\_{t} \leftarrow - \frac{RMS \left[ \Delta \theta \right]\_{t-1} }{RMS \left[ g \right]\_{t} } \ g\_{t} $$
-	
-	$$ \theta\_{t+1} \leftarrow \theta\_{t} + \Delta \theta\_{t} $$
-
-	- \\(RMS \left[ g \right]\_{t} = \sqrt{E \left[ g^{2} \right]\_{t} + \epsilon }\\) 是 \\(t\\) 时刻 \\(g^{2}\\) 历史均值的平方根
-	
-	- \\(RMS \left[ \Delta \theta \right]\_{t} = \sqrt{E \left[ \Delta \theta^{2} \right]\_{t} + \epsilon }\\) 是 \\(t\\) 时刻 \\(\Delta \theta^{2}\\) 历史均值的平方根：
-
-		$$ E \left[ \Delta \theta ^{2} \right]\_{t} \leftarrow \gamma E \left[ \Delta \theta^{2} \right]\_{t-1} + (1 - \gamma) \Delta \theta\_{t}^{2} $$
-
-- 优点：
-
-	- 无需设置默认学习率，训练初期加速效果不错
-
-- 缺点：
-
-	- 训练后期，容易在局部最小值附近抖动
-
 ### RMSProp Optimizer
 
-- Adadelta 的一个特例
-
-- 不使用 \\(\theta\\) 的梯度平方和，而是递归地计算梯度平方的历史均值：
+- 递归地计算梯度平方的历史均值：
 
 	$$ E \left[ g^{2} \right]\_{t} \leftarrow \gamma E \left[ g^{2} \right]\_{t-1} + (1 - \gamma) g\_{t}^{2} $$
 
@@ -223,6 +119,8 @@
 	$$ \theta\_{t+1} \leftarrow \theta\_{t} - \frac{\eta}{\sqrt{E \left[ g^{2} \right]\_{t} + \epsilon}} \ g\_{t} $$
 	
 	- 超参数 \\(\eta\\) 通常设置为 0.001
+
+- 无需设置默认学习率，训练初期加速效果不错
 
 ### Adam Optimizer
 
@@ -246,18 +144,4 @@
 	
 	- 超参数 \\(\eta\\) 通常设置为 0.001
 
-- 优点：
-
-	- 由于优化后期梯度越来越稀疏，偏差校正使得 Adam 在实际中表现更好
-
-## 如何选择
-
-- 如果数据是稀疏的，就用自适用方法，即 Adagrad，Adadelta，RMSprop，Adam
-
-- RMSprop，Adadelta，Adam 在很多情况下的效果相似
-
-- 随着梯度变得稀疏，Adam 比 RMSprop 效果会好；整体来讲，Adam 是最好的选择
-
-![img](images/optimizer_3d.gif)
-
-![img](images/optimizer_2d.gif)
+- 由于优化后期梯度越来越稀疏，偏差校正使得 Adam 在实际中表现更好
