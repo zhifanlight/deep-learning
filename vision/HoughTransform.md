@@ -52,30 +52,6 @@
 
 		- 如果线段长度超过某个阈值，则将该线段输出
 
-## 霍夫圆变换
-
-### 原理分析
-
-- 在笛卡尔坐标系中，同一圆上的点满足同一方程：\\((x - a) ^ {2} + (y - b) ^ {2} = r ^ {2}, \quad (r > 0)\\)
-
-- 经过点 \\((x\_{0}, y\_{0})\\) 的一族圆可定义为：\\((a - x\_{0}) ^ {2} + (b - y\_{0}) ^ {2} = r ^ {2}\\)，在 \\(a-b-r\\) 空间中的形状为锥体，锥面上任意一点 \\((a, b, r)\\) 都表示一个经过 \\((x\_{0}, y\_{0})\\) 的圆
-
-- 如果两族圆在 \\(a-b-r\\) 空间内相交于点 \\((a\_{0}, b\_{0}, r\_{0})\\)，说明该点代表的圆同时经过 \\((x\_{1}, y\_{1}), \ (x\_{2}, y\_{2})\\)，即两点在同一个圆上
-
-- 在 \\(a-b-r\\) 空间内，相交于某一点的圆越多，该点代表的圆将由更多的点组成。因此，可以通过计算所有 \\((a, b, r)\\) 点处相交圆的数量来寻找原图像中的圆形
-
-![img](images/hough_circle_intersect.png)
-
-### 算法流程
-
-- 对图像进行边缘检测，并二值化处理
-
-- 将所有非零像素点变换到霍夫空间并累加，统计累加值
-
-- 记录在搜索半径范围内，累加值大于阈值并且为邻域最大值的点
-
-- 将上述 \\((a, b, r)\\) 点转换为圆，并进一步处理
-
 ## Python 实现
 
 ### 标准霍夫线变换
@@ -97,19 +73,4 @@ lines = cv2.HoughLinesP(edge, rho=1, theta=np.pi/180, threshold=100, maxLineGap=
 for line in lines:
 	x1, y1, x2, y2 = line[0]
 	process((x1, y1), (x2, y2))
-```
-
-### 霍夫圆变换
-
-```
-# dp: image size / hough size
-# minDist: min distance between circles
-# param1: high threshold for canny edge (param1 / 2 for low threshold)
-# param2: circle points threshold
-
-circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, dp=1, minDist=50, param1=30, param2=50, minRadius=10, maxRadius=200)
-
-for circle in circles[0]:
-	x, y, r = circle
-	process((x, y), r)
 ```
