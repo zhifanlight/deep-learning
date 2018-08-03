@@ -122,28 +122,6 @@
 
 - 泊松分布是非对称分布，当 \\(\lambda\\) 较小时呈偏态分布；当 \\(\lambda=20\\) 时，近似为高斯分布
 
-### 指数分布
-
-- 描述两件事情发生的时间间隔的概率分布
-
-- 由泊松分布推导而来，假设单位时间内事件 \\(x\\) 发生 \\(\lambda\\) 次
-
-- 事件的时间间隔为 \\(t\\)，等价于在间隔 \\(t\\) 内事件 \\(x\\) 发生 \\(0\\) 次，代入泊松分布概率公式：
-
-	$$ P(x>t) = P(x=0) = e^{-\lambda t} $$
-
-	- 相应地，在间隔 \\(t\\) 内事件 \\(x\\) 发生的概率为：
-
-		$$ P(x \leq t) = 1 - e^{-\lambda t} $$
-
-	- 概率密度函数计算如下：
-
-		$$ P(t; \lambda) = \lambda \cdot e^{-\lambda t} $$
-
-- 期望为 \\(\frac{1}{\lambda}\\)，方差为 \\(\frac{1}{\lambda^{2}}\\)
-
-	- 计算时用到分步积分法
-
 ## 大数定律
 
 - 对于 \\(n\\) 个独立同分布的样本，当 \\(n \rightarrow \infty\\) 时，样本均值收敛到期望值：
@@ -154,7 +132,7 @@
 
 - 对于 \\(n\\) 个独立同分布的样本，当 \\(n \rightarrow \infty\\) 时，样本均值近似服从正态分布：
 
-	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N(\mu, \frac{\sigma^{2}}{n}) $$
+	$$ \lim\_{n \rightarrow \infty} \frac{1}{n} \sum\_{i=1}^{n} x\_{i} \ \sim \ N \left(\mu, \frac{\sigma^{2}}{n}\right) $$
 
 	- 其中 \\(\mu\\) 是原始样本均值，\\(\sigma^{2}\\) 是原始样本方差
 
@@ -177,17 +155,3 @@
 	$$ P(|X-\mu| \geq \epsilon) \leq \frac{\sigma^{2}}{\epsilon^{2}} $$
 	
 	- 越偏离平均值，概率越低
-
-- 切比雪夫不等式是马尔可夫不等式的一个特例：
-
-	- 将 \\(|X-\mu|\\) 和 \\(\epsilon\\) 代入马尔可夫不等式：
-
-		$$ P(|X-\mu| \geq \epsilon) \leq \frac{E(|X-\mu|)}{\epsilon} $$
-		
-	- 由于 \\(P(|X-\mu| \geq \epsilon)\\) 等价于 \\(P(|X-\mu|^{2} \geq \epsilon^{2})\\)，代入上式可得：
-
-		$$ P(|X-\mu|^{2} \geq \epsilon^{2}) \leq \frac{E \left( (X-E(x))^{2} \right)}{\epsilon^{2}} $$
-	
-	- 因此：
-
-		$$ P(|X-\mu| \geq \epsilon) \leq \frac{\sigma^{2}}{\epsilon^{2}} $$

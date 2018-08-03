@@ -22,21 +22,17 @@ $$ p(x) = \frac{1}{(2 \pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} \exp \left( -\f
 
 - 由概率之和 \\( \int p(x) \ dx = 1\\)：
 
-	$$ \int \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \ dx = \sqrt{2 \pi} \sigma $$
+	$$ \int \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \ dx = 1 $$
 
 - 同时对 \\(\mu\\) 求导：
 
-	$$ \int \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \cdot \left( \frac{2 \cdot (x-\mu)}{2 \sigma^{2}} \right) \ dx = 0 $$
+	$$ \int \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \cdot \left( \frac{2 \cdot (x-\mu)}{2 \sigma^{2}} \right) \ dx = 0 $$
 
 - 对上式进行化简：
 
-	$$ \int \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \cdot x \ dx = \mu \int \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \ dx = \mu \sqrt{2 \pi} \sigma $$
+	$$ \int \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \cdot x \ dx = \mu \int \frac{1}{\sqrt{2 \pi} \sigma} \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \ dx = \mu $$
 
 - 由定义 \\(E(x) = \int p(x) \cdot x \ dx\\)：
-
-	$$ E(x) = \frac{1}{\sqrt{2 \pi} \sigma} \int \exp \left( -\frac{(x-\mu)^{2}}{2 \sigma^{2}} \right) \cdot x \ dx $$
-
-- 将化简结果代入上式：
 
 	$$ E(x) = \mu $$
 
