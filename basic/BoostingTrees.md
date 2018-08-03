@@ -98,44 +98,6 @@
 
 	$$ f\_{T}(x) = \sum\_{t=1}^{T} T(x; \theta\_{t}) $$
 
-### 二分类任务
-
-- 损失函数为对数损失：
-
-	$$ L(y, \ f) = \log \left( 1 + e^{-2yf} \right) \qquad y \in \\{-1, +1\\} $$
-
-	- 其中 \\(f\\) 为对数几率的一半：
-
-		$$ f = \frac{1}{2} \ln \frac{P(y=1|x)}{P(y=-1|x)} = \frac{1}{2} \theta^{T}x $$
-
-	- 当 \\(y = 1\\) 时：
-
-		$$ L(y, \ f) = -y \ \log \left( \frac{1} {1 + e^{-\theta^{T}x}} \right) = - \ \log (P(y=1|x)) $$
-
-	- 当 \\(y = -1\\) 时：
-
-		$$ L(y, \ f) = -\log \left( \frac{1} {1 + e^{\theta^{T}x}} \right) = -\log \left( 1 - \frac{1} {1 + e^{-\theta^{T}x}} \right) = -\log(1 - P(y=1|x)) $$
-
-- 响应值 \\(r\_{t, \ i}\\) 计算如下：
-
-	$$ r\_{t, \ i} = - \left[ \frac{\partial{L \left(y\_{i}, \ f\_{t-1}(x\_{i}) \right)}}{\partial{f\_{t-1}(x\_{i})}} \right] = \frac{2y\_{i}}{1 + \exp \left( 2y\_{i} \cdot f\_{t-1}(x\_{i}) \right)} $$
-
-- 拟合 \\(r\_{t, \ i}\\) 的最优参数 \\(\theta^{\*}\_{t}\\) 计算如下：
-
-	$$ \theta^{\*}\_{t} = \arg \min\_{\theta} \sum\_{x \in R\_{t, \ j}} \log \left( 1 + \exp \left( -2y\_{i} \left( f\_{t-1}(x\_{i}) + \theta\_{t} \right) \right) \right) $$
-	
-	- 由于上式计算量较大，通常使用如下近似：
-
-		$$ \theta^{\*}\_{t} = \frac{\sum\_{x \in R\_{t, \ j}} r\_{t, \ i}}{\sum\_{x \in R\_{t, \ j}} |r\_{t, \ i}| \cdot (2 - |r\_{t, \ i}|) } $$
-
-- 更新分类树：
-
-	$$ f\_{t}(x) = f\_{t-1}(x) + T(x; \theta\_{t}) $$
-
-- 最终的分类树如下：
-
-	$$ f\_{T}(x) = \sum\_{t=1}^{T} T(x; \theta\_{t}) $$
-
 ## XGBoost
 
 - 相对 GBDT，基分类器除了回归树，还支持线性分类器
@@ -150,7 +112,7 @@
 
 	- 其中 \\(J\\) 为回归树中叶结点的数量，\\(b\_{j}\\) 表示第 \\(j\\) 个叶结点的输出
 
-- 权重衰减：在进行完一次迭代时，将叶结点的权值乘上衰减系数，以削弱每棵树的影响，让后面有更大的学习空间
+- 权重衰减：在进行完一次迭代后，将叶结点的权值乘上衰减系数，以削弱每棵树的影响，让后面有更大的学习空间
 
 - 支持自定义损失函数，优化过程同时用到一阶导数和二阶导数：
 

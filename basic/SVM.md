@@ -16,7 +16,7 @@
 
 	$$ \\left\\{ \begin{matrix} y\_{i}=+1 \quad \Leftrightarrow \quad w^{T}x\_{i}+b > 0 \\\\ y\_{i}=-1 \quad \Leftrightarrow \quad w^{T}x\_{i}+b < 0  \end{matrix} \\right. $$
 
-- 统一为 \\(y\_{i} \cdot (w^{T}x\_{i}+b) > 0\\)，通过对 \\(w\\) 缩放，可进一步保证 \\(y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1\\)，而满足 \\(y\_{i} \cdot (w^{T}x\_{i}+b) = 1\\) 的样本称为支持向量
+- 统一为 \\(y\_{i} \cdot \left( w^{T}x\_{i}+b \right) > 0\\)，通过对 \\(w\\) 缩放，可进一步保证 \\(y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \geq 1\\)，而满足 \\(y\_{i} \cdot \left( w^{T}x\_{i}+b \right) = 1\\) 的样本称为支持向量
 
 - SVM 优化目标是最大化正、负支持向量间隔：
 
@@ -28,17 +28,17 @@
 	
 	- 约束条件为：
 		
-		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1, \quad i=1,2,\cdots,M $$
+		$$ y\_{i} \cdot \left(w^{T}x\_{i}+b\right) \geq 1, \quad i=1,2,\cdots,M $$
 
 - 由拉格朗日乘子法可得：
 
-	$$ L(w,b,\alpha) = \frac{1}{2} ||w||^{2} + \sum\_{i=1}^{M} \alpha\_{i} \cdot (1 - y\_{i} \cdot (w^{T}x\_{i}+b)) $$
+	$$ L(w,b,\alpha) = \frac{1}{2} ||w||^{2} + \sum\_{i=1}^{M} \alpha\_{i} \cdot \left(1 - y\_{i} \cdot \left(w^{T}x\_{i}+b \right)\right) $$
 
-	- 约束条件为：
+	- KKT 条件为：
 
 		$$ \alpha\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ \alpha\_{i} \cdot (1 - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,\cdots,M $$
+		$$ \alpha\_{i} \cdot \left(1 - y\_{i} \cdot \left(w^{T}x\_{i}+b \right) \right) = 0, \quad i=1,2,\cdots,M $$
 
 - 计算 \\(\frac{\partial L}{\partial w}, \ \frac{\partial L}{\partial b}\\) 并令偏导数为 \\(0\\) 可得：
 
@@ -60,11 +60,11 @@
 
 ### 线性不可分
 
-- 在判别面附近，如果完全按照原始约束条件，会导致 SVM 发生较大的误差
+- 在判别面附近，如果完全按照原始约束条件，会导致 SVM 产生较大的误差
 
 - 为让 SVM 忽略某些噪声，可以引入松弛变量 \\(\xi\_{i} \geq 0\\) 来允许错误分类发生：
 
-	$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
+	$$ y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
 
 	- 对 \\(\xi\_{i}\\) 添加约束如下：
 
@@ -80,13 +80,13 @@
 
 		$$ \xi\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 
-		$$ y\_{i} \cdot (w^{T}x\_{i}+b) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
+		$$ y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \geq 1 - \xi\_{i}, \quad i=1,2,\cdots,M $$
 
 - 由拉格朗日乘子法可得：
 
-	$$ L(w,b,\alpha) = \frac{1}{2} ||w||^{2} + C \sum\_{i=1}^{M} \xi\_{i} + \sum\_{i=1}^{M} \alpha\_{i} \cdot (1 - \xi\_{i} - y\_{i} \cdot (w^{T}x\_{i}+b)) - \sum\_{i=1}^{M} \beta\_{i} \cdot \xi\_{i} $$
+	$$ L(w,b,\alpha) = \frac{1}{2} ||w||^{2} + C \sum\_{i=1}^{M} \xi\_{i} + \sum\_{i=1}^{M} \alpha\_{i} \cdot \left(1 - \xi\_{i} - y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \right) - \sum\_{i=1}^{M} \beta\_{i} \cdot \xi\_{i} $$
 
-	- 约束条件为：
+	- KKT 条件为：
 
 		$$ \alpha\_{i} \geq 0, \quad i=1,2,\cdots,M $$
 		
@@ -94,7 +94,7 @@
 
 		$$ \beta\_{i} \xi\_{i} = 0, \quad i=1,2,\cdots,M $$
 
-		$$ \alpha\_{i} \cdot (1 - \xi\_{i} - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0, \quad i=1,2,\cdots,M $$
+		$$ \alpha\_{i} \cdot \left( 1 - \xi\_{i} - y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \right) = 0, \quad i=1,2,\cdots,M $$
 
 - 计算 \\(\frac{\partial L}{\partial w}, \ \frac{\partial L}{\partial b}, \ \frac{\partial L}{\partial \xi\_{i}}\\) 并令偏导数为 \\(0\\) 可得：
 
@@ -148,7 +148,7 @@
 
 	$$ y\_{v} \left( \sum\_{i=1}^{M} \alpha\_{i} y\_{i} x\_{i}^{T} x\_{v} + b \right) = 1 $$
 
-- 从上式可以求得：
+- 由上式可得：
 
 	$$ b = \frac{1}{y\_{v}} - \sum\_{i=1}^{M} \alpha\_{i} y\_{i} x\_{i}^{T} x\_{v} = y\_{v} - \sum\_{i=1}^{M} \alpha\_{i} y\_{i} x\_{i}^{T} x\_{v} $$
 
@@ -164,19 +164,19 @@
 
 #### 线性可分
 
-- 由约束条件 \\(\alpha\_{i} \cdot (1 - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0\\) 和 \\(\alpha\_{i} \geq 0\\) 可知：
+- 由约束条件 \\(\alpha\_{i} \cdot \left( 1 - y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \right) = 0\\) 和 \\(\alpha\_{i} \geq 0\\) 可知：
 
 	- 当 \\(\alpha\_{i} = 0\\) 时，样本 \\((x\_{i}, y\_{i})\\) 对 \\(h(x)\\) 无影响
 
-	- 当 \\(\alpha\_{i} > 0\\) 时，\\(y\_{i} \cdot (w^{T}x\_{i}+b) = 1\\)，\\((x\_{i}, y\_{i})\\) 为支持向量
+	- 当 \\(\alpha\_{i} > 0\\) 时，\\(y\_{i} \cdot \left( w^{T}x\_{i}+b \right) = 1\\)，\\((x\_{i}, y\_{i})\\) 为支持向量
 
 #### 线性不可分
 
-- 由约束条件 \\(\alpha\_{i} \cdot (1 - \xi\_{i} - y\_{i} \cdot (w^{T}x\_{i}+b)) = 0\\) 和 \\(0 \leq \alpha\_{i} \leq C\\) 可知：
+- 由约束条件 \\(\alpha\_{i} \cdot \left( 1 - \xi\_{i} - y\_{i} \cdot \left( w^{T}x\_{i}+b \right) \right) = 0\\) 和 \\(0 \leq \alpha\_{i} \leq C\\) 可知：
 
 	- 当 \\(\alpha\_{i} = 0\\) 时，样本 \\((x\_{i}, y\_{i})\\) 对 \\(h(x)\\) 无影响
 
-	- 当 \\(0 < \alpha\_{i} \leq C\\) 时，\\(y\_{i} \cdot (w^{T}x\_{i}+b) = 1 - \xi\_{i}\\)，\\((x\_{i}, y\_{i})\\) 为支持向量：
+	- 当 \\(0 < \alpha\_{i} \leq C\\) 时，\\(y\_{i} \cdot \left( w^{T}x\_{i}+b \right) = 1 - \xi\_{i}\\)，\\((x\_{i}, y\_{i})\\) 为支持向量：
 
 - 当 \\(0 < \alpha\_{i} \leq C\\) 时，由约束条件 \\(\beta\_{i} \cdot \xi\_{i} = 0\\) 和 \\( 0 \leq \beta\_{i} \leq C\\) 可知：
 
