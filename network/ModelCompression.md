@@ -137,7 +137,7 @@ ShuffleNet | 结构 | Yes
 
 ## MobileNet
 
-- 关于 MobileNet，参考 [MobileNet v1.md](MobileNet v1.md)、[MobileNet v2.md](MobileNet v2.md)
+- 关于 MobileNet，参考 [MobileNet.md](MobileNet.md)
 
 ## ShuffleNet
 
