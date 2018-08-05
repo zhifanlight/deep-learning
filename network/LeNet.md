@@ -18,11 +18,11 @@
 
 	- 卷积核大小为 \\(5\\)，步长为 \\(1\\)，不进行 padding
 
-### 池化层 Pool1
+### Pooling 层 Pool1
 
-- 对 Conv1 结果进行池化，特征图维度为 \\(14 \times 14\\)
+- 对 Conv1 结果进行 Pooling，特征图维度为 \\(14 \times 14\\)
 
-	- 池化核大小为 \\(2\\)，步长为 \\(2\\)，使用 max polling
+	- 步长为 \\(2\\) 的 \\(2 \times 2\\) max polling
 
 ### 卷积层 Conv2
 
@@ -30,11 +30,11 @@
 
 	- 卷积核大小为 \\(5\\)，步长为 \\(1\\)，不进行 padding
 
-### 池化层 Pool2
+### Pooling 层 Pool2
 
-- 对 Conv2 结果进行池化，特征图维度为 \\(5 \times 5\\)
+- 对 Conv2 结果进行 Pooling，特征图维度为 \\(5 \times 5\\)
 
-	- 池化核大小为 \\(2\\)，步长为 \\(2\\)，使用 max polling
+	- 步长为 \\(2\\) 的 \\(2 \times 2\\) max polling
 
 ### 全连接层 FC1
 

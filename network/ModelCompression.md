@@ -64,6 +64,8 @@ ShuffleNet | 结构 | Yes
 
 - 将同一层的所有权值划分为 \\(k\\) 个簇，计算每个权值对应聚类中心：
 
+	- 对于每个权值，用相应的簇中心进行替换
+
 	- 假设原始权值有 \\(n\\) 个，每个权值占 \\(b\\) 位，压缩前需要的空间为 \\(nb\\)
 
 	- 压缩后，存储簇中心需要的空间为 \\(kb\\)
@@ -78,15 +80,13 @@ ShuffleNet | 结构 | Yes
 
 		$$ r = \frac{nb}{n \log\_{2}k + kb} $$
 
-- 在反向传播时，将簇内梯度和作为簇的总梯度，并更新簇中心
-
-- 训练结束后，把每个权值替换为相应的簇中心，用于近似原来的网络
+- 反向传播时，将簇内梯度和作为簇的总梯度，并更新簇中心
 
 - 使用 k-means 进行聚类：
 
 	- 计算当前层权值的边界 \\(min, \ max\\)，将 \\([min, max]\\) 切为等长区间，将切分点作为初始聚类中心
 
-	- 大的权值对 CNN 影响较大，但是占所有权值的比例较小
+	- 大的权值对 CNN 影响较大，但是占的比例较小
 	
 	- 无论是基于密度，还是随机选择聚类中心，都会降低大权值被选中的概率
 
@@ -130,7 +130,7 @@ ShuffleNet | 结构 | Yes
 
 	- 减少特征图通道数，不改变特征图维度
 
-- 在 expand 层使用等量的 \\(1 \times 1\\) 和 \\(3 \times 3\\) 卷积核，之后按通道对特征图进行拼接
+- 在 expand 层使用等量的 \\(1 \times 1\\) 和 \\(3 \times 3\\) 卷积核，之后对特征图进行拼接
 
 - squeeze 层和 expand 层都使用 ReLU 激活函数
 
@@ -310,7 +310,7 @@ ShuffleNet | 结构 | Yes
 
 ## MobileNet
 
-- 关于 MobileNet，参考 [MobileNet.md](MobileNet.md)
+- 关于 MobileNet，参考 [MobileNet v1.md](MobileNet v1.md)、[MobileNet v2.md](MobileNet v2.md)
 
 ## ShuffleNet
 
@@ -318,13 +318,13 @@ ShuffleNet | 结构 | Yes
 
 ### 设计思想
 
-- 用分组的 pointwise 卷积代替卷积分解，减少普通 pointwise 卷积的计算量
+- 通过分组 pointwise 卷积减少普通 pointwise 卷积的计算量
 
 - 通过 channel shuffle，加强不同组之间的信息交流，提升模型的表示能力
 
 ### ShuffleNet 单元
 
-- 采用 ResNet 的 bottoleneck 思想
+- 采用 ResNet 的 bottleneck 思想
 
 	- 将输入通道分为 \\(g\\) 组，每组 \\(n\\) 个通道
 
@@ -358,11 +358,11 @@ ShuffleNet | 结构 | Yes
 
 - 第一层是步长为 \\(2\\) 的 \\(3 \times 3\\) 卷积
 
-- 第二层是步长为 \\(2\\)、核为 \\(3\\) 的 max-pooling
+- 第二层是步长为 \\(2\\) 的 \\(3 \times 3\\)  max-pooling
 
 - 最后一层通过 global average pooling 后进行 softmax 分类
 
-- 其余层分为 3 组 ShuffleNet 单元，每组包含若干个 ShuffleNet 单元
+- 其余层分为 3 组，每组包含若干个 ShuffleNet 单元
 
 ### 缩放因子 \\(t\\)
 
@@ -380,7 +380,7 @@ ShuffleNet | 结构 | Yes
 
 		$$ h \cdot w \cdot c \cdot m $$
 
-	- bottleneck 处 \\(3 \times 3\\) 卷积计算量：
+	- \\(3 \times 3\\) 卷积计算量：
 
 		$$ h \cdot w \cdot m \cdot m \cdot 3 \cdot 3 $$
 
@@ -398,7 +398,7 @@ ShuffleNet | 结构 | Yes
 
 	- depthwise 卷积计算量：
 
-		$$ h \cdot w \cdot g \left( \frac{m}{g} \cdot 3 \cdot 3 \right) $$
+		$$ h \cdot w \cdot g \cdot \left( \frac{m}{g} \cdot 3 \cdot 3 \right) $$
 
 	- 第二个 pointwise 分组卷积计算量：
 

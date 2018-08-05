@@ -18,52 +18,19 @@
 
 - 容易落入判别器的 sigmoid 饱和区间，导致梯度消失
 
-### 模式崩溃
-
 - 不使用 logD trick，训练前期容易导致梯度消失
 
-- 使用 logD trick，容易导致模式崩溃
+	- 训练前期，两个分布距离较远，\\(JS\\) 散度为定值，梯度基本为零
 
-- 最优判别器如下：
+### 训练不稳定
 
-	$$ D^{\*}(x) = \frac{p\_{r}(x)}{p\_{r}(x) + p\_{g}(x)} $$
+- 使用 logD trick，容易导致训练不稳定
 
-- 此时 \\(G\_{loss}\\) 计算如下：
+- 在推导过程中出现以下目标：
 
-	$$ \mathbb{E}\_{x \sim p\_{r}(x)}[\log D^{\*}(x)] + \mathbb{E}\_{x \sim p\_{g}(x)}[\log(1 - D^{\*}(x))] = 2JS(p\_{r}||p\_{g}) - 2\log2 $$
+	$$ KL(P\_{g} || P\_{r}) - 2 \cdot JS(P\_{g} || P\_{r}) $$
 
-- 对 \\(KL(p\_{g}||p\_{r})\\) 做如下变换：
-
-	$$
-	\begin{aligned}
-	KL(p\_{g}||p\_{r}) &= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{p\_{g}(x)}{p\_{r}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{\frac{p\_{g}(x)}{p\_{g}(x) + p\_{r}(x)}}{\frac{p\_{r}(x)}{p\_{g}(x) + p\_{r}(x)}}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log\frac{1 - D^{\*}(x)}{D^{\*}(x)}\right] \newline
-	&= \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log(1 - D^{\*}(x))\right] - \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log D^{\*}(x)\right] \newline
-	\end{aligned}
-	$$
-
-- 综合上式可得：
-
-	$$
-	\begin{aligned}
-	\mathbb{- \ E}\_{x \sim p\_{g}(x)} \left[\log D^{\*}(x)\right] &= KL(p\_{g}||p\_{r}) - \mathbb{E}\_{x \sim p\_{g}(x)} \left[\log(1 - D^{\*}(x))\right] \newline
-	&= KL(p\_{g}||p\_{r}) - [2JS(p\_{r}||p\_{g}) - 2\log2 - \mathbb{E}\_{x \sim p\_{r}}[\log D^{\*}(x)]] \newline
-	&= KL(p\_{g}||p\_{r}) - 2JS(p\_{r}||p\_{g}) + Const \newline
-	\end{aligned}
-	$$
-
-- 最小化 \\(- 2JS(p\_{r}||p\_{g})\\) 意味着最大化 \\(p\_{r}\\) 与 \\(p\_{g}\\) 之间的差距，导致生成器不稳定
-
-- \\(KL\\) 散度的不对称性，会导致模式崩溃：
-
-	$$ \\left\\{ \begin{matrix} p\_{g}(x)\log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow 0 \quad & if \ p\_{g} \rightarrow 0, \ p\_{r} \rightarrow 1 \\\\ p\_{g}(x)\log\frac{p\_{g}(x)}{p\_{r}(x)} \rightarrow +\infty & if \ p\_{g} \rightarrow 1, \ p\_{r} \rightarrow 0 \end{matrix} \\right\. $$
-			
-	- 前者表示生成器没能生成数据集中存在的样本
-
-	- 后者表示生成器生成了数据集中不存在的样本
-
-	- 由于惩罚代价不同，生成器尽量生成一些重复但“安全”的样本，也不生成不存在的样本，最终导致了模式崩溃
+	- 既要最大化、又要最小化两个分布的距离，导致训练不稳定
 
 ## 模型改善
 
@@ -71,7 +38,7 @@
 
 - 生成器和判别器的损失函数不取 log
 
-- 每次更新判别器的参数之后，将其截断到固定范围内
+- 每次更新判别器的参数后，将其截断到固定范围内
 
 - 不要用基于动量的优化算法，推荐 RMSProp
 

@@ -10,7 +10,7 @@
 
 - \\(f\_{\omega}(x)\\) 表示 Lipschitz 函数，\\(g\_{\theta}(z)\\) 表示对样本 \\(z\\) 进行映射
 
-- 生成器 \\(G\\) 的优化目标是最小化真实分布与生成分布之间的 Wasserstein 惩罚距离，判别器 \\(D\\) 的优化目标是最大化真实分布与生成分布之间的 Wasserstein 惩罚距离
+- 生成器 \\(G\\) 的优化目标是最小化真实分布与生成分布之间的 Wasserstein 距离，判别器 \\(D\\) 的优化目标是最大化真实分布与生成分布之间的 Wasserstein 距离
 
 - 优化目标：\\( \min\limits\_{G} \max\limits\_{D} V(D,G) = \mathbb{E}\_{x \sim p\_{r}(x)}[f\_{\omega}(x)] - \mathbb{E}\_{x \sim p\_{g}(x)}[f\_{\omega}(x)] - \lambda \ \mathbb{E}\_{x \sim p\_{s}(x)} \left[ \left( ||\nabla\_{x}D(x)||\_{2} - 1 \right) ^ {2} \right] \\)
 

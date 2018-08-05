@@ -14,17 +14,13 @@
 
 ### Dense 块
 
-- 整个网络由多个 Dense 块组成，而基本的 Dense 块结构如下：
+- 整个网络由多个 Dense 块组成，基本的 Dense 块结构如下：
 
 	![img](images/densenet_block.png)
 
 	- Dense 块内每一层的输出特征图维度相同
 
-	- 不考虑 bottleneck 结构时，每一层的特征图通道数也相同
-
 	- 相比 ResNet 的残差块，Dense 块的特征图通道数较少，通常为12
-
-	- 特征图通道数又被称为 Dense 块的 growth rate
 
 - Dense 块采用 pre-activation，同一个特征图，作为不同层的输入时，经过的 Batch Normalization 层也不同，归一化后的输入分布也不同，可以充分利用提取到的特征
 
@@ -42,7 +38,7 @@
 
 ## 主要改进
 
-- 进一步改善了前向计算时的信息流动，反向传播时的梯度流动
+- 进一步改善了前向计算时的信息流动与反向传播时的梯度流动
 
 - 由于 Dense 块可以进行充分的特征重用，DenseNet 参数量比 ResNet 更少
 
@@ -70,4 +66,4 @@
 
 - 由于反向传播时重新计算 Batch Normalization 输出，训练时间大约增加 \\(20\%\\)
 
-- 但 DenseNet 显寸占用从 \\(O(L^{2})\\) 降为 \\(O(L)\\)，单 GPU 上训练更深的网络成为可能
+- DenseNet 显寸占用从 \\(O(L^{2})\\) 降为 \\(O(L)\\)，单 GPU 上训练更深的网络成为可能

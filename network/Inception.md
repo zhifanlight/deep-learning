@@ -26,9 +26,9 @@
 
 - 采用 \\(1 \times 1, \ 3 \times 3, \ 5 \times 5\\) 的卷积核，分别提取特征
 
-- 使用 \\(stride = 2\\) 的 \\(3 \times 3\\) pooling 提取特征，提高效率
+- 使用 \\(stride = 1\\) 的 \\(3 \times 3\\) pooling 提取特征
 
-- 将上述 \\(4\\) 组特征拼接后，作当前 Inception 节点的输出
+- 将上述 \\(4\\) 组特征拼接后，作为当前 Inception 节点的输出
 
 #### 加速计算
 
@@ -68,7 +68,7 @@
 
 #### 并行 pooling
 
-- 将 Inception 节点之后的 pooling 合并到节点内（上图，右）
+- 将 Inception 节点后的 pooling 合并到节点内（上图，右）
 
 	- 假设输入特征图维度为 \\(c \times n \times n\\)，输出特征图维度为 \\(c \times \frac{n}{2} \times \frac{n}{2}\\)
 
@@ -80,7 +80,7 @@
 
 			$$ \frac{n}{2} \cdot \frac{n}{2} \cdot (c \cdot 2c) = 2c^{2}\left(\frac{n}{2}\right)^{2} $$
 
-		- 同时通过 \\(stride = 2\\) 的 \\(3 \times 3, \ 5 \times 5\\) 卷积和 pooling，实现特征图降维
+		- 同时使用 \\(stride = 2\\) 的 \\(3 \times 3, \ 5 \times 5\\) 卷积和 pooling，实现特征图降维
 
 ## Inception v3
 
@@ -142,6 +142,6 @@
 
 		- 在这种 Xception 结构下，shortcut 分支可以加速收敛，提高分类性能
 
-		- 不用 shortcut 分支，使用类似 VGG 的结构时，同样可以达到相同的性能
+		- 不用 shortcut 分支，使用类似 VGG 的结构时，也可以达到相同的性能
 
 - 与 Inception v3 相比，参数量基本相同，分类性能更好

@@ -36,29 +36,19 @@
 
 	- \\(y\_{i}\\) 即为 Batch Normalization 后的输出
 
-	- 训练稳定时，\\(\gamma\\) 近似等于 \\(x\_{i}\\) 的标准差 \\(\sigma\_{B}\\)，\\(\beta\\) 近似等于 \\(x\_{i}\\) 的均值 \\(\mu\_{B}\\)
-
 	- 由于 \\(\hat{x\_{i}}\\) 分布固定， \\(y\_{i}\\) 的分布不再受浅层网络参数的影响，可以加速训练过程
 
 	- \\(\hat{x\_{i}}\\) 被归一化为标准正态分布，直接作为下一层输入会限制网络表达能力；需要通过参数 \\(\gamma, \beta\\) 进行恢复，具体恢复程度在训练过程中由神经网络自主决定
 
 ### 测试过程
 
-- Batch Normalization 是为了方便训练，测试时不应该使用；但由于训练时作为网络的整体，直接拿掉会影响结果
-
-- 首先计算训练过程中所有的 batch 的均值和方差：
+- 首先计算训练过程中所有 batch 的均值和方差：
 
 	$$ \mu = E \left\[\mu\_{B}\right\] \qquad \sigma^{2} = \frac{m}{m-1} E [\sigma\_{B}^{2}] $$
 
 - 此时 Batch Normalization 的输出值为：
 
 	$$ y = \gamma \left( \frac{x-\mu}{\sqrt{\sigma^{2}+\epsilon}} \right) + \beta = \frac{\gamma}{\sqrt{\sigma^{2}+\epsilon}} \cdot x + \left( \beta - \frac{\gamma \mu}{\sqrt{\sigma^{2}+\epsilon}}\right) $$
-
-	- 由于 \\(\gamma\\) 是 \\(\sigma\\) 的近似，\\(\beta\\) 是 \\(\mu\\) 的近似，上式近似等于：
-
-		$$ y = x $$
-			
-		- 相当于不使用 Batch Normalization
 
 - 在 CNN 中，通常为每个特征图设置一个 \\(\gamma, \ \beta\\)，以减少参数量
 
@@ -72,11 +62,11 @@
 
 ### 激活层
 
-- Batch Normalization 层通常放在卷积层之后、激活层之前：
+- Batch Normalization 层通常放在激活层之前：
 
-	- \\(w^{T}x+b\\) 更接近高斯分布，Batch Normalization 的归一化效果更好
+	- 在原始 ResNet 中，Batch Normalization 放在卷积层之后、激活层之前
 
-	- 如果放在激活层之后，\\(g(w^{T}x+b)\\) 则不具有这一特性
+	- 在 pre-activation 结构的 ResNet 中，是 Batch Normalization、激活层、卷积层
 
 ## 性能分析
 
@@ -114,15 +104,7 @@
 
 		$$ \frac{\partial{x\_{l}}}{\partial{x\_{l-1}}} = \frac{\partial{BN(w^{T}\_{l}x\_{l-1})}}{\partial{x\_{l-1}}} =  \frac{\partial{BN(\alpha w^{T}\_{l}x\_{l-1})}}{\partial{x\_{l-1}}} $$
 
-	- 反向传播时的残差与 \\(w\\) 的尺度无关：
-
-		- 尽管在参数更新时改变了 \\(w\\) 的值，但反向传播时的残差却不受影响
-
-- 由梯度下降法可得：
-	
-	$$ \frac{\partial{l}}{\partial{(\alpha w\_{l})}} = \frac{\partial{l}}{\partial{x\_{l}}} \cdot \frac{\partial{x\_{l}}}{\partial{(\alpha w\_{l})}} = \frac{\partial{l}}{\partial{x\_{l}}} \cdot \left( \frac{1}{\alpha} \cdot \frac{\partial{BN(w\_{l}^{T}x\_{l-1})}}{\partial{w\_{l}}} \right) $$
-
-	- 当 \\(w\\) 增大时，梯度减小，同样的学习率下参数更新幅度较小，可以防止梯度爆炸
+	- 反向传播时的残差与 \\(w\\) 的尺度无关
 
 ### 防止过拟合
 

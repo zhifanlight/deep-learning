@@ -22,7 +22,7 @@
 
 	$$ Var(y) = \sum\_{i=1}^{n} Var(x\_{i}) \cdot Var(w\_{i}) = n $$
 
-	- 关于期望、方差线性运算，参考 [Theorems.md](../basic/Theorems.md)
+	- 关于期望、方差线性运算，参考 [ProbabilityBasis.md](../basic/ProbabilityBasis.md)
 
 - 线性加权 \\(y\\) 的方差与输入维度有关，很容易落入 Sigmoid 饱和区，不利于反向传播
 
@@ -62,9 +62,7 @@
 
 ### Xavier
 
-- 由于 ReLU 无法进行数据压缩，输入 \\(x\\) 方差不一定为 \\(1\\)
-
-- 保证输入和输出的方差尽量相等，使网络信息更好的流动
+- 同时考虑输入、输出维度，保证输入和输出的方差尽量相等，使网络信息更好的流动
 
 - 假设输入为 \\(n\\) 维，输出为 \\(m\\) 维，激活函数为 ReLU 或 Tanh，权重 \\(w \sim U(-\sqrt{\frac{6}{m+n}}, \sqrt{\frac{6}{m+n}})\\)
 
@@ -80,7 +78,7 @@
 
 - 激活函数是 ReLU 时，深层权重迅速向 \\(0\\) 靠拢
 
-### He Initialization
+### MSRA
 
 - 在 ReLU 网络中，假定每一层只有一半的神经元被激活
 
@@ -114,7 +112,7 @@
 
 	- 测试时不进行 Dropout
 
-	- 需要设置 drop_ratio，即神经元不工作的概率
+	- 需要设置 dropout_ratio，即神经元不工作的概率
 
 - Tensorflow 实现：
 
