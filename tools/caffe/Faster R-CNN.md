@@ -147,11 +147,11 @@ layer {
 
 - AnchorTarget 层处理过程：
 
-	- 根据 Anchor 得到原始图像上的 Region Proposal
+	- 根据 Anchor 得到原始图像的对应区域
 
-	- 删除超出图像边界的 Region Proposal 对应的 Anchor
+	- 删除超出图像边界的区域对应的 Anchor
 
-	- 计算 Anchor 对应的 Region Proposal 和 Ground Truth 的 \\(IoU\\)
+	- 计算 Anchor 对应区域和 Ground Truth 的 \\(IoU\\)
 
 	- 标记正样本、负样本、无效样本
 
@@ -171,7 +171,7 @@ layer {
 
 	- 正、负样本太多时，随机采样
 
-	- 根据 Anchor 对应的 Region Proposal，计算 BBox 的目标
+	- 根据 Anchor 的对应区域，计算 BBox 的目标
 
 ### ProposalTarget 层
 

@@ -1,12 +1,12 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-# binaryproto 均值文件
+# 均值文件
 
 ## 简介
 
 - 记录输入数据中每个像素点、每个通道的均值
 
-- 对于 M * N 的彩色图像，binaryproto 文件维度为 1 * 3 * M * N
+- 对于 \\(M \times N\\) 的彩色图像，binaryproto 文件维度为 \\(1 \times 3 \times M \times N\\)
 
 ## Shell 实现
 

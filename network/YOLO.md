@@ -54,7 +54,7 @@
 
 	- BBox 尺度 Loss
 
-		$$ \lambda\_{coord} \sum\_{i=0}^{S^{2}}\sum\_{j=0}^{B} \mathbb{1}\_{ij}^{obj} \left[ \left(\sqrt{w\_{i}} - \sqrt\{\hat{w\_{i}}}\right)^{2} + \left(\sqrt{h\_{i}} - \sqrt{\hat{h\_{i}}}\right)^{2}\right] $$
+		$$ \lambda\_{coord} \sum\_{i=0}^{S^{2}}\sum\_{j=0}^{B} \mathbb{1}\_{ij}^{obj} \left[ \left(\sqrt{w\_{i}} - \sqrt{\hat{w\_{i}}}\right)^{2} + \left(\sqrt{h\_{i}} - \sqrt{\hat{h\_{i}}}\right)^{2}\right] $$
 
 		- \\(w\\) 或 \\(h\\) 差距相同时，小物体的 loss 应该更大
 
@@ -107,8 +107,6 @@
 - 对小目标的定位准确性较差
 
 	- 训练时小目标和大目标的 BBox loss 对损失函数影响相同（平方根只是缓解，不能彻底解决问题）
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 ## YOLO v2
 
