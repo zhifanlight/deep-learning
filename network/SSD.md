@@ -4,7 +4,7 @@
 
 ## 思想
 
-- 不选择 Region Proposal，直接在回归目标的 BBox 变换量和对应分类
+- 不选择 Region Proposal，直接回归目标的 BBox 变换量和对应分类
 
 - 引入 Faster R-CNN 的 Anchor 思想，在特征图的每个位置上设置 Default Box，每个 Default Box 对应输入图像的一块区域，每块区域有对应的 BBox 变换量、分类结果
 
@@ -18,7 +18,7 @@
 
 - pool5 层之前使用预训练的 VGG 网络
 
-- fc6，fc7 层的实现采用卷积层
+- fc6，fc7 层使用卷积层代替
 
 - 在 fc7 层之后添加 4 种尺度的卷积层
 
@@ -110,7 +110,7 @@
 
 ## 缺点
 
-- 学要手动设置 Default Box 的 min\_size、max\_size 和 aspect\_ratio；不同 feature 使用的 Default Box 大小、形状不一样，调试过程复杂
+- 需要手动设置 Default Box 的 min\_size、max\_size 和 aspect\_ratio；不同 feature 使用的 Default Box 大小、形状不一样，调试过程复杂
 
 - 对小目标检测的效果不好
 

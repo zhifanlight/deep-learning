@@ -92,6 +92,8 @@
 
 	- 将 \\(0.1 < IoU < 0.5\\) 的 Region Proposal 视为背景类
 
+	- 按 \\(0.5\\) 的概率对输入图像随机翻转，进行数据增强
+
 ## 特征提取
 
 ### 坐标映射
@@ -116,7 +118,7 @@
 
 		$$ in = out \cdot s $$
 
-		- 即，感受野中心点坐标 \\(in\\) 只与后一层有关
+		- 感受野中心点坐标 \\(in\\) 只与后一层有关
 
 		- 公式按层嵌套后，与 max pooling 响应点 \\(out\\) 对应的输入层中心点为：
 
@@ -133,16 +135,6 @@
 	- 计算 ROI 右上角坐标 \\((x, y)\\) 对应的 ROI pooling 坐标：
 
 		$$ x' = \left \lceil \frac{x}{S} \right \rceil - 1 \qquad y' = \left \lceil \frac{y}{S} \right \rceil - 1 $$
-
-### CNN 训练
-
-- 从 ROI pooling 层提取相应 ROI 的特征，训练 Softmax 分类器和 Bounding Box 回归器
-
-	- 将 \\(IoU \geq 0.5\\) 的 Region Proposal 视为正样本
-
-	- 将 \\(0.1 \leq IoU < 0.5\\) 的 Region Proposal 视为负样本
-
-- 按 \\(0.5\\) 的概率对输入图像随机翻转，进行数据增强
 
 ### 全连接层提速
 

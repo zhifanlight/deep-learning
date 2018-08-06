@@ -78,6 +78,8 @@
 
 	- 为防止训练结果偏向负样本，每个 batch 内正、负样本数量相同
 
+		- 正样本数量不足时，用负样本填充，组成一个完整的 batch
+
 - Softmax Loss 计算如下：
 
 	$$ L\_{cls} = \frac{1}{N\_{cls}} \sum\_{a} L\_{cls}(p\_{a}, p\_{a}^{\*}) $$
@@ -146,19 +148,19 @@
 
 #### RPN fine-tuning
 
-- 对 ImageNet 上预训练的 CNN 模型进行 fine-tuning，得到经过 Bounding Box 的 Region Proposal，用于后续 Fast R-CNN
+- 对预训练的 CNN 模型进行 fine-tuning，得到 Region Proposal，用于后续 Fast R-CNN
 
 #### Fast R-CNN fine-tuning
 
-- 利用上一步中得到的 Region Proposal，对 ImageNet 上预训练的 CNN 模型进行 fine-tuning
+- 利用上一步中得到的 Region Proposal，对预训练的 CNN 模型进行 fine-tuning
 
 #### RPN fine-tuning
 
-- 将 Fast R-CNN 的卷积核复制到 RPN 并固定，仅对 RPN 进行 fine-tuning，实现卷积层共享
+- 基于上一步得到的模型，仅对 RPN 进行 fine-tuning，实现卷积层共享
 
 #### Fast R-CNN fine-tuning
 
-- 继续固定卷积层，仅对 Fast-RCNN 进行 fine-tuning，完成对 Faster R-CNN 的训练
+- 固定卷积层和 RPN，仅对 Fast-RCNN 进行 fine-tuning，完成对 Faster R-CNN 的训练
 
 ### Anchor 数量
 
@@ -176,4 +178,4 @@
 
 	- 训练时从这 2000 个 Anchor 中随机选取 256 个 Anchor
 
-	- 测试时只选取得分最高的 300 个 Anchor 用于 Fast R-CNN 检测
+	- 测试时只选取得分最高的 300 个 Anchor 作为 Fast R-CNN 输入

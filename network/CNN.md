@@ -4,17 +4,17 @@
 
 ## 背景介绍
 
-- 与 BP 网络相比，CNN 的隐藏层细分为卷积层、池化层、全连接层
+- 与 BP 网络相比，CNN 的隐藏层细分为卷积层、Pooling 层、全连接层
 
 - 输入是二维图像而非一维向量，因此可以学到像素点的空间关系
 
-- 卷积层、池化层的梯度计算方式与 BP 的全连接层不同，但训练过程相同
+- 卷积层、Pooling 层的梯度计算方式与 BP 的全连接层不同，但训练过程相同
 
 ![img](images/lenet.png)
 
 ### 卷积、互相关、转置卷积
 
-- 参考 [Convolution.md] (../basic/Convolution.md)
+- 参考 [Convolution.md] (Convolution.md)
 
 ### 卷积层
 
@@ -58,9 +58,7 @@
 
 	$$ o' = s \ (i'-1) + a + k - 2p $$
 
-### 池化层
-
-- 如果在整个通道上进行池化操作，可以将不同输入尺寸的图像进行统一处理
+### Pooling 层
 
 - 降低特征图像的维度，分为 max-pooling 和 average-pooling
 
@@ -72,7 +70,7 @@
 
 		- 取邻域平均值作为当前像素点的像素值
 
-- 卷积层生成的特征图通常包含冗余信息，需要通过池化层来去除冗余
+- 卷积层生成的特征图通常包含冗余信息，需要通过 Pooling 来去除冗余
 
 	- 如果使用 max-pooling，相当于只考虑最大激活值
 
@@ -84,7 +82,7 @@
 
 - 输入尺寸 \\(i\\)、输出尺寸 \\(o\\)、池化核大小 \\(k\\)、步长 \\(s\\) 的关系为：
 
-	$$ o = \left \lfloor \frac{i-k}{s} \right \rfloor + 1 $$
+	$$ o = \left \lceil \frac{i-k}{s} \right \rceil + 1 $$
 
 ## 数学推导
 
@@ -124,28 +122,28 @@
 - 对权重项应用链式法则：
 
 	$$
-	\begin{align\*}
-	\frac{\partial{E}}{\partial{w\_{m, \ n}^{l}}} &= \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{w\_{m, \ n}^{l}}} \newline
-	&= \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} \newline
-	\end{align\*}
+	\begin{aligned}
+	\frac{\partial{E}}{\partial{w\_{m, \ n}^{l}}} &= \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{w\_{m, \ n}^{l}}} \newline
+	&= \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} \newline
+	\end{aligned}
 	$$
 
 	- 于是 \\(w\_{ji}\\) 更新公式为：
 
-		$$ w\_{m, \ n}^{l} \leftarrow w\_{m, \ n}^{l} - \eta \cdot \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} $$
+		$$ w\_{m, \ n}^{l} \leftarrow w\_{m, \ n}^{l} - \eta \cdot \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} $$
 
 - 对偏置项应用链式法则：
 
 	$$
-	\begin{align\*}
-	\frac{\partial{E}}{\partial{b^{l}}} &= \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{b^{l}}} \newline
-	&= \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}} \delta\_{i, \ j}^{l} \newline
-	\end{align\*}
+	\begin{aligned}
+	\frac{\partial{E}}{\partial{b^{l}}} &= \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{b^{l}}} \newline
+	&= \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \newline
+	\end{aligned}
 	$$
 	
 	- 于是：
 
-		$$ b^{l} \leftarrow b^{l} - \eta \cdot \sum\_{i=0}^{H-k\_{1}} \sum\_{j=0}^{W-k\_{2}} \delta\_{i, \ j}^{l} $$
+		$$ b^{l} \leftarrow b^{l} - \eta \cdot \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} $$
 
 ![img](images/cnn_range.png)
 	
@@ -154,13 +152,13 @@
 	- 由于输入 \\(x\_{i, \ j}^{l}\\) 只影响 \\((i - k\_{1} + 1, \ j - k\_{2} + 1)\\) 到 \\((i, \ j)\\) 区域内的输出（见上图），记该区域为 \\(Q\\)，则：
 
 	$$
-	\begin{align\*}
-	\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} &= \sum \frac{\partial{E}}{\partial{x\_{Q}^{l+1}}} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
-	&= \sum \delta\_{Q}^{l+1} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
+	\begin{aligned}
+	\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} &= \sum\_{Q} \frac{\partial{E}}{\partial{x\_{Q}^{l+1}}} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
+	&= \sum\_{Q} \delta\_{Q}^{l+1} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
 	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial{x\_{i-m, \ j-n}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
 	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \left( \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot z\_{i-m+p, \ j-n+q}^{l} + b^{l+1} \right) \newline
 	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot f(x\_{i-m+p, \ j-n+q}^{l}) \newline
-	\end{align\*}
+	\end{aligned}
 	$$
 	
 	- 由于:
@@ -170,33 +168,33 @@
 	- 因此：
 	
 		$$
-		\begin{align\*}
+		\begin{aligned}
 		\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} &= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot f(x\_{i-m+p, \ j-n+q}^{l}) \newline
 		&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} w\_{m, \ n}^{l+1} \cdot f(x\_{i, \ j}^{l}) \newline
 		&= f'(x\_{i, \ j}^{l}) \cdot \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot w\_{m, \ n}^{l+1} \newline
-		\end{align\*}
+		\end{aligned}
 		$$
 	
 	- 而由卷积 \\(\otimes\\) 与互相关 \\(*\\) 定义可知：
 
 		$$
-		\begin{align\*}
+		\begin{aligned}
 		\delta\_{i, \ j}^{l} &= f'(x\_{i, \ j}^{l}) \cdot \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot w\_{m, \ n}^{l+1} \newline
 		&= f'(x\_{i, \ j}^{l}) \cdot (\delta^{l+1} \otimes w^{l+1})\_{i, \ j} \newline
 		&= f'(x\_{i, \ j}^{l}) \cdot \left(\delta^{l+1} * filp\left(w^{l+1}\right)\right)\_{i, \ j} \newline
-		\end{align\*}
+		\end{aligned}
 		$$
 
 	- CNN 中的卷积是指互相关，而上式相当于先翻转卷积核再进行互相关
 
-#### 池化层
+#### Pooling 层
 
-##### max-pooling
+- max-pooling
 
-- 根据前向计算时记录的最大值位置，将后一层误差原封不动地传到前一层邻域最大值处
+	- 根据前向计算时记录的最大值位置，将后一层误差原封不动地传到前一层邻域最大值处
 
-	- 其他像素点由于被抑制，不会对最终的前向计算结果有影响
+		- 其他像素点由于被抑制，不会对最终的前向计算结果有影响
 
-##### average-pooling
+- average-pooling
 
-- 将后一层误差均匀地传到前一层邻域内的所有像素点
+	- 将后一层误差均匀地传到前一层邻域内的所有像素点

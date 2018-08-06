@@ -73,11 +73,11 @@
 	- 对于中间层，\\(x\_{j}^{l}\\) 依次影响 \\(z\_{j}^{l}, x\_{k}^{l+1}, y\_{k}\\) 间接作用于 \\(E\_{s}\\)，因此：
 
 		$$
-		\begin{align\*}
+		\begin{aligned}
 		\frac{\partial{E\_{s}}}{\partial{x\_{j}^{l}}} &= \sum\_{k \in Next} \frac{\partial{E\_{s}}}{\partial{x\_{k}^{l+1}}} \cdot \frac{\partial{x\_{k}^{l+1}}}{\partial{z\_{j}^{l}}} \cdot \frac{\partial{z\_{j}^{l}}}{\partial{x\_{j}^{l}}} \newline
 		&= \sum\_{k \in Next} \delta\_{k}^{l+1} \cdot w\_{kj}^{l+1} \cdot \left(z\_{j}^{l}\right)' \newline
 		&= \left(z\_{j}^{l}\right)' \sum\_{k \in Next} \delta\_{k}^{l+1} w\_{kj}^{l+1} \newline
-		\end{align\*}
+		\end{aligned}
 		$$
 	
 		- 将 \\(\delta\_{j}^{l} = \frac{\partial{E\_{s}}}{\partial{a\_{j}^{l}}}\\) 代入得：
