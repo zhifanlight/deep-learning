@@ -16,7 +16,7 @@
 
 ## 卷积
 
-- 先反转卷积核，再进行对位乘法，记作 \\( I * K \\)
+- 先翻转卷积核，再进行对位乘法，记作 \\( I * K \\)
 
 	$$ I * K = \\left[ \\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{matrix} \\right] * \\left[ \\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{matrix} \\right] = \\left[ \\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{matrix} \\right] \otimes \\left[ \\begin{matrix} 9 & 8 & 7 \\\\ 6 & 5 & 4 \\\\ 3 & 2 & 1 \\end{matrix} \\right] = \\left[ \\begin{matrix} 9 & 16 & 21 \\\\ 24 & 25 & 24 \\\\ 21 & 16 & 9 \\end{matrix} \\right] $$
 
@@ -29,20 +29,6 @@
 	\end{align\*}
 	$$
 
-## 转置卷积
-
-![img](images/conv.png)
-
-- 上图中，卷积核大小为 \\(3\\)，如果把输入 \\(X\\) 拉成 \\(16\\) 维列向量，把输出 \\(Y\\) 拉成 \\(4\\) 维列向量，把卷积核 \\(W\\) 展成以下形式，那么卷积可由矩阵乘法完成：\\(Y=WX\\)
-
-	![img](images/conv_weight.png)
-
-- 转置卷积的目标是通过 \\(W\\) 把输出 \\(Y\\) 变换到输入 \\(X\\) 的维度： \\(X=W^{T}Y\\)
-
-- 转置卷积相当于先把卷积核翻转，再对输出矩阵进行卷积，以得到输入的近似矩阵
-
-- 把卷积核按上述方式展开会得到稀疏矩阵，效率较低，通常采用以下矩阵展开方式
-
 ## 卷积加速
 
 ### 卷积定理
@@ -53,14 +39,40 @@
 
 ### 矩阵展开
 
-- 已知输入图像维度为 \\(H \times W \times C\\)，共有 \\(T\\) 个 \\(K \times K \times C\\) 卷积核，步长为 \\(S\\)：
+- 假设 \\(X = \left[ \begin{matrix} a & b & c \\\\ d & e & f \\\\ g & h & j \end{matrix} \right]\\)，\\(W = \left[ \begin{matrix} w & x \\\\ y & z \end{matrix} \right]\\)，\\(Y = \left[ \begin{matrix} p & q \\\\ r & s \end{matrix} \right]\\)
 
-	- 输入图像可展开为一个 \\( N \times (K \times K \times C) \\) 的矩阵 \\(A\\)，\\(A\\) 的每 \\(K \times K\\) 列表示一个通道，即 \\( A = \\left[ \\begin{matrix} A\_{1} & A\_{2} & \cdots & A\_{C} \\end{matrix} \\right] \\)，\\(A\_{i}\\) 的每一行表示一个需要卷积的元素
+- 进行 \\(im2col\\)：
 
-	- 所有卷积核可合并为一个 \\((K \times K \times C) \times T\\) 的矩阵 \\(B\\)，\\(B\\) 的每 \\(C\\) 行表示一个通道，即 \\( B = \\left[ \\begin{matrix} B\_{1} \\\\ B\_{2} \\\\ \vdots \\\\ B\_{C} \\end{matrix} \\right] \\)，\\(B\_{i}\\) 的每一列表示当前通道卷积核的元素展开
+	$$ W = \left[ \begin{matrix} w & x & y & z \end{matrix} \right], \quad X = \left[ \begin{matrix} a & b & d & e \\\\ b & c & e & f \\\\ d & e & g & h \\\\ e & f & h & j \end{matrix} \right] $$
 
-	- 通过 GPU 可以对矩阵乘法进行加速，计算 \\(D = AB\\)
+	- \\(X\\) 的每一列表示一次卷积位置
 
-	- \\(D\\) 为 \\(N \times T\\) 矩阵，\\(D\\) 的每一列表示一个卷积核的计算结果，即 \\(D = \\left[ \\begin{matrix} D\_{1} & D\_{2} & \cdots & D\_{T} \\end{matrix} \\right]\\)，将 \\(D\_{i}\\) 转化成 \\(\left( \frac{H - K}{S} + 1 \right) \times \left( \frac{W - K}{S} + 1 \right) \\) 矩阵，以得到所有卷积结果
-	
-![image](images/conv_acceleration.png)
+- 进行矩阵乘法：
+
+	$$ Y = WX = \left[ \begin{matrix} wa + xb + yd + ze \\\\ wb + xc + ye + zf \\\\ wd + xe + yg + zh \\\\ we + xf + yh + zj \end{matrix} \right]^{T} = \left[ \begin{matrix} p & q & r & s \end{matrix} \right] $$
+
+	- \\(Y\\) 的每一列表示一次卷积结果
+
+## 转置卷积
+
+- 假设 \\(X = \left[ \begin{matrix} a & b & c \\\\ d & e & f \\\\ g & h & j \end{matrix} \right]\\)，\\(W = \left[ \begin{matrix} w & x \\\\ y & z \end{matrix} \right]\\)，\\(Y = \left[ \begin{matrix} p & q \\\\ r & s \end{matrix} \right]\\)
+
+- 转置卷积定义为 \\(X = W^{T} Y\\)
+
+	- 转置卷积可以从输出特征图恢复输入特征图的形状
+
+	- 转置卷积的卷积核与普通卷积的卷积核没有数值关联
+
+- 进行 \\(im2col\\)：
+
+	$$ W^{T} = \left[ \begin{matrix} w \\\\ x \\\\ y \\\\ z \end{matrix} \right], \quad Y = \left[ \begin{matrix} p & q & r & s \end{matrix} \right] $$
+
+- 进行矩阵乘法：
+
+	$$ X = W^{T} Y = \left[ \begin{matrix} w p & w q & w r & w s \\\\ x p & x q & x r & x s \\\\ y p & y q & y r & y s \\\\ z p & z q & z r & z s \end{matrix} \right] $$
+
+- 进行 \\(col2im\\)：
+
+	$$ X = \left[ \begin{matrix} w p & w q + x p & x q \\\\ w r + y p & w s + x r + y q + z p & x s + z q \\\\ y r & y s + z r & z s \end{matrix} \right] $$
+
+- 转置卷积的计算过程，与卷积的反向传播计算方式相同
