@@ -234,6 +234,18 @@ layer {
 }
 ```
 
+- MultiBoxLoss 层处理流程：
+
+	- 获取所有 Ground Truth、Default Box、BBox 信息
+
+	- 对 Ground Truth 和 Default Box 进行匹配
+
+		- 根据匹配结果，计算 BBox 目标
+
+	- 进行 Hard Negative Mining
+
+		- 计算分类损失
+
 ## deploy.prototxt
 
 ### 输入层

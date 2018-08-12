@@ -143,7 +143,7 @@
 
 		- 进行矩阵乘法：
 
-			$$ Y = WX = \left[ \begin{matrix} wa + xb + yd + ze \\\\ wb + xc + ye + zf \\\\ wd + xe + yg + zh \\\\ we + xf + yh + zj \end{matrix} \right] $$
+			$$ Y = WX = \left[ \begin{matrix} wa + xb + yd + ze \\\\ wb + xc + ye + zf \\\\ wd + xe + yg + zh \\\\ we + xf + yh + zj \end{matrix} \right]^{T} $$
 
 	- 反向传播：
 

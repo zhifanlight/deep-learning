@@ -31,7 +31,7 @@ layer {
 	bottom: 'rpn_cls_prob_reshape'		# RPN softmax 输出
 	bottom: 'rpn_bbox_pred'				# RPN bbox 输出
 	bottom: 'im_info'					# 输入 shape
-	top: 'rois'
+	top: 'rois'							# Region Proposal
 	python_param {
 		module: 'rpn.proposal_layer'
 		layer: 'ProposalLayer'
@@ -60,7 +60,7 @@ layer {
 	type: "ROIPooling"
 	bottom: "conv5_3"		# 卷积层特征图
 	bottom: "rois"			# 得到的 Region Proposal
-	top: "pool5"
+	top: "pool5"			# roi pooling 结果
 	roi_pooling_param {
 		pooled_w: 7		# 输出特征图的宽
 		pooled_h: 7		# 输出特征图的高
@@ -129,10 +129,10 @@ layer {
 layer {
 	name: 'rpn-data'
 	type: 'Python'
-	bottom: 'rpn_cls_score'			# rpn softmax 输出
+	bottom: 'rpn_cls_score'			# 为了获取特征图维度
 	bottom: 'gt_boxes'				# ground-truth
-	bottom: 'im_info'				# 图像 shape
-	bottom: 'data'					# 待预测图像
+	bottom: 'im_info'				# 图像 shape 信息
+	bottom: 'data'					# 待预测图像，代码中似乎未使用
 	top: 'rpn_labels'					# Anchor 对应标签
 	top: 'rpn_bbox_targets'				# BBox 目标
 	top: 'rpn_bbox_inside_weights'		# 用于计算 RPN bbox loss
@@ -182,7 +182,7 @@ layer {
 	bottom: 'rpn_cls_prob_reshape'		# RPN softmax 输出
 	bottom: 'rpn_bbox_pred'				# RPN bbox 输出
 	bottom: 'im_info'					# 图像 shape
-	top: 'rpn_rois'
+	top: 'rpn_rois'						# Region Proposal
 	python_param {
 		module: 'rpn.proposal_layer'
 		layer: 'ProposalLayer'
