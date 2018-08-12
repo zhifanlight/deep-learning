@@ -12,10 +12,6 @@
 
 ![img](images/lenet.png)
 
-### 卷积、互相关、转置卷积
-
-- 参考 [Convolution.md] (Convolution.md)
-
 ### 卷积层
 
 - 输入图像与不同的卷积核做卷积，得到不同的特征图像
@@ -31,32 +27,6 @@
 	- 整合不同通道的信息
 
 	- 实现通道层面的降维，以减少计算
-
-### 转置卷积层
-
-- 对输入尺寸 \\(i\\)、输出尺寸 \\(o\\)、padding 长度 \\(p\\)、卷积核大小 \\(k\\)、步长 \\(s\\) 的卷积，相应的转置卷积操作为：
-
-	- 输入尺寸 \\(i' = o\\)
-
-	- 输出尺寸 \\(o' = i\\)
-
-	- padding 长度 \\(p' = k - p - 1\\)
-
-	- 卷积核大小 \\(k' = k\\)
-
-	- 步长 \\(s' = 1\\)
-
-	- 输入行之间填充 \\(s - 1\\) 行 \\(0\\) 元素
-
-	- 输入列之间填充 \\(s - 1\\) 列 \\(0\\) 元素
-
-	- 输入的上侧填充 \\((i + 2p - k) \ \% \ s\\) 行 \\(0\\) 元素
-
-	- 输入的右侧填充 \\((i + 2p - k) \ \% \ s\\) 列 \\(0\\) 元素
-
-- 输入尺寸 \\(i'\\)、输出尺寸 \\(o'\\)、padding 长度 \\(p\\)、卷积核大小 \\(k\\)、步长 \\(s\\) 的关系为：
-
-	$$ o' = s \ (i'-1) + a + k - 2p $$
 
 ### Pooling 层
 
@@ -121,12 +91,7 @@
 
 - 对权重项应用链式法则：
 
-	$$
-	\begin{aligned}
-	\frac{\partial{E}}{\partial{w\_{m, \ n}^{l}}} &= \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{w\_{m, \ n}^{l}}} \newline
-	&= \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} \newline
-	\end{aligned}
-	$$
+	$$ \frac{\partial{E}}{\partial{w\_{m, \ n}^{l}}} = \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{w\_{m, \ n}^{l}}} = \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \cdot z\_{i+m, \ j+n}^{l-1} $$
 
 	- 于是 \\(w\_{ji}\\) 更新公式为：
 
@@ -134,66 +99,75 @@
 
 - 对偏置项应用链式法则：
 
-	$$
-	\begin{aligned}
-	\frac{\partial{E}}{\partial{b^{l}}} &= \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{b^{l}}} \newline
-	&= \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} \newline
-	\end{aligned}
-	$$
+	$$ \frac{\partial{E}}{\partial{b^{l}}} = \sum\_{i} \sum\_{j}\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \cdot \frac{\partial{x\_{i, j}^{l}}}{\partial{b^{l}}} = \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} $$
 	
 	- 于是：
 
 		$$ b^{l} \leftarrow b^{l} - \eta \cdot \sum\_{i} \sum\_{j} \delta\_{i, \ j}^{l} $$
 
-![img](images/cnn_range.png)
-	
-- 而误差项 \\( \delta\_{i, \ j}^{l} = \frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \\) 计算如下：
+- 误差项 \\( \delta\_{i, \ j}^{l} = \frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} \\) 计算如下：
 
-	- 由于输入 \\(x\_{i, \ j}^{l}\\) 只影响 \\((i - k\_{1} + 1, \ j - k\_{2} + 1)\\) 到 \\((i, \ j)\\) 区域内的输出（见上图），记该区域为 \\(Q\\)，则：
+	- 假设受输入 \\(x\_{i, \ j}^{l}\\) 影响的区域为 \\(Q\\)，则：
 
-	$$
-	\begin{aligned}
-	\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} &= \sum\_{Q} \frac{\partial{E}}{\partial{x\_{Q}^{l+1}}} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
-	&= \sum\_{Q} \delta\_{Q}^{l+1} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
-	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial{x\_{i-m, \ j-n}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} \newline
-	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \left( \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot z\_{i-m+p, \ j-n+q}^{l} + b^{l+1} \right) \newline
-	&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot f(x\_{i-m+p, \ j-n+q}^{l}) \newline
-	\end{aligned}
-	$$
-	
-	- 由于:
+		$$ \frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} = \sum\_{Q} \frac{\partial{E}}{\partial{x\_{Q}^{l+1}}} \cdot \frac{\partial{x\_{Q}^{l+1}}}{\partial{x\_{i, \ j}^{l}}} $$
 
-		$$ \frac{\partial{f(x\_{i-m+p, \ j-n+q}^{l})}}{\partial{x\_{i, \ j}^{l}}} \neq 0 \ \rightarrow  \ \\left\\{ \begin{matrix} m=p \\\\ n=q \end{matrix} \\right\. $$
-		
-	- 因此：
-	
-		$$
-		\begin{aligned}
-		\frac{\partial{E}}{\partial{x\_{i, \ j}^{l}}} &= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} \sum\_{p}\sum\_{q} w\_{p, \ q}^{l+1} \cdot f(x\_{i-m+p, \ j-n+q}^{l}) \newline
-		&= \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot \frac{\partial}{\partial{x\_{i, \ j}^{l}}} w\_{m, \ n}^{l+1} \cdot f(x\_{i, \ j}^{l}) \newline
-		&= f'(x\_{i, \ j}^{l}) \cdot \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot w\_{m, \ n}^{l+1} \newline
-		\end{aligned}
-		$$
-	
-	- 而由卷积 \\(\otimes\\) 与互相关 \\(*\\) 定义可知：
+	- 假设 \\(X = \left[ \begin{matrix} a & b & c \\\\ d & e & f \\\\ g & h & j \end{matrix} \right]\\)，\\(W = \left[ \begin{matrix} w & x \\\\ y & z \end{matrix} \right]\\)，\\(Y = \left[ \begin{matrix} p & q \\\\ r & s \end{matrix} \right]\\)，\\(\delta\_{X} = \left[ \begin{matrix} \delta\_{a} & \delta\_{b} & \delta\_{c} \\\\ \delta\_{d} & \delta\_{e} & \delta\_{f} \\\\ \delta\_{g} & \delta\_{h} & \delta\_{j} \end{matrix} \right]\\)，\\(\delta\_{Y} = \left[ \begin{matrix} 0 & 0 & 0 & 0 \\\\ 0 & \delta\_{p} & \delta\_{q} & 0 \\\\ 0 & \delta\_{r} & \delta\_{s} & 0 \\\\ 0 & 0 & 0 & 0 \end{matrix} \right]\\)
 
-		$$
-		\begin{aligned}
-		\delta\_{i, \ j}^{l} &= f'(x\_{i, \ j}^{l}) \cdot \sum\_{m=0}^{k\_{1}-1}\sum\_{n=0}^{k\_{2}-1}  \delta\_{i-m, \ j-n}^{l+1} \cdot w\_{m, \ n}^{l+1} \newline
-		&= f'(x\_{i, \ j}^{l}) \cdot (\delta^{l+1} \otimes w^{l+1})\_{i, \ j} \newline
-		&= f'(x\_{i, \ j}^{l}) \cdot \left(\delta^{l+1} * filp\left(w^{l+1}\right)\right)\_{i, \ j} \newline
-		\end{aligned}
-		$$
+- 正向计算时：
 
-	- CNN 中的卷积是指互相关，而上式相当于先翻转卷积核再进行互相关
+	$$ Y = X \otimes W $$
+
+	- 由卷积定义：
+
+		$$ \left\\{ \begin{matrix} p = aw + bx + dy + ez \\\\ q = bw + cx + ey + fz \\\\ r = dw + ex + gy + hz \\\\ s = ew + fx + hy + jz \end{matrix} \right. $$
+
+- 反向传播时：
+
+	$$ \delta\_{X} = \delta\_{Y} \otimes Rot(W) $$
+
+	- 其中 \\(Rot(W) = \left[ \begin{matrix} z & y \\\\ x & w \end{matrix} \right]\\) 表示对卷积核 \\(W\\) 同时进行水平翻转和竖直翻转
+
+	- 以 \\(\delta\_{a}, \ \delta\_{e}\\) 为例，偏导数计算如下：
+
+		$$ \frac{\partial{E}}{\partial{a}} = \frac{\partial{E}}{\partial{p}} \cdot \frac{\partial{p}}{\partial{a}} = \delta\_{p} \cdot w $$ 
+				
+		$$ \frac{\partial{E}}{\partial{e}} = \frac{\partial{E}}{\partial{p}} \frac{\partial{p}}{\partial{e}} + \frac{\partial{E}}{\partial{q}} \frac{\partial{q}}{\partial{e}} + \frac{\partial{E}}{\partial{r}} \frac{\partial{r}}{\partial{e}} + \frac{\partial{E}}{\partial{s}} \frac{\partial{s}}{\partial{e}} = \delta\_{p} \cdot z + \delta\_{q} \cdot y + \delta\_{r} \cdot x + \delta\_{s} \cdot w $$
+
+- 在实际计算时，由于进行了 \\(im2col\\) 和 \\(col2im\\)，不用翻转卷积核；但需要对 \\(im2col\\) 后的卷积核进行转置
+
+	- 正向计算：
+
+		- 进行 \\(im2col\\)：
+
+			$$ W = \left[ \begin{matrix} w & x & y & z \end{matrix} \right], \quad X = \left[ \begin{matrix} a & b & d & e \\\\ b & c & e & f \\\\ d & e & g & h \\\\ e & f & h & j \end{matrix} \right] $$
+
+		- 进行矩阵乘法：
+
+			$$ Y = WX = \left[ \begin{matrix} wa + xb + yd + ze \\\\ wb + xc + ye + zf \\\\ wd + xe + yg + zh \\\\ we + xf + yh + zj \end{matrix} \right] $$
+
+	- 反向传播：
+
+		- 误差矩阵不使用 padding：
+
+			$$ \delta\_{Y} = \left[ \begin{matrix} \delta\_{p} & \delta\_{q} \\\\ \delta\_{r} & \delta\_{s} \end{matrix} \right] $$
+
+		- 进行 \\(im2col\\)：
+
+			$$ W^{T} = \left[ \begin{matrix} w \\\\ x \\\\ y \\\\ z \end{matrix} \right], \quad \delta\_{Y} = \left[ \begin{matrix} \delta\_{p} & \delta\_{q} & \delta\_{r} & \delta\_{s} \end{matrix} \right] $$
+
+		- 进行矩阵乘法：
+
+			$$ \delta\_{X} = W^{T} \delta\_{Y} = \left[ \begin{matrix} w \delta\_{p} & w \delta\_{q} & w \delta\_{r} & w \delta\_{s} \\\\ x \delta\_{p} & x \delta\_{q} & x \delta\_{r} & x \delta\_{s} \\\\ y \delta\_{p} & y \delta\_{q} & y \delta\_{r} & y \delta\_{s} \\\\ z \delta\_{p} & z \delta\_{q} & z \delta\_{r} & z \delta\_{s} \end{matrix} \right] $$
+
+		- 进行 \\(col2im\\)：
+
+			$$ \delta\_{X} = \left[ \begin{matrix} w \delta\_{p} & w \delta\_{q} + x \delta\_{p} & x \delta\_{q} \\\\ w \delta\_{r} + y \delta\_{p} & w \delta\_{s} + x \delta\_{r} + y \delta\_{q} + z \delta\_{p} & x \delta\_{s} + z \delta\_{q} \\\\ y \delta\_{r} & y \delta\_{s} + z \delta\_{r} & z \delta\_{s} \end{matrix} \right] $$
 
 #### Pooling 层
 
 - max-pooling
 
-	- 根据前向计算时记录的最大值位置，将后一层误差原封不动地传到前一层邻域最大值处
-
-		- 其他像素点由于被抑制，不会对最终的前向计算结果有影响
+	- 根据前向计算时记录的最大值位置，将误差原封不动地传到前一层邻域最大值处
 
 - average-pooling
 
