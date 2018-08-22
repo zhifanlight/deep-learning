@@ -4,7 +4,7 @@
 
 ## 思想
 
-- 用 RPN 替换 Selective Search 过程，并将 RPN 与 Fast R-CNN 统一到同一个 CNN 中，实现端到端检测
+- 用 RPN 替换 Selective Search，并将 RPN 与 Fast R-CNN 统一到同一个 CNN 中，实现端到端检测
 
 - RPN 与 Fast R-CNN 共享卷积层，减少计算量
 

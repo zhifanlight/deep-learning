@@ -28,7 +28,7 @@
 
 	$$ L(y\_{i}, f(x\_{i})) = (y\_{i} - f(x\_{i}))^{2} $$
 
-	- 用于在线性回归，参考 [LinearRegression.md](LinearRegression.md)
+	- 用于线性回归，参考 [LinearRegression.md](LinearRegression.md)
 
 ### 对数损失函数
 
@@ -40,7 +40,7 @@
 
 		$$ p(i) = sigmoid \ (f(x\_{i})) $$
 
-		$$ L(y\_{i}, f(x\_{i})) = -( y\_{i} \cdot log \ p\_{i} + (1 - y\_{i}) \cdot log \ (1 - p\_{i}) ) $$
+		$$ L(y\_{i}, f(x\_{i})) = -( y\_{i} \cdot \log \ p\_{i} + (1 - y\_{i}) \cdot \log \ (1 - p\_{i}) ) $$
 		
 		- 用于逻辑回归，参考 [LogisticRegression.md](LogisticRegression.md)
 
@@ -48,7 +48,7 @@
 
 		$$ p(i) = softmax \ (f(x\_{i})) $$
 
-		$$ L(y\_{i}, f(x\_{i})) = - \sum\_{j} y\_{ij} \cdot log \ p\_{ij} $$
+		$$ L(y\_{i}, f(x\_{i})) = - \sum\_{j} y\_{ij} \cdot \log \ p\_{ij} $$
 		
 		- 用于 Softmax 回归，参考 [SoftmaxRegression.md](SoftmaxRegression.md)
 
