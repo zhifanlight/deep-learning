@@ -138,6 +138,20 @@
 
 	- 实际训练时，选择 256 个 Anchor 组成 mini-batch
 
+### Faster R-CNN with ResNet-101
+
+- 使用 ResNet-101 作为主干网络时，结构略有不同
+
+	- 去掉 Fast R-CNN 的两个全连接层，构成 FCN
+
+	- 在 conv4 特征图上进行 RPN 和 ROIPooling
+
+	- ROIPooling 后的特征图维度变为 \\(14 \times 14\\)
+
+	- 将 ROIPooling 结果作为 conv5 的输入
+
+	- 对 conv5 的 global average pooling 结果送入两个子网络进行分类和 BBox 回归
+
 ## 训练过程
 
 - 只进行单尺度检测，将图像缩放至短边长度 \\(s = 600\\)
