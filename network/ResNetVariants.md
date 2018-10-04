@@ -126,7 +126,9 @@
 
 - 参数量相同时，ResNeXt 比 ResNet 结果更好
 
-	- ResNeXt-50 可以达到 ResNet-101 的效果，但参数量更少
+	- ResNeXt 第一个 \\(1 \times 1\\) 卷积通道数是 ResNet 的两倍，可以提取更充分的特征
+
+	- 由于 ResNeXt 使用了分组卷积，参数量和计算量反而比 ResNet 少
 
 - 增加 Cardinality 比增加模型的深度或宽度效果更好
 
