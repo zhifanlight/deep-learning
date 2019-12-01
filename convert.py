@@ -2,44 +2,43 @@ import os
 import time
 
 """
-change markdown syntax from MacDown to YouDaoYun Note 
+change markdown syntax from Typora to YouDaoYun Note
     read from clipboard, process and paste to clipboard
 """
 
 clip = os.popen('pbpaste').read()
 
-clip = clip.replace(r'\\(', '`$').replace(r'\\)', '$`')
-clip = clip.replace(r'\\', '\\').replace(r'\_', '_').replace(r'\*', '*').replace(r'\.', '.')
 clip = clip.replace(r'\newline', '\\\\')
-clip = clip.replace(r'\*', '*')
 clips = clip.split('\n')
 
 ans = ''
-start = False
+equation_start = False
+appear_code = False
 
 for c in clips:
-    if '$$' in c:
-        if start:
-            if c.strip() == '$$':
-                ans += c.replace('$$', '```') + '\n'
-                start = False
+    if c.strip() == '$$':
+        if equation_start:
+            ans += c.replace('$$', '```') + '\n'
         else:
-            if c.strip() == '$$':
-                ans += c.replace('$$', '```math') + '\n'
-                start = True
+            ans += c.replace('$$', '```math') + '\n'
+        equation_start = not equation_start
+    elif '$$' in c:
+        raise ValueError('$$ must exist in new line')
+    elif '$' in c and not appear_code:
+        appear_dollar = False
+        for v in c:
+            if v == '$':
+                ans += '`$' if not appear_dollar else '$`'
+                appear_dollar = not appear_dollar
             else:
-                left = 0
-                right = len(c) - 1
-                tabs = c.index('$$')
-                while left < right and c[left] in (' ', '\t', '$'):
-                    left += 1
-                while left < right and c[right] in (' ', '\t', '$'):
-                    right -= 1
-                ans += '\t' * tabs + '```math' + '\n'
-                ans += '\t' * tabs + c[left: right + 1] + '\n'
-                ans += '\t' * tabs + '```' + '\n'
+                ans += v
+        ans += '\n'
+        if appear_dollar:
+            print('[CHECK]: %s' % c)
     else:
         ans += c + '\n'
+        if '```' in c:
+            appear_code = not appear_code
 
 name = str(time.time()).split('.')[0]
 fp = open(name, 'w')

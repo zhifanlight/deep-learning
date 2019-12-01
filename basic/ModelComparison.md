@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 # 模型比较
 
 ## 回归
@@ -14,9 +12,9 @@
 
 - 集成方法
 
-	- GBDT
+  - $\mathrm{GBDT}$
 
-	- 随机森林
+  - 随机森林
 
 ## 分类
 
@@ -26,7 +24,7 @@
 
 - 决策树
 
-- kNN
+- $\mathrm{kNN}$
 
 - 朴素贝叶斯
 
@@ -36,11 +34,11 @@
 
 - 集成方法
 
-	- Adaboost
+  - $\mathrm{Adaboost}$
 
-	- GBDT
+  - $\mathrm{GBDT}$
 
-	- 随机森林
+  - 随机森林
 
 ## 聚类
 
@@ -54,7 +52,7 @@
 
 ## 决策树
 
-- 参考 [DecisionTrees.md](DecisionTrees.md)
+- 参考 [$\mathrm{DecisionTrees.md}$](DecisionTrees.md)
 
 ### 优点
 
@@ -70,13 +68,13 @@
 
 - 容易出现过拟合
 
-	- 对决策树进行剪枝，使用交叉验证选择最终的树结构
+  - 对决策树进行剪枝，使用交叉验证选择最终的树结构
 
-	- 使用基于决策树的组合方法，比如随机森林、GBDT
+  - 使用基于决策树的组合方法，比如随机森林、$\mathrm{GBDT}$
 
-## kNN
+## $\mathrm{kNN}$
 
-- 参考 [kNN.md](kNN.md)
+- 参考 [$\mathrm{kNN.md}$](kNN.md)
 
 ### 优点
 
@@ -86,15 +84,15 @@
 
 ### 缺点
 
-- \\(k\\) 值的选择不易控制
+- $k$ 值的选择不易控制
 
 - 样本集较大时，计算量也较大
 
 - 样本不平衡时，预测偏差比较大
 
-## SVM
+## $\mathrm{SVM}$
 
-- 参考 [SVM.md](SVM.md)
+- 参考 [$\mathrm{SVM.md}$](SVM.md)
 
 ### 优点
 
@@ -112,33 +110,33 @@
 
 ## 逻辑回归
 
-- 参考 [LogisticRegression.md](LogisticRegression.md)
+- 参考 [$\mathrm{LogisticRegression.md}$](LogisticRegression.md)
 
 ### 优点
 
 - 计算量少，易于实现
 
-- 与 SVM 相比，可以输出样本的概率值
+- 与 $\mathrm{SVM}$ 相比，可以输出样本的概率值
 
 ### 缺点
 
 - 当分类边界非线性时，性能较差
 
-### LR 与 SVM 选择
+### $\mathrm{LR}$ 与 $\mathrm{SVM}$ 选择
 
 - 数据量过大时：
 
-	- 选择 LR，优化方法采用 SGD；由于内存开销，SVM 无法在海量数据上训练
+  - 选择 $\mathrm{LR}$，优化方法采用 $\mathrm{SGD}$；由于内存开销，$\mathrm{SVM}$ 无法在海量数据上训练
 
 - 数据量不是很大时：
 
-	- 使用正则化约束的 LR，或者线性核的 SVM
+  - 使用正则化约束的 $\mathrm{LR}$，或者线性核的 $\mathrm{SVM}$
 
-	- 上述方法无效时，尝试高斯核的 SVM
+  - 上述方法无效时，尝试高斯核的 $\mathrm{SVM}$
 
 ## 朴素贝叶斯
 
-- 参考 [NaiveBayes.md](NaiveBayes.md)
+- 参考 [$\mathrm{NaiveBayes.md}$](NaiveBayes.md)
 
 ### 优点
 
@@ -150,9 +148,9 @@
 
 ## 神经网络
 
-- 参考 [BP.md](../network/BP.md)
+- 参考 [$\mathrm{BP.md}$](../network/BP.md)
 
-- 参考 [CNN.md](../network/CNN.md)
+- 参考 [$\mathrm{CNN.md}$](../network/CNN.md)
 
 ### 优点
 

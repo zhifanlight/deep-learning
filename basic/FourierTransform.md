@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 # 傅立叶变换
 
 ## 背景介绍
@@ -14,23 +12,31 @@
 
 ## 原理分析
 
-- 假设 \\(f, F\\) 分别表示空间域、频率域上的信号，宽、高分别为 \\(M, N\\)
+- 假设 $f, \ F$ 分别表示空间域、频率域上的信号，宽、高分别为 $M, \ N$
 
-	- 正向傅立叶变换从空间域变换到频率域：
+  - 正向傅立叶变换从空间域变换到频率域：
 
-		$$ F(u,v) = \sum\_{x=0}^{M-1} \sum\_{y=0}^{N-1} f(x,y) \ e^{-j2\pi (\frac{ux}{M} + \frac{vy}{N})}$$
+    $$
+    F \left( u, \ v \right) = \sum_{x = 0}^{M - 1} \sum_{y = 0}^{N - 1} f \left( x, \ y \right) \mathrm{e}^{-j2\pi \left( \frac{ux}{M} + \frac{vy}{N} \right)}
+    $$
 
-	- 逆向傅立叶变换从频率域变换到空间域：
+  - 逆向傅立叶变换从频率域变换到空间域：
 
-		$$ f(x,y) = \frac{1}{MN} \sum\_{u=0}^{M-1} \sum\_{v=0}^{N-1} F(u,v) \ e^{j2\pi (\frac{ux}{M} + \frac{vy}{N})}$$
-		
-	- 欧拉公式：
-	
-		$$ e^{jx} = cos(x) + j\ sin(x) $$ 
+    $$
+    f \left( x, \ y \right) = \frac{1}{MN} \sum_{u = 0}^{M - 1} \sum_{v = 0}^{N - 1} F \left( u, \ v \right) \mathrm{e}^{j2\pi \left( \frac{ux}{M} + \frac{vy}{N} \right)}
+    $$
 
-	- 频谱直流分量（图像平均灰度）：
-	
-		$$ F(0, 0) = \frac{1}{MN} \sum\_{x=0}^{M-1} \sum\_{y=0}^{N-1} f(x,y) $$
+  - 欧拉公式：
+
+    $$
+    \mathrm{e}^{jx} = \cos \left( x \right) + j \sin \left( x \right)
+    $$
+
+  - 频谱直流分量（图像平均灰度）：
+
+    $$
+    F \left( 0, \ 0 \right) = \frac{1}{MN} \sum_{x = 0}^{M - 1} \sum_{y = 0}^{N - 1} f \left( x, \ y \right)
+    $$
 
 - 二维傅立叶变换是两个一维傅立叶变换叠加：先按行进行变换，再按列进行变换
 
@@ -42,8 +48,12 @@
 
 - 函数卷积的傅立叶变换等于各自傅立叶变换的乘积：
 
-	$$F(f * g) = F(f) \cdot F(g)$$
-	
+  $$
+  F \left( f * g \right) = F \left( f \right) \cdot F \left( g \right)
+  $$
+
 - 函数相关的傅立叶变换等于前者傅立叶变换乘上后者傅立叶变换的共轭：
 
-	$$F(f \otimes g) = F(f) \cdot F^{*}(g)$$
+  $$
+  F \left( f \otimes g \right) = F \left( f \right) \cdot F^{*} \left( g \right)
+  $$

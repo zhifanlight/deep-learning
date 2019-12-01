@@ -1,22 +1,22 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-# TensorRT
+# $\mathrm{TensorRT}$
 
 ## 加速原理
 
-- 以 Inception v1 的节点为例，原始结构如下：
+- 以 $\mathrm{Inception \ v1}$ 的节点为例，原始结构如下：
 
-	- 卷积层的计算实际分为两步：计算卷积，加偏置项
+  - 卷积层的计算实际分为两步：计算卷积，加偏置项
 
-		![img](images/origin.png)
+  <center>
+  <img src="images/origin.png"/>
+  </center>
 
 ### 删除无关层
 
 - 删除没有用到的输出层和相关层，减少计算量
 
-### Concat 优化
+### $\mathrm{Concat}$ 优化
 
-- 直接预分配连续显存，并将计算结果写入到对应区域；不再进行 Concat 操作
+- 直接预分配连续显存，并将计算结果写入到对应区域；不再进行 $\mathrm{Concat}$ 操作
 
 ### 低精度计算
 
@@ -24,26 +24,30 @@
 
 ### 内核融合
 
-- 垂直方向：将多个串行节点节点合并进一个计算节点，减少 GPU 内核启动次数
+- 垂直方向：将多个串行节点节点合并进一个计算节点，减少 $\mathrm{GPU}$ 内核启动次数
 
-	- 将卷积层和激活层合并得到 CBR（Convolution + Bias + ReLU）如下：
+  - 将卷积层和激活层合并得到 $\mathrm{CBR}$（$\mathrm{Convolution + Bias + ReLU}$）如下：
 
-		![img](images/vertical.png)
+  <center>
+  <img src="images/vertical.png"/>
+  </center>
 
 - 水平方向：合并输入相同、操作相同的层，分别计算每一部分，减少内核启动次数
 
-	- 将来自同一输入的 \\(1 \times 1\\) 卷积后，得到的计算图如下：
+  - 将来自同一输入的 $1 \times 1$ 卷积后，得到的计算图如下：
 
-	 ![img](images/horizon.png)
+  <center>
+  <img src="images/horizon.png"/>
+  </center>
 
 ## 基本流程
 
-- 将 Caffe、Tensorflow 等模型转换成 GIE 可以运行的模型，或直接从磁盘加载
+- 将 $\mathrm{Caffe}$、$\mathrm{Tensorflow}$ 等模型转换成 $\mathrm{GIE}$ 可以运行的模型，或直接从磁盘加载
 
-	- GIE 全称是 GPU Inference Engine
+  - $\mathrm{GIE}$ 全称是 $\mathrm{GPU \ Inference \ Engine}$
 
-	- 在转换过程中，进行上述优化
+  - 在转换过程中，进行上述优化
 
-- 将数据拷贝到 GPU 并通过 GIE 计算，将计算结果拷回 CPU
+- 将数据拷贝到 $\mathrm{GPU}$ 并通过 $\mathrm{GIE}$ 计算，将计算结果拷回 $\mathrm{CPU}$
 
-- 对于 TensorRT 原生不支持的层，可以自己写插件实现
+- 对于 $\mathrm{TensorRT}$ 原生不支持的层，可以自己写插件实现
