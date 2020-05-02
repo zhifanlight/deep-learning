@@ -233,3 +233,53 @@
 - 相比 $\mathrm{MobileNet \ v1}$，多了扩展因子 $t$ 和第一个 $\mathrm{pointwise}$ 卷积；由于第一个 $\mathrm{pointwise}$ 可以实现特征升维，$\mathrm{MobileNet \ v2}$ 可以使用更窄的输入、输出特征
 
 - 相比 $\mathrm{MobileNet \ v1}$，由于特征升维的作用，准确率有所提升
+
+## $\mathrm{MobileNet \ v3}$
+
+### 设计思想
+
+#### 轻量级激活函数
+
+- 用 $\mathrm{HardSigmoid}$ 替换 $\mathrm{Sigmoid}$，从而间接替换 $\mathrm{Swish}$ 函数，其中 $\mathrm{HardSigmoid}$ 函数定义如下：
+
+  $$
+  \mathrm{HardSigmoid} \left( x \right) = \frac{\mathrm{ReLU6 \left( x \right)}}{6}
+  $$
+
+- 与 $\mathrm{Sigmoid}$ 相比，$\mathrm{HardSigmoid}$ 所需的计算量极小，而且几乎不会导致模型精度下降
+
+#### 起始模块优化
+
+- 目前的移动端模型，一般使用 $32$ 通道的标准 $3 \times 3$ 卷积作为起始模块，得益于 $\mathrm{HardSwish}$ 更强的非线性，可以将该模块的通道数削减为 $16$，却不会导致模型精度下降
+
+#### 预测输出模块优化
+
+- $\mathrm{MobileNet \ v2}$ 在最后一个 $\mathrm{Bottleneck}$ 模块后，首先使用 $1 \times 1$ 卷积对 $7 \times 7$ 的特征图进行通道升维，然后对 $\mathrm{Global \ Average \ Pooling}$ 的结果进行分类
+
+- 在 $\mathrm{MobileNet \ v3}$ 中，只保留该 $\mathrm{Bottleneck}$ 的 $\mathrm{Expasion} \ 1 \times 1$ 卷积，然后将 $\mathrm{Global \ Average \ Pooling}$ 的结果升维到 $1280$ 通道，最后进行分类
+
+- 优化后，通道升维在 $1 \times 1$ 特征图生进行，可以进一步提升效率；而实验结果表明，该改动不会导致最终精度下降
+
+- 输出模块优化前后的对比如下：
+
+<center>
+<img src="images/mobilenet_v3_output.png"/>
+</center>
+
+#### 引入 $\mathrm{SE}$ 模块进一步提升精度
+
+- $\mathrm{Bottleneck}$ 的结构基本沿用了 $\mathrm{MobileNet \ v2}$ 的设计，$\mathrm{SE}$ 模块应用在 $\mathrm{Depthwise}$ 后的特征图上
+
+- $\mathrm{SE}$ 模块中，通道降维系数固定为 $0.25$
+
+### 网络结构
+
+- 基本的 $\mathrm{MobileNet \ v3}$ 模块如下：
+
+<center>
+<img src="images/mobilenet_v3_block.png"/>
+</center>
+
+- 沿用 $\mathrm{MobileNet \ v2}$ 的模块设计，但由于使用 $\mathrm{NAS}$ 搜索最优网络结构，每个模块的 $\mathrm{Expasion}$ 比例不固定
+
+- $\mathrm{NL}$ 表示 $\mathrm{ReLU}$ 或 $\mathrm{HardSwish}$，其中，起始模块和深层网络使用 $\mathrm{HardSwish}$，其他部分使用 $\mathrm{ReLU}$
