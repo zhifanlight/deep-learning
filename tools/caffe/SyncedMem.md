@@ -2,7 +2,7 @@
 
 ## 实现
 
-- 通过 `SyncedMemory` 类实现 $\mathrm{GPU}$ 和 $\mathrm{CPU}$ 之间的数据同步
+- 通过 `SyncedMem` 类实现 $\mathrm{GPU}$ 和 $\mathrm{CPU}$ 之间的数据同步
 
   - `SyncedHead` 枚举类记录上一次的数据状态
 

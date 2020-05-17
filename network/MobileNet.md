@@ -280,6 +280,6 @@
 <img src="images/mobilenet_v3_block.png"/>
 </center>
 
-- 沿用 $\mathrm{MobileNet \ v2}$ 的模块设计，但由于使用 $\mathrm{NAS}$ 搜索最优网络结构，每个模块的 $\mathrm{Expasion}$ 比例不固定
+- 沿用 $\mathrm{MobileNet \ v2}$ 的模块设计，但由于使用 $\mathrm{NAS}$ 搜索最优网络结构，每个模块的 $\mathrm{Expansion}$ 比例不固定
 
 - $\mathrm{NL}$ 表示 $\mathrm{ReLU}$ 或 $\mathrm{HardSwish}$，其中，起始模块和深层网络使用 $\mathrm{HardSwish}$，其他部分使用 $\mathrm{ReLU}$
