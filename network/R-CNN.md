@@ -44,13 +44,13 @@
 
 - 对 $\mathrm{Selective \ Search}$ 的结果进行拉伸或填充，使其满足 $\mathrm{CNN}$ 的输入尺寸要求
 
-- 对 $\mathrm{AlexNet}$、$\mathrm{VGG}$ 进行 $\mathrm{fine-tuning}$，修改最后的全连接层，对候选区域训练 $N + 1$ 类（前景、背景）分类器
+- 对 $\mathrm{AlexNet}$、$\mathrm{VGG}$ 进行 $\mathrm{fine-tuning}$，修改最后的全连接层，对候选区域训练 $N + 1$ 类（前景 $\mathrm{+}$ 背景）分类器
 
 - 用 $\mathrm{CNN}$ 提取候选区域的 $4096$ 维特征，通过二分类 $\mathrm{SVM}$，判断该特征是否属于某个类别
 
   - 在训练 $\mathrm{CNN}$ 时，为防止过拟合，进行了数据增强，对正样本定义比较宽松
 
-  - 如果直接对提取的特征进行 $\mathrm{Softmax}$，分类效果不是很好
+  - 训练时正样本位置不准确，导致 $\mathrm{CNN}$ 提取的特征不够准确，直接进行 $\mathrm{Softmax}$ 分类效果较差
 
 ### $\mathrm{CNN \ fine-tuning}$
 

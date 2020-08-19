@@ -279,7 +279,7 @@ layer {
 
     - $\mathrm{id}$ 表示当前图像在 $\mathrm{batch}$ 内的序号
 
-    - 由于只支持对单张图片检测，$\mathrm{id} = 0$
+    - 官方 $\mathrm{Caffe}$ 版本只支持对单张图片的检测，因此 $\mathrm{id} = 0$
 
 - $\mathrm{Fast \ R-CNN \ Softmax}$ 模块的输出 `cls_prob` 维度为 $\left( N, \ C \right)$
 

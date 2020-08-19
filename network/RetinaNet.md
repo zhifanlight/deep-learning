@@ -32,7 +32,7 @@
   \mathrm{CE} \left( p_{t} \right) = -\alpha_{t} \log p_{t}
   $$
 
-  - 其中 $\alpha_{t}$ 可以设置为正样本数的逆频率，也可以直接设置为超参数
+  - $\alpha_{t}$ 与 $p_{t}$ 的计算方式相同
 
 - 上述方法可以处理类别不平衡，但无法区分容易分类和难以分类的样本
 
@@ -66,7 +66,9 @@
 
   - 分类网络包含 $4$ 层 $256$ 通道的 $3 \times 3$ 卷积和 $1$ 层 $KA$ 通道的 $3 \times 3$ 卷积，用于 $\mathrm{sigmoid}$ 分类
 
-  - $\mathrm{BBox}$ 网络包含 $4$ 层 $256$ 通道的 $3 \times 3$ 卷积和 $1$ 层 $4A$ 通道的 $3 \times 3$ 卷积，用于 $\mathrm{sigmoid}$ 分类
+  - $\mathrm{BBox}$ 网络包含 $4$ 层 $256$ 通道的 $3 \times 3$ 卷积和 $1$ 层 $4A$ 通道的 $3 \times 3$ 卷积，用于 $\mathrm{bbox}$ 回归
+
+    - 与 $\mathrm{Faster \ R-CNN}$ 及 $\mathrm{SSD}$ 不同的是，所有类别共享 $\mathrm{bbox}$ 参数
 
   - $K$ 是类别数，$A$ 是每个位置的 $\mathrm{anchor}$ 种类，分类网络和 $\mathrm{BBox}$ 网络不共享参数
 
