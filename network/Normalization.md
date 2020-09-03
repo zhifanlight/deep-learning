@@ -1,24 +1,26 @@
-# $\mathrm{Batch \ Normalization}$
+# $\mathrm{Normalization}$
 
-## 背景介绍
+## $\mathrm{Batch \ Normalization}$
 
-### $\mathrm{Covariate \ Shift}$
+### 背景介绍
+
+#### $\mathrm{Covariate \ Shift}$
 
 - 网络浅层参数的改变，导致深层的输入分布发生变化，是神经网络训练困难的原因
 
-### $\mathrm{Whitening}$
+#### $\mathrm{Whitening}$
 
 - 对输入进行白化（零均值、单位标准差）能够加速网络收敛
 
 - 对于 $\mathrm{Sigmoid}$ 激活函数，可以避免输入层的梯度消失，但深层数据分布依旧不可控
 
-### $\mathrm{Batch \ Normalization}$
+#### $\mathrm{Batch \ Normalization}$
 
 - 核心思想是通过对中间层数据进行归一化和特征恢复，减少浅层网络输出分布变化对深层网络输入的影响，加速训练
 
-## 数学推导
+### 数学推导
 
-### 训练过程
+#### 训练过程
 
 - 计算输入 $x$ 的均值 $\mu_{B}$ 与方差 $\sigma_{B}^{2}$：
 
@@ -44,7 +46,7 @@
 
   - $\hat{x_{i}}$ 被归一化为标准正态分布，直接作为下一层输入会限制网络表达能力；需要通过参数 $\gamma, \ \beta$ 进行恢复，具体恢复程度在训练过程中由神经网络自主决定
 
-### 测试过程
+#### 测试过程
 
 - 首先计算训练过程中所有 $\mathrm{batch}$ 的均值和方差：
 
@@ -60,7 +62,7 @@
 
 - 在 $\mathrm{CNN}$ 中，通常为每个特征图设置一个 $\gamma, \ \beta$，以减少参数量
 
-### 偏置项
+#### 偏置项
 
 - 对于使用 $\mathrm{Batch \ Normalization}$ 的层，无需使用偏置项 $b$：
 
@@ -70,7 +72,7 @@
     \mathrm{BN} \left( w^{T} x \right) = \mathrm{BN} \left( w^{T} x + b \right)
     $$
 
-### 激活层
+#### 激活层
 
 - $\mathrm{Batch \ Normalization}$ 层通常放在激活层之前：
 
@@ -78,9 +80,9 @@
 
   - 在 $\mathrm{pre-activation}$ 结构的 $\mathrm{ResNet}$ 中，顺序是 $\mathrm{Batch \ Normalization}$、激活层、卷积层
 
-## 性能分析
+### 性能分析
 
-### 加速训练
+#### 加速训练
 
 - 解决 $\mathrm{Covariate \ Shift}$：
 
@@ -92,7 +94,7 @@
 
   - $\mathrm{Batch \ Normalization}$ 将每一层、每一维的数据范围保持一致，可以直接使用较高的学习率进行训练
 
-### 解决梯度问题
+#### 解决梯度问题
 
 - 对于 $x_{l} = w^{T}_{l} x_{l - 1}$，在反向传播时计算如下：
 
@@ -124,7 +126,7 @@
 
   - 反向传播时的残差与 $w$ 的尺度无关
 
-### 防止过拟合
+#### 防止过拟合
 
 - 由 $\mathrm{Batch \ Normalization}$ 过程可知，某个样本的中间层特征不再仅取决于样本本身，也取决于这个样本所属的 $\mathrm{mini-batch}$
 

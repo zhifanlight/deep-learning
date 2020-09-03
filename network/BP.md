@@ -10,9 +10,9 @@
 
 - 在训练时，先正向计算，再反向传播，直到神经网络的权值趋于稳定
 
-<center>
-<img src="images/bp.png"/>
-</center>
+  <center>
+  <img src="images/bp.png"/>
+  </center>
 
 ## 数学推导
 
