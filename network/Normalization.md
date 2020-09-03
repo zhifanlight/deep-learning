@@ -76,7 +76,7 @@
 
 - $\mathrm{Batch \ Normalization}$ 层通常放在激活层之前：
 
-  - 在原始 $\mathrm{ResNet}$ 中，$\mathrm{Batch \ Normalization}$ 放在卷积层之后、激活层之前
+  - 在原始 $\mathrm{ResNet}$ 中，$\mathrm{Batch \ Normalization}$ 放在卷积层之后、激活层之前
 
   - 在 $\mathrm{pre-activation}$ 结构的 $\mathrm{ResNet}$ 中，顺序是 $\mathrm{Batch \ Normalization}$、激活层、卷积层
 
@@ -131,3 +131,43 @@
 - 由 $\mathrm{Batch \ Normalization}$ 过程可知，某个样本的中间层特征不再仅取决于样本本身，也取决于这个样本所属的 $\mathrm{mini-batch}$
 
 - 同一个样本与不同的样本组成 $\mathrm{mini-batch}$ 时，输出也不同，一定程度上可以抑制过拟合
+
+## $\mathrm{Group \ Normalization}$
+
+### 背景介绍
+
+- $\mathrm{Batch \ Normalization}$ 在小 $\mathrm{batch}$ 下性能较差；以检测为例，由于单张图像占用显存过高，每张卡的 $\mathrm{batch}$ 只能设置为 $1$ 或 $2$
+
+  - 此时 $\mathrm{Batch \ Normalization}$ 不够稳定，通常做法是冻结参数，将其作为普通的仿射变换层
+
+  - 但$\mathrm{ImageNet}$ 上预训练的模型，$\mathrm{Batch \ Normalization}$ 的统计参数与检测时的统计量通常不同，可能会影响检测模型的性能
+
+- 为解决问题，需要避免在 $\mathrm{batch}$ 维度对特征图进行归一化处理
+
+- 对于特定层的卷积核，提取的特征并不是孤立的，可能部分是形状特征，部分是纹理特征，部分是亮度特征等；理论上，这些特征可以被分为不同的组
+
+### 计算过程
+
+<center>
+<img src="images/normalization.png"/>
+</center>
+
+- $\mathrm{Group \ Normalization}$ 与 $\mathrm{Batch \ Normalization}$、$\mathrm{Layer \ Normalization}$、$\mathrm{Instance \ Normalization}$ 的计算过程基本相同，不同的是计算统计量时使用的特征图不同
+
+- 与 $\mathrm{Batch \ Normalization}$ 相比，$\mathrm{Group \ Normalization}$ 在计算统计量时，不会跨越 $\mathrm{batch}$ 维度
+
+- 与 $\mathrm{Layer \ Normalization}$ 相比，$\mathrm{Group \ Normalization}$ 在计算统计量时，将当前层的特征图分为 $\mathrm{G=32}$ 组，每组分别统计和计算，更加灵活
+
+  - 当 $\mathrm{G=1}$ 时，$\mathrm{Group \ Normalization}$ 退化为 $\mathrm{Layer \ Normalization}$
+
+  - 同层特征图通常包含不同方面的特征，$\mathrm{Layer \ Normalization}$ 对所有特征图进行归一化，反而会降低模型的表达能力
+
+- 与 $\mathrm{Instance \ Normalization}$ 相比，$\mathrm{Group \ Normalization}$ 在计算统计量时，会更充分地考虑通道间关系
+
+  - 当 $\mathrm{G=C}$ 时，$\mathrm{Group \ Normalization}$ 退化为 $\mathrm{Instance \ Normalization}$
+
+- 训练和测试的计算过程相同：使用当前特征图计算相关统计量
+
+### 性能分析
+
+- 在大多数情况下，可以作为 $\mathrm{Batch \ Normalization}$ 的替代品，在小 $\mathrm{batch}$ 下优势更明显
