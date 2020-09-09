@@ -1,6 +1,8 @@
 # $\mathrm{EfficientNet}$
 
-## 背景
+## $\mathrm{EfficientNet}$
+
+### 背景
 
 - 对于同系列网络，常用的精度提升方法是加深、加宽、提高分辨率
 
@@ -16,7 +18,7 @@
 
 - 因此，最好是同时加深、加宽、提高分辨率
 
-## 思想
+### 思想
 
 - 在计算量翻倍的情况下，深度 $d$、宽度 $w$、分辨率 $r$ 分别按如下规则进行调整：
 
@@ -32,7 +34,7 @@
 
     - 上述约束基于：深度与计算量是线性关系，而宽度、分辨率与计算量是二次关系
 
-## 网络
+### 网络
 
 - 通过网络结构方法得到基础的 $\mathrm{EfficientNet-B0}$
 
@@ -47,3 +49,13 @@
   $$
 
 - 按照上述规则，不断扩展网络的计算量，得到 $\mathrm{EfficientNet-B1}$ 至 $\mathrm{EfficientNet-B7}$ 的系列网络
+
+## $\mathrm{EfficientNet-Lite}$
+
+- $\mathrm{EfficientNet-Lite}$ 是针对边缘设备优化的版本，主要包括以下改进：
+
+  - 移除 $\mathrm{SE}$ 模块，原因是边缘设备对 $\mathrm{SE}$ 模块的支持欠佳
+
+  - 使用 $\mathrm{ReLU6}$ 代替 $\mathrm{Swish}$ 函数，提升训练后的量化质量
+
+  - 模型缩放时，固定 $\mathrm{stem}$ （网络起始层）和 $\mathrm{head}$ （分类层及前一层），以减少模型体积及计算量
