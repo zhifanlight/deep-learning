@@ -199,7 +199,7 @@
       \delta_{X} = W^{T} \delta_{Y} = \left[ \begin{matrix} w \delta_{p} & w \delta_{q} & w \delta_{r} & w \delta_{s} \\ x \delta_{p} & x \delta_{q} & x \delta_{r} & x \delta_{s} \\ y \delta_{p} & y \delta_{q} & y \delta_{r} & y \delta_{s} \\ z \delta_{p} & z \delta_{q} & z \delta_{r} & z \delta_{s} \end{matrix} \right]
       $$
 
-    - 进行 $\mathrm{col2im}$：
+    - 对 $\delta_{X}$ 先转置再进行 $\mathrm{col2im}$：
 
       $$
       \delta_{X} = \left[ \begin{matrix} w \delta_{p} & w \delta_{q} + x \delta_{p} & x \delta_{q} \\ w \delta_{r} + y \delta_{p} & w \delta_{s} + x \delta_{r} + y \delta_{q} + z \delta_{p} & x \delta_{s} + z \delta_{q} \\ y \delta_{r} & y \delta_{s} + z \delta_{r} & z \delta_{s} \end{matrix} \right]

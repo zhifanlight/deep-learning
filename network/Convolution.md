@@ -27,10 +27,10 @@
 - 即：
 
   $$
-  \begin{align*}
+  \begin{aligned}
   \left( I * K \right)_{ij} &= \sum_{m = 0}^{k_{1} - 1} \sum_{n = 0}^{k_{2} - 1} I \left( i - m, \ j - n \right) \cdot K \left( m, \ n \right) \newline
   & = \sum_{m = 0}^{k_{1} - 1} \sum_{n = 0}^{k_{2} - 1} I \left( i, \ j \right) \cdot K \left( -m, \ -n \right)
-  \end{align*}
+  \end{aligned}
   $$
 
 ## 卷积加速
@@ -83,10 +83,11 @@
   X = W^{T} Y = \left[ \begin{matrix} w p & w q & w r & w s \\ x p & x q & x r & x s \\ y p & y q & y r & y s \\ z p & z q & z r & z s \end{matrix} \right]
   $$
 
-- 进行 $\mathrm{col2im}$：
+- 先转置再进行 $\mathrm{col2im}$：
 
   $$
   X = \left[ \begin{matrix} w p & w q + x p & x q \\ w r + y p & w s + x r + y q + z p & x s + z q \\ y r & y s + z r & z s \end{matrix} \right]
   $$
 
 - 转置卷积的计算过程，与卷积的反向传播计算方式相同
+

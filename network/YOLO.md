@@ -6,7 +6,7 @@
 
 - 不选择 $\mathrm{Region \ Proposal}$，直接在输出层回归目标的位置和对应分类
 
-- 由于省略了 $\mathrm{Region \ Proposal}$ 过程，速度可以达到 $\mathrm{45 \ FPS}$；代价是精度降低
+- 由于省略了 $\mathrm{Region \ Proposal}$ 过程，速度可以达到 $\mathrm{45 \ FPS}$；代价是精度降低（预测位置不准）
 
 ### 检测流程
 
@@ -16,7 +16,7 @@
 
   - $\left( x, \ y \right)$ 是 $\mathrm{BBox}$ 中心相对于当前 $\mathrm{Grid}$ 左上角的位移，归一化到 $\left[ 0, \ 1 \right)$
 
-  - $\left( w, \ h \right)$ 是 $\mathrm{BBox}$ 相对于输入图像的宽和长，归一化到 $\left[ 0, \ 1 \right)$
+  - $\left( w, \ h \right)$ 是 $\mathrm{BBox}$ 相对于输入图像的宽和高，归一化到 $\left[ 0, \ 1 \right)$
 
     - 由损失函数部分可知，$\left( w, \ h \right)$ 实际是归一化后的平方根
 
@@ -40,9 +40,9 @@
 
     - 更重视对 $\mathrm{BBox}$ 的预测，$\lambda_{\mathrm{coord}} = 5$
 
-  - 如果一个 $\mathrm{BBox}$ 中没有目标，其 $\mathrm{Confidence}$ 会被置零；由于大部分 $\mathrm{BBox}$ 中没有目标，会导致网络训练不稳定
+  - 如果一个 $\mathrm{Grid}$ 中没有目标，其 $\mathrm{Confidence}$ 会被置零；由于大部分 $\mathrm{Grid}$ 中没有目标，使得无目标部分的梯度在训练时占比过高，容易造成网络训练不稳定
 
-    - 对于没有目标的 $\mathrm{BBox}$，其 $\mathrm{loss}$ 影响较小，$\lambda_{\mathrm{noobj}} = 0.5$
+    - 降低无目标 $\mathrm{Grid}$ 的分类 $\mathrm{loss}$ 权重，即 $\lambda_{\mathrm{noobj}} = 0.5$
 
 - $\mathrm{Loss}$ 由以下 $5$ 项组成：
 
@@ -138,7 +138,7 @@
 
 #### 高分辨率分类器
 
-- 检测算法大多使用 $\mathrm{ImageNet}$ 上的预训练模型提取特征，但这些分类模型的输入一般是 $224 \times 224$，导致分辨率够高，会给检测带来困难
+- 检测算法大多使用 $\mathrm{ImageNet}$ 上的预训练模型提取特征，但这些分类模型的输入一般是 $224 \times 224$，分辨率较低，会给检测带来困难
 
 - 在 $\mathrm{YOLO \ v2}$ 中，首先在 $\mathrm{ImageNet}$ 上对 $448 \times 448$ 的分类模型进行 $\mathrm{fine-tuning}$，再在检测任务上进行 $\mathrm{fine-tuning}$
 
@@ -182,13 +182,13 @@
 
   - 正确的做法是，每一个 $\mathrm{Anchor}$ 只负责周围的 $\mathrm{BBox}$
 
-- 将 $\mathrm{BBox}$ 的位置预测值改为相对于 $\mathrm{Cell}$ 左上角的偏移量
+- 将 $\mathrm{BBox}$ 的位置预测值 $\left( t_{x}, \ t_{y} \right)$ 改为相对于 $\mathrm{Cell}$ 左上角的偏移量
 
   - $\mathrm{Cell}$ 左上角坐标用其位置表示，$\left( c_{x}, \ c_{y} \right)$ 表示第 $\left( c_{x}, \ c_{y} \right)$ 个 $\mathrm{Cell}$
 
   - $\mathrm{BBox}$ 预测值 $\left( t_{x}, \ t_{y} \right)$ 通过 $\mathrm{Sigmoid}$ 函数归一化到 $\left( 0, \ 1 \right)$ 范围
 
-  - 最终的 $\mathrm{BBox}$ 计算如下：
+  - 对于形状为 $\left( p_{w}, \ p_{h} \right)$ 的 $\mathrm{Anchor}$，最终的 $\mathrm{BBox}$ 回归过程计算如下：
 
     $$
     b_{x} = \sigma \left( t_{x} \right) + c_{x}
@@ -213,6 +213,8 @@
 - 把浅层的 $26 \times 26$ 进行特征重排后，与 $13 \times 13$ 的特征图进行拼接，方便小目标检测
 
   - 通过隔行隔列采样，$26 \times 26$ 的特征图可以得到 $4$ 个 $13 \times 13$ 特征图
+
+  - 原论文 $\mathrm{Reorg}$ 层实现方式很诡异，但精度略高
 
 #### 多尺度训练
 
@@ -258,12 +260,8 @@
 
 - 使用 $\mathrm{Darknet-19}$ 作为基础网络，相比 $\mathrm{VGG}$ 和 $\mathrm{GoogLeNet}$，运算速度更快，精度更高
 
-- $\mathrm{Darknet-19}$ 共有 $7$ 组卷积，卷积层数依次为 $1, \ 1, \ 3, \ 3, \ 5, \ 5, 1$
+- $\mathrm{Darknet-19}$ 共有 $7$ 组卷积（$19$ 层），$5$ 个 $\mathrm{pooling}$ 层
 
   - 前 $6$ 组卷积之间通过 $\mathrm{stride} = 2$ 的 $2 \times 2 \ \mathrm{pooling}$ 实现下采样
 
   - 最后的卷积层经过 $\mathrm{global \ average \ pooling}$ 后进行 $\mathrm{Softmax}$ 分类
-
-  - $7$ 组卷积核大小依次为 $3, \quad 3, \quad 3-1-3, \quad 3-1-3, \quad 3-1-3-1-3, \quad 3-1-3-1-3, \quad 3$
-
-- 共 $19$ 个卷积层，$5$ 个 $\mathrm{pooling}$ 层

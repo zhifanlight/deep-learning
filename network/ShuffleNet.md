@@ -142,7 +142,7 @@
 
   - 第二项是读卷积核的 $\mathrm{IO}$ 次数（$c_{1} c_{2}$ 个卷积核）
 
-- 根据均值不等式 $a + b \ge 2 \sqrt{ab}$：
+- 根据均值不等式 $a + b \ge 2 \sqrt{ab}$（当 $a = b$ 时，等号成立）：
 
   $$
   \mathrm{MAC} \ge 2hw \sqrt{c_{1} c_{2}} + c_{1} c_{2} = 2 \sqrt{hwB} + \frac{B}{hw}
@@ -161,7 +161,7 @@
 - 内存访问总次数计算如下：
 
   $$
-  \mathrm{MAC} = hw \left( c_{1} + c_{2} \right) + \frac{c_{1} c_{2}}{g}
+  \mathrm{MAC} = hw \left( c_{1} + c_{2} \right) + \frac{c_{1} c_{2}}{g} = hwc_{1} + \frac{Bg}{c_{1}} + \frac{B}{hw}
   $$
 
 - 运算量不变时，增加卷积分组数意味着增加输入输出通道数，导致内存访问次数增加
@@ -172,7 +172,7 @@
 
 - 串行分支（堆叠层数）过多，每层通道数较少，无法充分利用 $\mathrm{GPU}$ 并行能力
 
-- 并行分支过多，内核启动和内核同步所需时间较长，
+- 并行分支过多，内核启动和内核同步所需时间较长
 
 #### $\mathrm{Element-wise}$ 操作的时间不可忽视
 
@@ -202,7 +202,7 @@
   <img src="images/shufflenet_v2.png"/>
   </center>
 
-- 工程上，还可以把 $\mathrm{concat}$、$\mathrm{channel \ shuffle}$ 以及下一个单元的 $\mathrm{channel \ split}$ 操作合并到一起，减少 $\mathrm{elment-wise}$ 操作带来的时间消耗
+- 工程上，还可以把 $\mathrm{concat}$、$\mathrm{channel \ shuffle}$ 以及下一个单元的 $\mathrm{channel \ split}$ 操作合并到一起，减少 $\mathrm{element-wise}$ 操作带来的时间消耗
 
 - 整体的网络结构与 $\mathrm{ShuffleNet \ v1}$ 基本相同，区别在于 $\mathrm{global \ average \ pooling}$ 前增加了一层 $\mathrm{pointwise}$ 卷积
 
