@@ -265,3 +265,35 @@
   - 前 $6$ 组卷积之间通过 $\mathrm{stride} = 2$ 的 $2 \times 2 \ \mathrm{pooling}$ 实现下采样
 
   - 最后的卷积层经过 $\mathrm{global \ average \ pooling}$ 后进行 $\mathrm{Softmax}$ 分类
+
+## $\mathrm{YOLO \ v3}$
+
+### 多标签分类代替单标签分类
+
+- 针对每个类别进行二分类，忽略类间的互斥关系
+
+  - 在某些复杂场景下，一个目标可能属于多个类，比如“人”和“女人”
+
+### 更深的主干网络 $\mathrm{Darknet-53}$
+
+- 使用 $\mathrm{Darknet-53}$ 代替 $\mathrm{Yolo \ v2}$ 的 $\mathrm{Darknet-19}$
+
+  - 网络层数更深，共有 $53$ 个卷积层
+
+  - 借鉴 $\mathrm{ResNet}$ 残差思想，基本单元为残差块
+
+  - 不同 $\mathrm{Stage}$ 间使用步长为 $2$ 的卷积层实现下采样（$\mathrm{Darknet-19}$ 通过池化层实现）
+
+### 多尺度特征与预测
+
+- 采用 $\mathrm{FPN}$ 的思想，在最后 $3$ 个 $\mathrm{Stage}$ 尺度上进行预测
+
+  - 与 $\mathrm{Yolo \ v2}$ 通过下采样（$\mathrm{26 \times 26 \ \rightarrow \ 13 \times 13}$）进行特征级联不同，$\mathrm{Yolo \ v3}$ 通过上采样在高分辨率特征图上进行特征级联
+
+- 每个尺度各负责 $3$ 种 $\mathrm{Anchor}$ 预测，共有 $9$ 种
+
+  - 通过 $\mathrm{k-means}$ 聚类得到 $9$ 组 $\mathrm{Anchor}$，按尺寸分配到不同尺度的特征图上
+
+### $\mathrm{Tiny \ YOLO}$
+
+- 输入尺寸不变，去掉 $\mathrm{YOLO \ v3}$ 主干网络的部分特征层，$\mathrm{FPN}$ 部分只保留 $\mathrm{13 \times 13}$ 和 $\mathrm{26 \times 26}$ 两个低分辨率输出

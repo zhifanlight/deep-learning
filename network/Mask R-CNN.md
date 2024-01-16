@@ -1,4 +1,4 @@
-# $\mathrm{Mask R-CNN}$
+# $\mathrm{Mask \ R-CNN}$
 
 ## 思想
 
