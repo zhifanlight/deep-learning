@@ -1,3 +1,3 @@
 # deep-learning-notes
 
-- Sytanx: Typora for Mac
+- Syntax: Typora for Mac
