@@ -1,0 +1,69 @@
+T2IAdapter(
+  (adapter): FullAdapter(
+    (unshuffle): PixelUnshuffle(downscale_factor=8)
+    (conv_in): Conv2d(192, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (body): ModuleList(
+      (0): AdapterBlock(
+        (resnets): Sequential(
+          (0): AdapterResnetBlock(
+            (block1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): AdapterResnetBlock(
+            (block1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (1): AdapterBlock(
+        (downsample): AvgPool2d(kernel_size=2, stride=2, padding=0)
+        (in_conv): Conv2d(320, 640, kernel_size=(1, 1), stride=(1, 1))
+        (resnets): Sequential(
+          (0): AdapterResnetBlock(
+            (block1): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): AdapterResnetBlock(
+            (block1): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (2): AdapterBlock(
+        (downsample): AvgPool2d(kernel_size=2, stride=2, padding=0)
+        (in_conv): Conv2d(640, 1280, kernel_size=(1, 1), stride=(1, 1))
+        (resnets): Sequential(
+          (0): AdapterResnetBlock(
+            (block1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): AdapterResnetBlock(
+            (block1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (3): AdapterBlock(
+        (downsample): AvgPool2d(kernel_size=2, stride=2, padding=0)
+        (resnets): Sequential(
+          (0): AdapterResnetBlock(
+            (block1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (1): AdapterResnetBlock(
+            (block1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (act): ReLU()
+            (block2): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+    )
+  )
+)
